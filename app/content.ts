@@ -5,6 +5,7 @@ export type Locale = (typeof locales)[number];
 type SiteContent = {
   localeName: string;
   meta: { title: string; description: string };
+  a11y: { skipToContent: string; home: string; primaryNav: string; languageNav: string; mobileNav: string; closeDialog: string };
   nav: { capabilities: string; process: string; quality: string; partnership: string; start: string; menu: string; close: string };
   hero: { kicker: string; line1: string; emphasis: string; line2: string; copy: string; primary: string; secondary: string; rail: string[] };
   intro: { kicker: string; title: string; body: string; side: string };
@@ -24,6 +25,7 @@ export const content: Record<Locale, SiteContent> = {
       title: "JJWine — China Production, Delivered to Global Standards",
       description: "End-to-end China production solutions for global wine and beverage brands.",
     },
+    a11y: { skipToContent: "Skip to main content", home: "JJWine home", primaryNav: "Primary", languageNav: "Language", mobileNav: "Menu", closeDialog: "Close dialog" },
     nav: { capabilities: "Capabilities", process: "Process", quality: "Quality", partnership: "Partnership", start: "Start a project", menu: "Menu", close: "Close" },
     hero: {
       kicker: "Independent production partner · China",
@@ -91,6 +93,7 @@ export const content: Record<Locale, SiteContent> = {
   "zh-cn": {
     localeName: "简体中文",
     meta: { title: "JJWine — 全球酒饮品牌的中国生产落地伙伴", description: "为全球酒饮品牌提供产品本地化、生产组织、质量治理与合规协调的一站式解决方案。" },
+    a11y: { skipToContent: "跳转到主要内容", home: "JJWine 首页", primaryNav: "主导航", languageNav: "语言选择", mobileNav: "菜单", closeDialog: "关闭对话框" },
     nav: { capabilities: "生产能力", process: "合作流程", quality: "质量合规", partnership: "合作对象", start: "启动项目", menu: "菜单", close: "关闭" },
     hero: {
       kicker: "独立生产合作平台 · 中国", line1: "全球品牌标准，", emphasis: "在中国", line2: "真正落地。",
@@ -157,6 +160,7 @@ export const content: Record<Locale, SiteContent> = {
   es: {
     localeName: "Español",
     meta: { title: "JJWine — Producción en China conforme a estándares globales", description: "Soluciones integrales de localización, producción, calidad y cumplimiento en China para marcas internacionales de vinos y bebidas." },
+    a11y: { skipToContent: "Saltar al contenido principal", home: "Inicio de JJWine", primaryNav: "Principal", languageNav: "Idioma", mobileNav: "Menú", closeDialog: "Cerrar diálogo" },
     nav: { capabilities: "Capacidades", process: "Proceso", quality: "Calidad", partnership: "Colaboración", start: "Iniciar proyecto", menu: "Menú", close: "Cerrar" },
     hero: {
       kicker: "Socio independiente de producción · China", line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",

@@ -41,6 +41,36 @@ button {
   font: inherit;
 }
 
+:focus-visible {
+  outline: 2px solid var(--wine-bright);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.capabilities-section :focus-visible,
+.quality-section :focus-visible,
+.brief-dialog :focus-visible {
+  outline-color: var(--wine);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 200;
+  top: 12px;
+  left: 12px;
+  padding: 12px 18px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
 .site-shell {
   min-height: 100vh;
   overflow: hidden;
@@ -248,7 +278,7 @@ button {
   display: flex;
   align-items: center;
   gap: 18px;
-  color: rgba(243, 238, 229, 0.45);
+  color: rgba(243, 238, 229, 0.62);
   font-size: 9px;
   letter-spacing: 0.22em;
 }
@@ -343,6 +373,8 @@ button {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
   }
 }
 
@@ -431,7 +463,7 @@ body::selection {
 }
 
 .language-links a {
-  color: rgba(243, 238, 229, 0.38);
+  color: rgba(243, 238, 229, 0.6);
 }
 
 .language-links a[aria-current="page"] {
@@ -501,7 +533,7 @@ body::selection {
 }
 
 .mobile-language-links a {
-  color: rgba(243, 238, 229, 0.4);
+  color: rgba(243, 238, 229, 0.6);
 }
 
 .mobile-language-links a[aria-current="page"] {
@@ -662,7 +694,7 @@ body::selection {
   margin-top: 48px;
   padding-top: 18px;
   border-top: 1px solid var(--line);
-  color: rgba(243, 238, 229, 0.42);
+  color: rgba(243, 238, 229, 0.6);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -972,7 +1004,7 @@ body::selection {
 .quality-badge small {
   max-width: 170px;
   margin-top: 12px;
-  color: rgba(18, 12, 13, 0.5);
+  color: rgba(18, 12, 13, 0.66);
   font-size: 9px;
   letter-spacing: 0.12em;
   line-height: 1.5;
@@ -1025,7 +1057,7 @@ body::selection {
 
 .quality-grid p {
   margin: 0;
-  color: rgba(18, 12, 13, 0.56);
+  color: rgba(18, 12, 13, 0.68);
   font-size: 13px;
   line-height: 1.6;
 }
@@ -1159,7 +1191,7 @@ body::selection {
 .contact-content > small {
   display: block;
   margin-top: 18px;
-  color: rgba(255, 255, 255, 0.48);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 9px;
   letter-spacing: 0.08em;
 }
@@ -1220,7 +1252,7 @@ footer p {
 
 footer small {
   max-width: 560px;
-  color: rgba(243, 238, 229, 0.38);
+  color: rgba(243, 238, 229, 0.58);
   font-size: 9px;
   line-height: 1.55;
 }
@@ -1303,11 +1335,15 @@ footer > a:last-child {
   border: 0;
   border-bottom: 1px solid rgba(18, 12, 13, 0.28);
   border-radius: 0;
-  outline: none;
   background: transparent;
   color: var(--ink);
   font: inherit;
   font-size: 15px;
+}
+
+.brief-dialog input::placeholder,
+.brief-dialog textarea::placeholder {
+  color: rgba(18, 12, 13, 0.58);
 }
 
 .brief-dialog input {
@@ -1339,7 +1375,7 @@ footer > a:last-child {
 }
 
 .brief-submit small {
-  color: rgba(18, 12, 13, 0.48);
+  color: rgba(18, 12, 13, 0.64);
   font-size: 9px;
 }
 
@@ -1373,6 +1409,14 @@ footer > a:last-child {
   .quality-grid article:nth-child(-n + 2) { border-bottom: 1px solid rgba(18, 12, 13, 0.22); }
 
   footer { grid-template-columns: 1fr 1fr; }
+}
+
+/* The two-column process grid needs ~820px of track minimums, so between
+   the 760px stack point and ~905px its list overflowed the viewport.
+   Stack it a breakpoint earlier instead. */
+@media (max-width: 960px) {
+  .process-section { grid-template-columns: 1fr; gap: 70px; }
+  .process-sticky { position: relative; top: auto; }
 }
 
 @media (max-width: 760px) {

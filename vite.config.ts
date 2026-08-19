@@ -11,9 +11,14 @@ const { d1, r2 } = hostingConfig;
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
+// nodejs_compat deliberately omitted: vinext already injects it, and workerd
+// rejects the flag when it is specified twice ("Compatibility flag specified
+// multiple times"), which prevented `npm run dev` from starting.
+// compatibility_date caps the dev runtime at the newest date the bundled
+// workerd binary supports; deploys still use wrangler.jsonc's date.
 const localBindingConfig = {
   main: "./worker/index.ts",
-  compatibility_flags: ["nodejs_compat"],
+  compatibility_date: "2026-05-22",
   d1_databases: d1
     ? [
         {

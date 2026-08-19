@@ -1,15 +1,7 @@
-import type { Metadata } from "next";
 import { JJWineSite } from "../JJWineSite";
-import { content } from "../content";
+import { localeMetadata } from "../site-metadata";
 
-export const metadata: Metadata = {
-  title: content["zh-cn"].meta.title,
-  description: content["zh-cn"].meta.description,
-  alternates: {
-    canonical: "/zh-cn",
-    languages: { en: "/en", "zh-CN": "/zh-cn", es: "/es", "x-default": "/en" },
-  },
-};
+export const metadata = localeMetadata("zh-cn");
 
 export default function ChinesePage() {
   return <JJWineSite locale="zh-cn" />;

@@ -20,6 +20,24 @@ async function render(pathname) {
 
 const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+const localeMeta = {
+  en: {
+    title: "JJWine — China Production, Delivered to Global Standards",
+    ogLocale: "en_US",
+    skip: "Skip to main content",
+  },
+  "zh-CN": {
+    title: "JJWine — 全球酒饮品牌的中国生产落地伙伴",
+    ogLocale: "zh_CN",
+    skip: "跳转到主要内容",
+  },
+  es: {
+    title: "JJWine — Producción en China conforme a estándares globales",
+    ogLocale: "es_ES",
+    skip: "Saltar al contenido principal",
+  },
+};
+
 for (const [pathname, expected, lang, canonicalPath] of [
   ["/", "Your standards.", "en", "/en"],
   ["/en", "One brief. Full-chain execution.", "en", "/en"],
@@ -61,7 +79,55 @@ for (const [pathname, expected, lang, canonicalPath] of [
       );
     }
   });
+
+  test(`emits localized social metadata and favicons for ${pathname}`, async () => {
+    const html = await (await render(pathname)).text();
+    const meta = localeMeta[lang];
+
+    // Open Graph and Twitter must carry the locale's own copy, not English.
+    assert.match(html, new RegExp(`property="og:title" content="${escape(meta.title)}"`));
+    assert.match(html, new RegExp(`name="twitter:title" content="${escape(meta.title)}"`));
+    assert.match(html, new RegExp(`property="og:locale" content="${escape(meta.ogLocale)}"`));
+    assert.match(html, new RegExp(`property="og:url" content="${escape(`https://jjwine.example${canonicalPath}`)}"`));
+    assert.match(html, /property="og:site_name" content="JJWine"/);
+    assert.match(html, /name="twitter:card" content="summary_large_image"/);
+    assert.match(html, new RegExp(`property="og:image" content="${escape("https://jjwine.example/og.png")}"`));
+
+    // Declared og:image dimensions must match the real pixel size of og.png.
+    const png = await readFile(new URL("../public/og.png", import.meta.url));
+    const width = png.readUInt32BE(16);
+    const height = png.readUInt32BE(20);
+    assert.match(html, new RegExp(`property="og:image:width" content="${width}"`));
+    assert.match(html, new RegExp(`property="og:image:height" content="${height}"`));
+
+    assert.match(html, /<link rel="icon" href="[^"]*\/favicon\.svg" type="image\/svg\+xml"/);
+    assert.match(html, /<link rel="icon" href="[^"]*\/favicon\.ico"/);
+  });
+
+  test(`emits accessible navigation markup for ${pathname}`, async () => {
+    const html = await (await render(pathname)).text();
+    const meta = localeMeta[lang];
+
+    assert.match(html, new RegExp(`<a class="skip-link" href="#main-content">${escape(meta.skip)}</a>`));
+    assert.match(html, /<section class="hero" id="main-content" tabindex="-1">/);
+    assert.match(html, /<button class="menu-button"[^>]*aria-expanded="false"[^>]*aria-controls="mobile-menu"/);
+    assert.match(html, /<nav class="mobile-menu[^"]*" id="mobile-menu" aria-label="[^"]+"/);
+    assert.match(html, /<nav class="language-links" aria-label="[^"]+"/);
+    // Language switch links declare the language of their target and label.
+    // (case-insensitive: the SSR serializer emits React's camelCase hrefLang,
+    // which HTML parses identically to hreflang)
+    assert.match(html, /<a[^>]*href="\/zh-cn"[^>]*hreflang="zh-CN"[^>]*lang="zh-CN"/i);
+    // The brief dialog only mounts on demand; it must not be server-rendered.
+    assert.doesNotMatch(html, /role="dialog"/);
+  });
 }
+
+test("ships valid favicon files", async () => {
+  const ico = await readFile(new URL("../public/favicon.ico", import.meta.url));
+  assert.deepEqual([...ico.subarray(0, 4)], [0, 0, 1, 0]);
+  const svg = await readFile(new URL("../public/favicon.svg", import.meta.url), "utf8");
+  assert.match(svg, /^<svg /);
+});
 
 test("ships the social card and Cloudflare configuration", async () => {
   const og = await readFile(new URL("../public/og.png", import.meta.url));

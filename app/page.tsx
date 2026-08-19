@@ -1,15 +1,8 @@
-import type { Metadata } from "next";
 import { JJWineSite } from "./JJWineSite";
-import { content } from "./content";
+import { localeMetadata } from "./site-metadata";
 
-export const metadata: Metadata = {
-  title: content.en.meta.title,
-  description: content.en.meta.description,
-  alternates: {
-    canonical: "/en",
-    languages: { en: "/en", "zh-CN": "/zh-cn", es: "/es", "x-default": "/en" },
-  },
-};
+// The root route serves the English page and canonicalizes to /en.
+export const metadata = localeMetadata("en");
 
 export default function Home() {
   return <JJWineSite locale="en" />;

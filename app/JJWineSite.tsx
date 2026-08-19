@@ -1,22 +1,44 @@
 "use client";
 
-import type { CSSProperties, FormEvent, PointerEvent } from "react";
+import type { CSSProperties, FormEvent, MouseEvent, PointerEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import { content, type Locale } from "./content";
 
 type Props = { locale: Locale };
 
-const localeLinks: Array<{ locale: Locale; short: string }> = [
-  { locale: "en", short: "EN" },
-  { locale: "zh-cn", short: "中文" },
-  { locale: "es", short: "ES" },
+const localeLinks: Array<{ locale: Locale; short: string; lang: string }> = [
+  { locale: "en", short: "EN", lang: "en" },
+  { locale: "zh-cn", short: "中文", lang: "zh-CN" },
+  { locale: "es", short: "ES", lang: "es" },
 ];
 
 export function JJWineSite({ locale }: Props) {
   const copy = content[locale];
   const [menuOpen, setMenuOpen] = useState(false);
   const [briefOpen, setBriefOpen] = useState(false);
+  const siteShellRef = useRef<HTMLElement>(null);
+  const mobileMenuRef = useRef<HTMLElement>(null);
+  const dialogRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const briefTriggerRef = useRef<HTMLElement | null>(null);
+
+  const openBrief = (event: MouseEvent<HTMLElement>) => {
+    // Use the actual control rather than document.activeElement: Safari does
+    // not consistently focus buttons when they are clicked with a pointer.
+    briefTriggerRef.current = event.currentTarget;
+    setMenuOpen(false);
+    setBriefOpen(true);
+  };
+
+  const closeBrief = () => {
+    const trigger = briefTriggerRef.current;
+    briefTriggerRef.current = null;
+    setBriefOpen(false);
+    // Defer until React unmounts the dialog and its effect releases `inert`
+    // from the page behind it.
+    window.setTimeout(() => { if (trigger?.isConnected) trigger.focus(); }, 0);
+  };
 
   useEffect(() => {
     document.documentElement.classList.add("motion-ready");
@@ -35,6 +57,7 @@ export function JJWineSite({ locale }: Props) {
     );
     revealElements.forEach((element) => observer.observe(element));
 
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let ticking = false;
     const updateScroll = () => {
       document.documentElement.style.setProperty(
@@ -49,7 +72,7 @@ export function JJWineSite({ locale }: Props) {
         ticking = true;
       }
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
+    if (!reducedMotion.matches) window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       observer.disconnect();
@@ -58,15 +81,113 @@ export function JJWineSite({ locale }: Props) {
     };
   }, [locale]);
 
+  // While the mobile menu is open: keep keyboard focus in the menu/toggle,
+  // close on Escape, and make the covered page content inert.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !mobileMenuRef.current || !menuButtonRef.current) return;
+      const focusable = [
+        menuButtonRef.current,
+        ...Array.from(
+          mobileMenuRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button, [tabindex]:not([tabindex="-1"])',
+          ),
+        ),
+      ].filter((element) => !element.hasAttribute("disabled"));
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (!focusable.includes(active as HTMLElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    const pageBackground = Array.from(siteShellRef.current?.children ?? []).filter(
+      (element): element is HTMLElement =>
+        element instanceof HTMLElement &&
+        element !== mobileMenuRef.current &&
+        element.tagName !== "HEADER",
+    );
+    const headerBackground = Array.from(
+      siteShellRef.current?.querySelectorAll<HTMLElement>(
+        "header > .wordmark, header .desktop-nav, header .language-links, header .nav-cta",
+      ) ?? [],
+    );
+    const background = [...pageBackground, ...headerBackground];
+    background.forEach((element) => { element.inert = true; });
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      background.forEach((element) => { element.inert = false; });
+    };
+  }, [menuOpen]);
+
+  // While the brief dialog is open: move focus in, trap Tab inside it,
+  // close on Escape, and lock background scrolling. Focus returns to the
+  // trigger via closeBrief.
   useEffect(() => {
     if (!briefOpen) return;
     closeButtonRef.current?.focus();
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setBriefOpen(false);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeBrief();
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'button, input, textarea, select, a[href], [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => !element.hasAttribute("disabled"));
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (!dialogRef.current.contains(active)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey);
+    const background = Array.from(siteShellRef.current?.children ?? []).filter(
+      (element): element is HTMLElement =>
+        element instanceof HTMLElement && !element.classList.contains("brief-overlay"),
+    );
+    background.forEach((element) => { element.inert = true; });
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      background.forEach((element) => { element.inert = false; });
+    };
   }, [briefOpen]);
+
+  // A single shared scroll lock avoids competing cleanup effects if UI state
+  // changes quickly (for example, opening the brief while the menu is open).
+  useEffect(() => {
+    if (!menuOpen && !briefOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [menuOpen, briefOpen]);
 
   const onPointerMove = (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType === "touch") return;
@@ -100,34 +221,38 @@ export function JJWineSite({ locale }: Props) {
   };
 
   return (
-    <main className={`site-shell locale-${locale}`} onPointerMove={onPointerMove}>
+    <main className={`site-shell locale-${locale}`} id="top" ref={siteShellRef} onPointerMove={onPointerMove}>
+      <a className="skip-link" href="#main-content">{copy.a11y.skipToContent}</a>
       <header className="topbar">
-        <a className="wordmark" href="#top" aria-label="JJWine home">
+        <a className="wordmark" href="#top" aria-label={copy.a11y.home}>
           JJ<span>WINE</span>
         </a>
-        <nav className="desktop-nav" aria-label="Primary navigation">
+        <nav className="desktop-nav" aria-label={copy.a11y.primaryNav}>
           <a href="#capabilities">{copy.nav.capabilities}</a>
           <a href="#process">{copy.nav.process}</a>
           <a href="#quality">{copy.nav.quality}</a>
           <a href="#partnership">{copy.nav.partnership}</a>
         </nav>
         <div className="topbar-actions">
-          <div className="language-links" aria-label="Language selection">
+          <nav className="language-links" aria-label={copy.a11y.languageNav}>
             {localeLinks.map((item) => (
               <a
                 aria-current={item.locale === locale ? "page" : undefined}
                 href={`/${item.locale}`}
+                hrefLang={item.lang}
                 key={item.locale}
+                lang={item.lang}
               >
                 {item.short}
               </a>
             ))}
-          </div>
-          <button className="nav-cta" type="button" onClick={() => setBriefOpen(true)}>
+          </nav>
+          <button className="nav-cta" type="button" onClick={openBrief}>
             {copy.nav.start}
           </button>
           <button
             className="menu-button"
+            ref={menuButtonRef}
             type="button"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -138,21 +263,27 @@ export function JJWineSite({ locale }: Props) {
         </div>
       </header>
 
-      <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`} id="mobile-menu">
+      <nav className={`mobile-menu ${menuOpen ? "is-open" : ""}`} id="mobile-menu" ref={mobileMenuRef} aria-label={copy.a11y.mobileNav}>
         <a href="#capabilities" onClick={() => setMenuOpen(false)}>{copy.nav.capabilities}</a>
         <a href="#process" onClick={() => setMenuOpen(false)}>{copy.nav.process}</a>
         <a href="#quality" onClick={() => setMenuOpen(false)}>{copy.nav.quality}</a>
         <a href="#partnership" onClick={() => setMenuOpen(false)}>{copy.nav.partnership}</a>
         <div className="mobile-language-links">
           {localeLinks.map((item) => (
-            <a aria-current={item.locale === locale ? "page" : undefined} href={`/${item.locale}`} key={item.locale}>
+            <a
+              aria-current={item.locale === locale ? "page" : undefined}
+              href={`/${item.locale}`}
+              hrefLang={item.lang}
+              key={item.locale}
+              lang={item.lang}
+            >
               {item.short}
             </a>
           ))}
         </div>
-      </div>
+      </nav>
 
-      <section className="hero" id="top">
+      <section className="hero" id="main-content" tabIndex={-1}>
         <div className="pointer-glow" aria-hidden="true" />
         <div className="motion-stage" aria-hidden="true">
           <div className="motion-orbit motion-orbit-a" />
@@ -170,7 +301,7 @@ export function JJWineSite({ locale }: Props) {
           </h1>
           <p className="hero-copy">{copy.hero.copy}</p>
           <div className="hero-actions">
-            <button className="button button-primary" type="button" onClick={() => setBriefOpen(true)}>
+            <button className="button button-primary" type="button" onClick={openBrief}>
               {copy.hero.primary} <span aria-hidden="true">↗</span>
             </button>
             <a className="text-link" href="#capabilities">
@@ -281,7 +412,7 @@ export function JJWineSite({ locale }: Props) {
             <div>
               <h3>{copy.partnership.brandTitle}</h3>
               <p>{copy.partnership.brandBody}</p>
-              <button type="button" onClick={() => setBriefOpen(true)}>{copy.partnership.brandLink} ↗</button>
+              <button type="button" onClick={openBrief}>{copy.partnership.brandLink} ↗</button>
             </div>
           </article>
           <article data-reveal>
@@ -289,7 +420,7 @@ export function JJWineSite({ locale }: Props) {
             <div>
               <h3>{copy.partnership.retailTitle}</h3>
               <p>{copy.partnership.retailBody}</p>
-              <button type="button" onClick={() => setBriefOpen(true)}>{copy.partnership.retailLink} ↗</button>
+              <button type="button" onClick={openBrief}>{copy.partnership.retailLink} ↗</button>
             </div>
           </article>
         </div>
@@ -301,7 +432,7 @@ export function JJWineSite({ locale }: Props) {
           <p className="eyebrow">{copy.contact.kicker}</p>
           <h2>{copy.contact.title}</h2>
           <p>{copy.contact.body}</p>
-          <button className="button button-dark" type="button" onClick={() => setBriefOpen(true)}>
+          <button className="button button-dark" type="button" onClick={openBrief}>
             {copy.contact.button} <span aria-hidden="true">↗</span>
           </button>
           <small>{copy.contact.note}</small>
@@ -319,10 +450,10 @@ export function JJWineSite({ locale }: Props) {
         <div
           className="brief-overlay"
           role="presentation"
-          onMouseDown={(event) => { if (event.currentTarget === event.target) setBriefOpen(false); }}
+          onMouseDown={(event) => { if (event.currentTarget === event.target) closeBrief(); }}
         >
-          <section className="brief-dialog" role="dialog" aria-modal="true" aria-labelledby="brief-title">
-            <button className="brief-close" ref={closeButtonRef} type="button" onClick={() => setBriefOpen(false)} aria-label={copy.nav.close}>×</button>
+          <section className="brief-dialog" ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="brief-title">
+            <button className="brief-close" ref={closeButtonRef} type="button" onClick={closeBrief} aria-label={copy.a11y.closeDialog}>×</button>
             <p className="eyebrow">JJWine</p>
             <h2 id="brief-title">{copy.brief.title}</h2>
             <p className="brief-intro">{copy.brief.intro}</p>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- JJWine mark: the hero's wine orb on the site's ink ground. -->
+  <defs>
+    <radialGradient id="orb" cx="0.38" cy="0.32" r="0.85">
+      <stop offset="0" stop-color="#e34260"/>
+      <stop offset="0.55" stop-color="#8f1831"/>
+      <stop offset="1" stop-color="#3a0a15"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#120c0d"/>
+  <circle cx="32" cy="32" r="24" fill="none" stroke="#d12e4f" stroke-opacity="0.45" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="16.5" fill="url(#orb)"/>
+  <circle cx="26" cy="26" r="4.5" fill="#ffbfc8" opacity="0.5"/>
+</svg>

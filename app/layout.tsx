@@ -8,21 +8,17 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
 
+  // Locale-specific title, description, alternates, Open Graph and Twitter
+  // metadata come from each page via app/site-metadata.ts.
   return {
     metadataBase: new URL(origin),
     title: { default: "JJWine", template: "%s" },
     description: "Global standards. Local execution in China.",
-    openGraph: {
-      title: "JJWine — Global standards. Local execution.",
-      description: "China production solutions for global wine and beverage brands.",
-      type: "website",
-      images: [{ url: new URL("/og.png", origin).toString(), width: 1200, height: 630, alt: "JJWine" }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "JJWine — Global standards. Local execution.",
-      description: "China production solutions for global wine and beverage brands.",
-      images: [new URL("/og.png", origin).toString()],
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "32x32" },
+      ],
     },
   };
 }
