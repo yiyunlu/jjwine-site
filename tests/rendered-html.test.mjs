@@ -18,20 +18,48 @@ async function render(pathname) {
   );
 }
 
-for (const [pathname, expected] of [
-  ["/", "Your standards."],
-  ["/en", "One brief. Full-chain execution."],
-  ["/zh-cn", "一个需求，全链路承接。"],
-  ["/es", "Un brief. Ejecución integral."],
+const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+for (const [pathname, expected, lang, canonicalPath] of [
+  ["/", "Your standards.", "en", "/en"],
+  ["/en", "One brief. Full-chain execution.", "en", "/en"],
+  ["/zh-cn", "一个需求，全链路承接。", "zh-CN", "/zh-cn"],
+  ["/es", "Un brief. Ejecución integral.", "es", "/es"],
 ]) {
   test(`renders ${pathname}`, async () => {
     const response = await render(pathname);
     assert.equal(response.status, 200);
     assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
     const html = await response.text();
-    assert.match(html, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.match(html, new RegExp(escape(expected)));
     assert.match(html, /JJWINE/i);
     assert.doesNotMatch(html, /Your site is taking shape|codex-preview|react-loading-skeleton/i);
+  });
+
+  test(`emits lang and language alternates for ${pathname}`, async () => {
+    const html = await (await render(pathname)).text();
+
+    assert.match(html, new RegExp(`<html lang="${escape(lang)}"`));
+
+    // Canonical and hreflang URLs must be absolute and derived from the
+    // request origin, so a rename or custom domain needs no code change.
+    assert.match(
+      html,
+      new RegExp(`<link rel="canonical" href="${escape(`https://jjwine.example${canonicalPath}`)}"\\s*/?>`),
+    );
+    for (const [hreflang, alternatePath] of [
+      ["en", "/en"],
+      ["zh-CN", "/zh-cn"],
+      ["es", "/es"],
+      ["x-default", "/en"],
+    ]) {
+      assert.match(
+        html,
+        new RegExp(
+          `<link rel="alternate" href="${escape(`https://jjwine.example${alternatePath}`)}" hreflang="${escape(hreflang)}"`,
+        ),
+      );
+    }
   });
 }
 

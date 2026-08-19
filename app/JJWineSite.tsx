@@ -19,7 +19,6 @@ export function JJWineSite({ locale }: Props) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    document.documentElement.lang = locale;
     document.documentElement.classList.add("motion-ready");
 
     const revealElements = document.querySelectorAll<HTMLElement>("[data-reveal]");

@@ -6,6 +6,8 @@
   --wine: #8f1831;
   --wine-bright: #d12e4f;
   --line: rgba(243, 238, 229, 0.22);
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
 }
 
 * {
@@ -20,7 +22,13 @@ body {
   margin: 0;
   background: var(--ink);
   color: var(--paper);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 a {
@@ -112,7 +120,7 @@ button {
 
 .hero h1 em {
   color: #c22c48;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-weight: 400;
 }
 
@@ -481,7 +489,7 @@ body::selection {
 .mobile-menu > a {
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(32px, 9vw, 58px);
 }
 
@@ -508,13 +516,6 @@ body::selection {
 
 .hero-content h1 {
   max-width: 1000px;
-}
-
-.locale-zh-cn .hero-content h1 {
-  max-width: 1050px;
-  font-size: clamp(58px, 8.4vw, 132px);
-  letter-spacing: -0.07em;
-  line-height: 0.92;
 }
 
 .locale-es .hero-content h1 {
@@ -638,7 +639,7 @@ body::selection {
 .contact-content h2,
 .brief-dialog h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(52px, 7.8vw, 126px);
   font-weight: 400;
   letter-spacing: -0.065em;
@@ -786,7 +787,7 @@ body::selection {
 
 .format-card h3 {
   margin: 0 0 18px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(36px, 4vw, 64px);
   font-weight: 400;
   letter-spacing: -0.05em;
@@ -895,7 +896,7 @@ body::selection {
 
 .process-list h3 {
   margin: 0 0 14px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(38px, 4.2vw, 68px);
   font-weight: 400;
   letter-spacing: -0.055em;
@@ -963,7 +964,7 @@ body::selection {
 
 .quality-badge span {
   color: var(--wine);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(38px, 5vw, 70px);
   letter-spacing: -0.05em;
 }
@@ -1016,7 +1017,7 @@ body::selection {
 
 .quality-grid h3 {
   margin: 110px 0 16px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(28px, 3vw, 44px);
   font-weight: 400;
   letter-spacing: -0.04em;
@@ -1077,7 +1078,7 @@ body::selection {
   top: -0.2em;
   right: 0.02em;
   color: rgba(243, 238, 229, 0.035);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(280px, 36vw, 540px);
   line-height: 0.8;
   transition: color 500ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -1095,7 +1096,7 @@ body::selection {
 
 .audience-grid h3 {
   margin: 0 0 24px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: clamp(44px, 5.4vw, 82px);
   font-weight: 400;
   letter-spacing: -0.055em;
@@ -1213,7 +1214,7 @@ footer small { margin: 0; }
 
 footer p {
   color: rgba(243, 238, 229, 0.76);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: 18px;
 }
 
@@ -1381,8 +1382,7 @@ footer > a:last-child {
 
   .hero-content { transform: none; }
 
-  .locale-zh-cn .hero-content h1,
-  .locale-es .hero-content h1 { font-size: clamp(50px, 15.5vw, 78px); }
+  .locale-es .hero-content h1 { font-size: clamp(46px, 14vw, 72px); }
 
   .motion-stage { transform: none; }
 
@@ -1452,5 +1452,145 @@ footer > a:last-child {
   .motion-ready [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Simplified Chinese typography (kept last so it wins source order).  */
+/* CJK glyphs are square and full-width: the Latin display treatment   */
+/* (negative tracking, sub-1 leading, 9px labels) crowds and clips     */
+/* them, so zh-CN gets its own font stacks, tracking and leading.      */
+/* ------------------------------------------------------------------ */
+
+.locale-zh-cn {
+  --font-sans: Arial, Helvetica, "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-serif: Georgia, "Songti SC", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+  font-family: var(--font-sans);
+  line-break: strict;
+}
+
+.locale-zh-cn .hero-content h1 {
+  max-width: 1050px;
+  font-size: clamp(52px, 7.8vw, 120px);
+  letter-spacing: 0.02em;
+  line-height: 1.14;
+}
+
+.locale-zh-cn p,
+.locale-zh-cn .process-sticky > p:not(.eyebrow),
+.locale-zh-cn .quality-lead > p:not(.eyebrow),
+.locale-zh-cn .contact-content > p:not(.eyebrow) {
+  letter-spacing: 0.015em;
+  line-height: 1.82;
+}
+
+.locale-zh-cn .intro-grid h2,
+.locale-zh-cn .section-head h2,
+.locale-zh-cn .process-sticky h2,
+.locale-zh-cn .quality-lead h2,
+.locale-zh-cn .contact-content h2,
+.locale-zh-cn .brief-dialog h2 {
+  letter-spacing: 0.02em;
+  line-height: 1.22;
+}
+
+.locale-zh-cn .intro-grid h2,
+.locale-zh-cn .brief-dialog h2 {
+  font-size: clamp(44px, 6.6vw, 106px);
+}
+
+.locale-zh-cn .section-head h2 {
+  font-size: clamp(40px, 5.8vw, 92px);
+}
+
+.locale-zh-cn .process-sticky h2 {
+  font-size: clamp(40px, 5.4vw, 86px);
+}
+
+.locale-zh-cn .quality-lead h2 {
+  font-size: clamp(40px, 5.6vw, 90px);
+}
+
+.locale-zh-cn .contact-content h2 {
+  font-size: clamp(44px, 7.4vw, 120px);
+}
+
+.locale-zh-cn .format-card h3,
+.locale-zh-cn .process-list h3,
+.locale-zh-cn .quality-grid h3,
+.locale-zh-cn .audience-grid h3,
+.locale-zh-cn .mobile-menu > a {
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+.locale-zh-cn .intro-body p {
+  font-size: clamp(17px, 1.8vw, 24px);
+}
+
+.locale-zh-cn .format-card p,
+.locale-zh-cn .process-list p {
+  font-size: 15px;
+}
+
+.locale-zh-cn .quality-grid p {
+  font-size: 14px;
+}
+
+/* 9px CJK labels are illegible; lift the micro-type floor to 11px. */
+.locale-zh-cn .eyebrow {
+  font-size: 11px !important;
+  letter-spacing: 0.2em;
+}
+
+.locale-zh-cn .hero-kicker,
+.locale-zh-cn .desktop-nav a,
+.locale-zh-cn .language-links a,
+.locale-zh-cn .nav-cta,
+.locale-zh-cn .menu-button,
+.locale-zh-cn .hero-rail,
+.locale-zh-cn .intro-body span,
+.locale-zh-cn .format-card small,
+.locale-zh-cn .format-card-content > span,
+.locale-zh-cn .quality-badge small,
+.locale-zh-cn .quality-grid article > span,
+.locale-zh-cn .contact-content > small,
+.locale-zh-cn .brief-dialog label > span,
+.locale-zh-cn .brief-submit small,
+.locale-zh-cn footer small {
+  font-size: 11px;
+}
+
+.locale-zh-cn .button {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.locale-zh-cn .text-link {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 760px) {
+  /* At 390px the hero must fit 全球品牌标准， (7 full-width glyphs) on   */
+  /* one line; keep-all then only breaks at the space before 真正落地。  */
+  .locale-zh-cn .hero-content h1 {
+    font-size: clamp(36px, 12.2vw, 64px);
+    line-height: 1.18;
+    word-break: keep-all;
+  }
+
+  .locale-zh-cn .intro-grid h2,
+  .locale-zh-cn .section-head h2,
+  .locale-zh-cn .process-sticky h2,
+  .locale-zh-cn .quality-lead h2,
+  .locale-zh-cn .contact-content h2,
+  .locale-zh-cn .brief-dialog h2 {
+    font-size: clamp(34px, 11vw, 54px);
+    line-height: 1.24;
+  }
+
+  .locale-zh-cn .intro-body p {
+    font-size: 17px;
   }
 }

@@ -12,7 +12,12 @@ interface ExecutionContext {
 
 const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    return handler.fetch(request, env, ctx);
+    // The app router does not expose the pathname to the root layout, which
+    // needs it to emit the locale-specific <html lang>. Forward it as a
+    // trusted header (overwriting any client-supplied value).
+    const headers = new Headers(request.headers);
+    headers.set("x-jjwine-pathname", new URL(request.url).pathname);
+    return handler.fetch(new Request(request, { headers }), env, ctx);
   },
 };
 

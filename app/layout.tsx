@@ -27,13 +27,21 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+function resolveLang(pathname: string): string {
+  if (pathname === "/zh-cn" || pathname.startsWith("/zh-cn/")) return "zh-CN";
+  if (pathname === "/es" || pathname.startsWith("/es/")) return "es";
+  return "en";
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const pathname = requestHeaders.get("x-jjwine-pathname") ?? "/";
   return (
-    <html lang="en">
+    <html lang={resolveLang(pathname)}>
       <body>{children}</body>
     </html>
   );
