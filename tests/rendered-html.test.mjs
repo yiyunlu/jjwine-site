@@ -122,6 +122,19 @@ for (const [pathname, expected, lang, canonicalPath] of [
   });
 }
 
+for (const [pathname, productionCopy, certificationCopy, obsoleteCopy] of [
+  ["/en", "Coordinated manufacturing at the confirmed production site.", "Current production partner certification", "qualified production partners"],
+  ["/zh-cn", "在经确认的生产场地组织量产。", "当前生产合作伙伴认证", "核心生产合作伙伴认证"],
+  ["/es", "Fabricación coordinada en la planta de producción confirmada.", "Certificación del socio de producción actual", "socios de producción cualificados"],
+]) {
+  test(`does not imply multiple current production partners on ${pathname}`, async () => {
+    const html = await (await render(pathname)).text();
+    assert.match(html, new RegExp(escape(productionCopy)));
+    assert.match(html, new RegExp(escape(certificationCopy)));
+    assert.doesNotMatch(html, new RegExp(escape(obsoleteCopy), "i"));
+  });
+}
+
 test("ships valid favicon files", async () => {
   const ico = await readFile(new URL("../public/favicon.ico", import.meta.url));
   assert.deepEqual([...ico.subarray(0, 4)], [0, 0, 1, 0]);

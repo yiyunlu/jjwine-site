@@ -54,7 +54,7 @@ export const content: Record<Locale, SiteContent> = {
         { title: "Align", body: "Brand brief, target channel, liquid, packaging, volume and approval rules." },
         { title: "Localize", body: "Translate global specifications into a China-ready product and material plan." },
         { title: "Validate", body: "Sampling, technical review, artwork and project-specific compliance checks." },
-        { title: "Produce", body: "Coordinated manufacturing through qualified production partners." },
+        { title: "Produce", body: "Coordinated manufacturing at the confirmed production site." },
         { title: "Release", body: "In-process controls, batch testing, release documents and traceability." },
         { title: "Deliver", body: "Warehousing and delivery coordination for the agreed channel." },
       ],
@@ -62,7 +62,7 @@ export const content: Record<Locale, SiteContent> = {
     quality: {
       kicker: "Quality + compliance", title: "Quality is project architecture—not a final inspection.",
       body: "The site, certification scope, product standard and control plan are confirmed for each project. Public claims stay tied to current evidence and authorization.",
-      badge: "FSSC 22000", badgeNote: "Core production partner certification",
+      badge: "FSSC 22000", badgeNote: "Current production partner certification",
       pillars: [
         { title: "Qualification", body: "Production-site capability and certification scope checked against the project." },
         { title: "Brand control", body: "Specifications, samples, artwork and changes follow defined approval points." },
@@ -121,7 +121,7 @@ export const content: Record<Locale, SiteContent> = {
         { title: "需求对齐", body: "确认品牌需求、目标渠道、液体、包装、数量和审批规则。" },
         { title: "本地化", body: "把全球规格转化为适合中国生产的产品与物料方案。" },
         { title: "验证", body: "完成打样、技术评估、包材稿件及项目所需合规核查。" },
-        { title: "生产", body: "通过经确认的生产合作伙伴组织量产。" },
+        { title: "生产", body: "在经确认的生产场地组织量产。" },
         { title: "放行", body: "执行过程控制、批次检测、放行文件与追溯管理。" },
         { title: "交付", body: "按照约定渠道统筹仓储与交付。" },
       ],
@@ -129,7 +129,7 @@ export const content: Record<Locale, SiteContent> = {
     quality: {
       kicker: "质量 + 合规", title: "质量不是最后一道检查，而是项目架构。",
       body: "每个项目分别确认生产场地、认证范围、产品标准与控制计划；所有公开能力表述均与现行证据和授权绑定。",
-      badge: "FSSC 22000", badgeNote: "核心生产合作伙伴认证",
+      badge: "FSSC 22000", badgeNote: "当前生产合作伙伴认证",
       pillars: [
         { title: "能力准入", body: "依据具体项目核对生产场地能力及体系认证适用范围。" },
         { title: "品牌控制", body: "规格、样品、稿件和变更均设置明确的品牌审批节点。" },
@@ -188,7 +188,7 @@ export const content: Record<Locale, SiteContent> = {
         { title: "Alinear", body: "Brief de marca, canal, líquido, envase, volumen y reglas de aprobación." },
         { title: "Localizar", body: "Convertir las especificaciones globales en un plan de producto y materiales para China." },
         { title: "Validar", body: "Muestras, revisión técnica, artes y verificaciones de cumplimiento del proyecto." },
-        { title: "Producir", body: "Fabricación coordinada mediante socios de producción cualificados." },
+        { title: "Producir", body: "Fabricación coordinada en la planta de producción confirmada." },
         { title: "Liberar", body: "Controles en proceso, análisis de lote, documentación y trazabilidad." },
         { title: "Entregar", body: "Coordinación de almacenamiento y entrega para el canal acordado." },
       ],
@@ -196,7 +196,7 @@ export const content: Record<Locale, SiteContent> = {
     quality: {
       kicker: "Calidad + cumplimiento", title: "La calidad es la arquitectura del proyecto, no la inspección final.",
       body: "Para cada proyecto se confirman la planta, el alcance de certificación, el estándar del producto y el plan de control. Las declaraciones públicas se vinculan a evidencia y autorización vigentes.",
-      badge: "FSSC 22000", badgeNote: "Certificación del socio principal de producción",
+      badge: "FSSC 22000", badgeNote: "Certificación del socio de producción actual",
       pillars: [
         { title: "Cualificación", body: "Capacidad y alcance de certificación contrastados con el proyecto." },
         { title: "Control de marca", body: "Especificaciones, muestras, artes y cambios con aprobaciones definidas." },
