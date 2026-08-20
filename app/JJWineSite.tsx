@@ -443,6 +443,10 @@ export function JJWineSite({ locale }: Props) {
         <a className="wordmark footer-mark" href="#top">JJ<span>WINE</span></a>
         <p>{copy.footer.line}</p>
         <small>{copy.footer.legal}</small>
+        <nav className="footer-legal-links" aria-label={copy.footer.legalNav}>
+          <a href={`/${locale}/privacy`}>{copy.footer.privacyLink}</a>
+          <a href={`/${locale}/legal`}>{copy.footer.legalLink}</a>
+        </nav>
         <a href="#top">{copy.footer.top} ↑</a>
       </footer>
 

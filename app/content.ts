@@ -15,7 +15,7 @@ type SiteContent = {
   partnership: { kicker: string; title: string; brandTitle: string; brandBody: string; brandLink: string; retailTitle: string; retailBody: string; retailLink: string };
   contact: { kicker: string; title: string; body: string; button: string; note: string };
   brief: { title: string; intro: string; company: string; companyPlaceholder: string; market: string; marketPlaceholder: string; product: string; productPlaceholder: string; format: string; formatPlaceholder: string; volume: string; volumePlaceholder: string; timing: string; timingPlaceholder: string; details: string; detailsPlaceholder: string; download: string; privacy: string };
-  footer: { line: string; legal: string; top: string };
+  footer: { line: string; legal: string; top: string; legalNav: string; privacyLink: string; legalLink: string };
 };
 
 export const content: Record<Locale, SiteContent> = {
@@ -88,7 +88,7 @@ export const content: Record<Locale, SiteContent> = {
       details: "Standards and requirements", detailsPlaceholder: "Liquid, packaging, certification, approval or channel requirements",
       download: "Download brief", privacy: "This form does not transmit or store your information.",
     },
-    footer: { line: "Global standards. Local execution.", legal: "Capabilities and certifications are confirmed against each project, product and qualified production site.", top: "Back to top" },
+    footer: { line: "Global standards. Local execution.", legal: "Capabilities and certifications are confirmed against each project, product and qualified production site.", top: "Back to top", legalNav: "Legal", privacyLink: "Privacy Policy", legalLink: "Legal Notice" },
   },
   "zh-cn": {
     localeName: "简体中文",
@@ -155,7 +155,7 @@ export const content: Record<Locale, SiteContent> = {
       details: "标准及其他要求", detailsPlaceholder: "液体、包装、认证、审批或渠道要求",
       download: "下载需求简报", privacy: "本表单不会传输或储存您的信息。",
     },
-    footer: { line: "全球标准，本地执行。", legal: "所有能力与认证均需结合具体项目、产品和经确认的生产场地核实。", top: "返回顶部" },
+    footer: { line: "全球标准，本地执行。", legal: "所有能力与认证均需结合具体项目、产品和经确认的生产场地核实。", top: "返回顶部", legalNav: "法律信息", privacyLink: "隐私政策", legalLink: "法律声明" },
   },
   es: {
     localeName: "Español",
@@ -222,6 +222,6 @@ export const content: Record<Locale, SiteContent> = {
       details: "Estándares y requisitos", detailsPlaceholder: "Líquido, envase, certificación, aprobación o canal",
       download: "Descargar brief", privacy: "Este formulario no transmite ni almacena tu información.",
     },
-    footer: { line: "Estándares globales. Ejecución local.", legal: "Las capacidades y certificaciones se confirman para cada proyecto, producto y planta cualificada.", top: "Volver arriba" },
+    footer: { line: "Estándares globales. Ejecución local.", legal: "Las capacidades y certificaciones se confirman para cada proyecto, producto y planta cualificada.", top: "Volver arriba", legalNav: "Información legal", privacyLink: "Política de privacidad", legalLink: "Aviso legal" },
   },
 };

@@ -20,7 +20,8 @@ Run Claude Code and all development commands from this directory. Business contr
 - production formats, six-stage project process and quality/compliance sections
 - separate global-brand and retail/private-label entry points
 - local project-brief generator; form data never leaves the visitor's device
-- dynamic Open Graph metadata and project-specific social preview card
+- trilingual Privacy Policy and Legal Notice pages (`/{locale}/privacy`, `/{locale}/legal`) for the operator 上海捷嘉酒业有限公司, linked from every footer
+- dynamic Open Graph metadata and project-specific social preview card, including page-specific canonical/hreflang for the legal pages
 - Cloudflare Worker-compatible server and static asset output
 
 ## Local development
@@ -58,7 +59,7 @@ Then deploy:
 npm run deploy
 ```
 
-Cloudflare will assign a `*.workers.dev` address. A custom domain can be attached in the Cloudflare dashboard after the first deployment.
+The current configuration deploys directly to the custom domain declared in `wrangler.jsonc`; `workers.dev` and per-deployment preview URLs are disabled.
 
 The deployment configuration is in `wrangler.jsonc`. Version 1.0 uses no D1, R2, KV or paid third-party runtime service.
 
@@ -74,5 +75,5 @@ The deployment configuration is in `wrangler.jsonc`. Version 1.0 uses no D1, R2,
 - confirm the final domain and business contact route
 - replace the local brief download with an approved enquiry destination if required
 - revalidate every public certification, capability and authorization claim
-- add privacy, cookie and legal pages for the actual operating entity and target markets
+- have the published privacy and legal pages (effective 2026-08-20, operator 上海捷嘉酒业有限公司) reviewed by qualified counsel for the actual target markets; they are website policies, not legal advice
 - confirm China hosting/ICP requirements if the site will use a mainland-China origin

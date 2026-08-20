@@ -141,3 +141,109 @@ test("ships the social card and Cloudflare configuration", async () => {
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
   await access(new URL("../app/JJWineSite.tsx", import.meta.url));
 });
+
+// --- Privacy Policy and Legal Notice pages ---
+
+const legalRoutes = [
+  ["/en/privacy", "en", "Privacy Policy", "no user accounts, no login, no analytics or advertising scripts"],
+  ["/en/legal", "en", "Legal Notice", "confirmed for each individual project, product and market"],
+  ["/zh-cn/privacy", "zh-CN", "隐私政策", "不使用任何分析统计或广告脚本"],
+  ["/zh-cn/legal", "zh-CN", "法律声明", "依据当时的现行证据逐一确认"],
+  ["/es/privacy", "es", "Política de privacidad", "no utiliza scripts de analítica ni de publicidad"],
+  ["/es/legal", "es", "Aviso legal", "se confirman para cada proyecto, producto y mercado"],
+];
+
+const localBriefMarkers = {
+  en: "processed entirely on your own device",
+  "zh-CN": "完全在您自己的设备和浏览器中处理",
+  es: "se procesa íntegramente en su propio dispositivo",
+};
+
+for (const [pathname, lang, title, marker] of legalRoutes) {
+  const isPrivacy = pathname.endsWith("/privacy");
+
+  test(`renders ${pathname} with the approved operator facts`, async () => {
+    const response = await render(pathname);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+    const html = await response.text();
+
+    assert.match(html, new RegExp(`<h1>${escape(title)}</h1>`));
+    assert.match(html, new RegExp(escape(marker)));
+    // The exact registered operator name — never an invented English name.
+    assert.match(html, /上海捷嘉酒业有限公司/);
+    // The only contact channel is the visitor's own mail client.
+    assert.match(html, /href="mailto:eddielu@winekee\.com"/);
+
+    if (isPrivacy) {
+      // Privacy policy must state local brief generation and Cloudflare processing.
+      assert.match(html, new RegExp(escape(localBriefMarkers[lang])));
+      assert.match(html, /Cloudflare Workers/);
+      assert.match(html, /PIPL/);
+      assert.match(html, /GDPR|RGPD/);
+    }
+  });
+
+  test(`emits page-specific metadata for ${pathname}`, async () => {
+    const html = await (await render(pathname)).text();
+    assert.match(html, new RegExp(`<html lang="${escape(lang)}"`));
+    assert.match(
+      html,
+      new RegExp(`<link rel="canonical" href="${escape(`https://jjwine.example${pathname}`)}"`),
+    );
+    const page = pathname.split("/").pop();
+    for (const [hreflang, prefix] of [
+      ["en", "/en"],
+      ["zh-CN", "/zh-cn"],
+      ["es", "/es"],
+      ["x-default", "/en"],
+    ]) {
+      assert.match(
+        html,
+        new RegExp(
+          `<link rel="alternate" href="${escape(`https://jjwine.example${prefix}/${page}`)}" hreflang="${escape(hreflang)}"`,
+        ),
+      );
+    }
+    assert.match(html, new RegExp(`property="og:title" content="[^"]*${escape(title)}[^"]*"`));
+    assert.match(html, new RegExp(`property="og:url" content="${escape(`https://jjwine.example${pathname}`)}"`));
+    assert.match(html, /name="twitter:card" content="summary_large_image"/);
+  });
+
+  test(`links ${pathname} back to its locale home and sibling document`, async () => {
+    const html = await (await render(pathname)).text();
+    const locale = pathname.split("/")[1];
+    const sibling = isPrivacy ? "legal" : "privacy";
+    assert.match(html, new RegExp(`<a href="/${escape(locale)}">`));
+    assert.match(html, new RegExp(`href="/${escape(locale)}/${sibling}"`));
+    // Language switch links point at the same document in the other locales.
+    for (const other of ["en", "zh-cn", "es"]) {
+      const page = pathname.split("/").pop();
+      assert.match(html, new RegExp(`href="/${other}/${page}"`));
+    }
+  });
+}
+
+for (const locale of ["en", "zh-cn", "es"]) {
+  test(`home /${locale} footer links to its privacy and legal pages`, async () => {
+    const html = await (await render(`/${locale}`)).text();
+    assert.match(html, new RegExp(`<a href="/${locale}/privacy">`));
+    assert.match(html, new RegExp(`<a href="/${locale}/legal">`));
+  });
+}
+
+test("legal pages introduce no analytics, tracking or external scripts", async () => {
+  for (const [pathname] of legalRoutes) {
+    const html = await (await render(pathname)).text();
+    assert.doesNotMatch(html, /googletagmanager|google-analytics|gtag\(|plausible|umami|hotjar|facebook\.net/i);
+    assert.doesNotMatch(html, /<form/i);
+    const scriptSources = [...html.matchAll(/<script[^>]+src="([^"]+)"/gi)].map((match) => match[1]);
+    for (const source of scriptSources) assert.match(source, /^\/_next\//);
+  }
+});
+
+test("legal pages retain responsive language links and readable footer links", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.legal-topbar \.language-links\s*\{\s*display:\s*flex;/);
+  assert.match(css, /\.legal-footer > a:last-child\s*\{[^}]*font-size:\s*13px;/s);
+});
