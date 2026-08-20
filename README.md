@@ -62,6 +62,13 @@ Cloudflare will assign a `*.workers.dev` address. A custom domain can be attache
 
 The deployment configuration is in `wrangler.jsonc`. Version 1.0 uses no D1, R2, KV or paid third-party runtime service.
 
+## Temporary test deployment
+
+- URL: `https://jjwine.ecomm101.cc`
+- Cloudflare Worker: `jjwine-site`
+- The custom domain is declared in `wrangler.jsonc`.
+- `workers.dev` and per-deployment preview URLs are disabled; this test deployment is reachable only through the custom domain.
+
 ## Before public launch
 
 - confirm the final domain and business contact route
