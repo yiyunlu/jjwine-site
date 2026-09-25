@@ -281,6 +281,10 @@ export function JJWineSite({ locale }: Props) {
             </a>
           ))}
         </div>
+        <div className="footer-legal-links">
+          <a href={`/${locale}/privacy`} onClick={() => setMenuOpen(false)}>{copy.footer.privacyLink}</a>
+          <a href={`/${locale}/legal`} onClick={() => setMenuOpen(false)}>{copy.footer.legalLink}</a>
+        </div>
       </nav>
 
       <section className="hero" id="main-content" tabIndex={-1}>
