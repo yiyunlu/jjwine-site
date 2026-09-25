@@ -245,6 +245,29 @@ for (const locale of ["en", "zh-cn", "es"]) {
   });
 }
 
+// The privacy and legal documents must also be reachable from the mobile menu,
+// not only from the desktop footer. Scoping the assertions to the #mobile-menu
+// subtree means they fail if the links are missing there (not just elsewhere
+// on the page), so they are a real guard rather than a tautology.
+for (const [locale, privacyText, legalText] of [
+  ["en", "Privacy Policy", "Legal Notice"],
+  ["zh-cn", "隐私政策", "法律声明"],
+  ["es", "Política de privacidad", "Aviso legal"],
+]) {
+  test(`home /${locale} mobile menu links to its privacy and legal pages`, async () => {
+    const html = await (await render(`/${locale}`)).text();
+
+    const start = html.indexOf('id="mobile-menu"');
+    assert.notEqual(start, -1, "the mobile menu nav should be server-rendered");
+    const end = html.indexOf("</nav>", start);
+    assert.notEqual(end, -1, "the mobile menu nav should be closed");
+    const menu = html.slice(start, end);
+
+    assert.match(menu, new RegExp(`<a href="/${escape(locale)}/privacy"[^>]*>${escape(privacyText)}</a>`));
+    assert.match(menu, new RegExp(`<a href="/${escape(locale)}/legal"[^>]*>${escape(legalText)}</a>`));
+  });
+}
+
 test("legal pages introduce no analytics, tracking or external scripts", async () => {
   for (const [pathname] of legalRoutes) {
     const html = await (await render(pathname)).text();
