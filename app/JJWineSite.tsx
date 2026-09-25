@@ -239,7 +239,6 @@ export function JJWineSite({ locale }: Props) {
               <a
                 aria-current={item.locale === locale ? "page" : undefined}
                 href={`/${item.locale}`}
-                hrefLang={item.lang}
                 key={item.locale}
                 lang={item.lang}
               >
@@ -273,7 +272,6 @@ export function JJWineSite({ locale }: Props) {
             <a
               aria-current={item.locale === locale ? "page" : undefined}
               href={`/${item.locale}`}
-              hrefLang={item.lang}
               key={item.locale}
               lang={item.lang}
             >

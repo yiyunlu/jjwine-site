@@ -9,7 +9,7 @@ const languageAlternates = { en: "/en", "zh-CN": "/zh-cn", es: "/es", "x-default
 
 // public/og.png's real pixel size; tests/rendered-html.test.mjs asserts the
 // emitted og:image:width/height match the file so the two cannot drift.
-export const ogImage = { url: "/og.png", width: 1731, height: 909, alt: "JJWine" };
+export const ogImage = { url: "/og.png", width: 1200, height: 630, alt: "JJWine" };
 
 /**
  * Locale-specific page metadata. Relative URLs (canonical, alternates, og:url,

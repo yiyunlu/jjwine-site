@@ -155,7 +155,7 @@ export const content: Record<Locale, SiteContent> = {
       details: "标准及其他要求", detailsPlaceholder: "液体、包装、认证、审批或渠道要求",
       download: "下载需求简报", privacy: "本表单不会传输或储存您的信息。",
     },
-    footer: { line: "全球标准，本地执行。", legal: "所有能力与认证均需结合具体项目、产品和经确认的生产场地核实。", top: "返回顶部", legalNav: "法律信息", privacyLink: "隐私政策", legalLink: "法律声明" },
+    footer: { line: "全球标准，本地执行。", legal: "所有能力与认证均需结合具体项目、产品和经确认的生产场地核实。", top: "返回顶部", legalNav: "法律信息", privacyLink: "法律声明", legalLink: "隐私政策" },
   },
   es: {
     localeName: "Español",
