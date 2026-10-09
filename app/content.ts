@@ -3,11 +3,11 @@ export { locales, type Locale } from "./i18n";
 type SiteContent = {
   localeName: string;
   meta: { title: string; description: string };
-  a11y: { skipToContent: string; home: string; primaryNav: string; languageNav: string; mobileNav: string; closeDialog: string };
+  a11y: { skipToContent: string; home: string; primaryNav: string; languageNav: string; mobileNav: string; closeDialog: string; formatTags: string };
   nav: { capabilities: string; process: string; quality: string; partnership: string; start: string; menu: string; close: string };
   hero: { kicker: string; line1: string; emphasis: string; line2: string; copy: string; primary: string; secondary: string; rail: string[] };
   intro: { kicker: string; title: string; body: string; side: string };
-  capabilities: { kicker: string; title: string; body: string; items: Array<{ code: string; title: string; body: string; note: string }> };
+  capabilities: { kicker: string; title: string; body: string; explore: string; items: Array<{ code: string; title: string; body: string; note: string; tagline: string; tags: string[] }> };
   process: { kicker: string; title: string; body: string; steps: Array<{ title: string; body: string }> };
   quality: { kicker: string; title: string; body: string; badge: string; badgeNote: string; pillars: Array<{ title: string; body: string }> };
   partnership: { kicker: string; title: string; brandTitle: string; brandBody: string; brandLink: string; retailTitle: string; retailBody: string; retailLink: string };
@@ -23,7 +23,7 @@ export const content: Record<Locale, SiteContent> = {
       title: "JJWine — China Production, Delivered to Global Standards",
       description: "End-to-end China production solutions for global wine and beverage brands.",
     },
-    a11y: { skipToContent: "Skip to main content", home: "JJWine home", primaryNav: "Primary", languageNav: "Language", mobileNav: "Menu", closeDialog: "Close dialog" },
+    a11y: { skipToContent: "Skip to main content", home: "JJWine home", primaryNav: "Primary", languageNav: "Language", mobileNav: "Menu", closeDialog: "Close dialog", formatTags: "Format tags" },
     nav: { capabilities: "Capabilities", process: "Process", quality: "Quality", partnership: "Partnership", start: "Start a project", menu: "Menu", close: "Close" },
     hero: {
       kicker: "00 / JJWine",
@@ -39,10 +39,11 @@ export const content: Record<Locale, SiteContent> = {
     capabilities: {
       kicker: "02 / Formats", title: "Built around the product—not a fixed line.",
       body: "Format, liquid, channel and project requirements are assessed together before the production route is confirmed.",
+      explore: "Explore",
       items: [
-        { code: "01", title: "Bottle", body: "Still, sparkling and wine-based products across project-appropriate glass formats and closures.", note: "Glass · closures · secondary packaging" },
-        { code: "02", title: "Can", body: "Contemporary formats for sparkling, wine-based and ready-to-drink concepts, subject to product validation.", note: "Compact · portable · channel-ready" },
-        { code: "03", title: "Bag-in-Box", body: "Efficient multi-serve formats for retail and professional channels, with project-specific material review.", note: "Retail · food service · multi-serve" },
+        { code: "01", title: "Bottle", body: "Still, sparkling and wine-based products across project-appropriate glass formats and closures.", note: "Glass · closures · secondary packaging", tagline: "750 ml · 375 ml", tags: ["Glass", "Screwcap / Cork", "Private label"] },
+        { code: "02", title: "Can", body: "Contemporary formats for sparkling, wine-based and ready-to-drink concepts, subject to product validation.", note: "Compact · portable · channel-ready", tagline: "250 ml · 375 ml", tags: ["Aluminium", "Single-serve", "Full wrap"] },
+        { code: "03", title: "Bag-in-Box", body: "Efficient multi-serve formats for retail and professional channels, with project-specific material review.", note: "Retail · food service · multi-serve", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Tap dispense", "Low freight"] },
       ],
     },
     process: {
@@ -91,7 +92,7 @@ export const content: Record<Locale, SiteContent> = {
   "zh-cn": {
     localeName: "简体中文",
     meta: { title: "JJWine — 全球酒饮品牌的中国生产落地伙伴", description: "为全球酒饮品牌提供产品本地化、生产组织、质量治理与合规协调的一站式解决方案。" },
-    a11y: { skipToContent: "跳转到主要内容", home: "JJWine 首页", primaryNav: "主导航", languageNav: "语言选择", mobileNav: "菜单", closeDialog: "关闭对话框" },
+    a11y: { skipToContent: "跳转到主要内容", home: "JJWine 首页", primaryNav: "主导航", languageNav: "语言选择", mobileNav: "菜单", closeDialog: "关闭对话框", formatTags: "包装标签" },
     nav: { capabilities: "生产能力", process: "合作流程", quality: "质量合规", partnership: "合作对象", start: "启动项目", menu: "菜单", close: "关闭" },
     hero: {
       kicker: "00 / JJWine", line1: "全球品牌标准，", emphasis: "在中国", line2: "真正落地。",
@@ -106,10 +107,11 @@ export const content: Record<Locale, SiteContent> = {
     capabilities: {
       kicker: "02 / 形式", title: "围绕产品匹配能力，而不是套用固定产线。",
       body: "我们综合评估产品、液体、渠道和项目要求，再确认具体生产与包装方案。",
+      explore: "了解更多",
       items: [
-        { code: "01", title: "瓶装", body: "覆盖静止、起泡及葡萄酒基产品，按项目匹配玻璃瓶型、封口和外包装。", note: "瓶型 · 封口 · 二级包装" },
-        { code: "02", title: "罐装", body: "适用于起泡、葡萄酒基和即饮产品，具体可行性以产品验证结果为准。", note: "便携 · 现代 · 渠道适配" },
-        { code: "03", title: "盒中袋", body: "面向零售和专业渠道的多容量包装，并按项目审核液袋、纸盒与灌装适配。", note: "零售 · 餐饮 · 多人分享" },
+        { code: "01", title: "瓶装", body: "覆盖静止、起泡及葡萄酒基产品，按项目匹配玻璃瓶型、封口和外包装。", note: "瓶型 · 封口 · 二级包装", tagline: "750 ml · 375 ml", tags: ["玻璃瓶", "螺旋盖 / 橡木塞", "自有品牌"] },
+        { code: "02", title: "罐装", body: "适用于起泡、葡萄酒基和即饮产品，具体可行性以产品验证结果为准。", note: "便携 · 现代 · 渠道适配", tagline: "250 ml · 375 ml", tags: ["铝罐", "单人份", "全包覆印刷"] },
+        { code: "03", title: "盒中袋", body: "面向零售和专业渠道的多容量包装，并按项目审核液袋、纸盒与灌装适配。", note: "零售 · 餐饮 · 多人分享", tagline: "3 L · 5 L · 10 L", tags: ["3–10 升", "龙头出酒", "低运费"] },
       ],
     },
     process: {
@@ -158,7 +160,7 @@ export const content: Record<Locale, SiteContent> = {
   es: {
     localeName: "Español",
     meta: { title: "JJWine — Producción en China conforme a estándares globales", description: "Soluciones integrales de localización, producción, calidad y cumplimiento en China para marcas internacionales de vinos y bebidas." },
-    a11y: { skipToContent: "Saltar al contenido principal", home: "Inicio de JJWine", primaryNav: "Principal", languageNav: "Idioma", mobileNav: "Menú", closeDialog: "Cerrar diálogo" },
+    a11y: { skipToContent: "Saltar al contenido principal", home: "Inicio de JJWine", primaryNav: "Principal", languageNav: "Idioma", mobileNav: "Menú", closeDialog: "Cerrar diálogo", formatTags: "Etiquetas de formato" },
     nav: { capabilities: "Capacidades", process: "Proceso", quality: "Calidad", partnership: "Colaboración", start: "Iniciar proyecto", menu: "Menú", close: "Cerrar" },
     hero: {
       kicker: "00 / JJWine", line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",
@@ -173,10 +175,11 @@ export const content: Record<Locale, SiteContent> = {
     capabilities: {
       kicker: "02 / Formatos", title: "La capacidad se adapta al producto, no al revés.",
       body: "Evaluamos conjuntamente el formato, el líquido, el canal y los requisitos antes de confirmar la ruta de producción.",
+      explore: "Explorar",
       items: [
-        { code: "01", title: "Botella", body: "Vinos tranquilos, espumosos y bebidas a base de vino en formatos de vidrio y cierres adecuados al proyecto.", note: "Vidrio · cierres · embalaje" },
-        { code: "02", title: "Lata", body: "Formatos contemporáneos para conceptos espumosos, a base de vino y listos para beber, sujetos a validación.", note: "Compacto · portátil · para el canal" },
-        { code: "03", title: "Bag-in-Box", body: "Formatos multidosis eficientes para retail y canal profesional, con revisión de materiales por proyecto.", note: "Retail · hostelería · multidosis" },
+        { code: "01", title: "Botella", body: "Vinos tranquilos, espumosos y bebidas a base de vino en formatos de vidrio y cierres adecuados al proyecto.", note: "Vidrio · cierres · embalaje", tagline: "750 ml · 375 ml", tags: ["Vidrio", "Tapón / Corcho", "Marca privada"] },
+        { code: "02", title: "Lata", body: "Formatos contemporáneos para conceptos espumosos, a base de vino y listos para beber, sujetos a validación.", note: "Compacto · portátil · para el canal", tagline: "250 ml · 375 ml", tags: ["Aluminio", "Monodosis", "Impresión total"] },
+        { code: "03", title: "Bag-in-Box", body: "Formatos multidosis eficientes para retail y canal profesional, con revisión de materiales por proyecto.", note: "Retail · hostelería · multidosis", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Grifo", "Bajo flete"] },
       ],
     },
     process: {
