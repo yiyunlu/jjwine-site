@@ -1,6 +1,4 @@
-export const locales = ["en", "zh-cn", "es"] as const;
-
-export type Locale = (typeof locales)[number];
+export { locales, type Locale } from "./i18n";
 
 type SiteContent = {
   localeName: string;

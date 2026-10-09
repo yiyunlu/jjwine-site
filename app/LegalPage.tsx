@@ -1,4 +1,5 @@
 import type { Locale } from "./content";
+import { localeLinks } from "./i18n";
 import {
   CONTACT_EMAIL,
   legalContent,
@@ -7,12 +8,6 @@ import {
 } from "./legal-content";
 
 type Props = { locale: Locale; page: LegalPageKey };
-
-const localeLinks: Array<{ locale: Locale; short: string; lang: string }> = [
-  { locale: "en", short: "EN", lang: "en" },
-  { locale: "zh-cn", short: "中文", lang: "zh-CN" },
-  { locale: "es", short: "ES", lang: "es" },
-];
 
 /** Shared server-rendered layout for the Privacy Policy and Legal Notice pages. */
 export function LegalPage({ locale, page }: Props) {
