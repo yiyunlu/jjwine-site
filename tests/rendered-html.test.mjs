@@ -109,7 +109,7 @@ for (const [pathname, expected, lang, canonicalPath] of [
     const meta = localeMeta[lang];
 
     assert.match(html, new RegExp(`<a class="skip-link" href="#main-content">${escape(meta.skip)}</a>`));
-    assert.match(html, /<section class="hero" id="main-content" tabindex="-1">/);
+    assert.match(html, /<section class="hero[^"]*" id="main-content" tabindex="-1">/);
     assert.match(html, /<button class="menu-button"[^>]*aria-expanded="false"[^>]*aria-controls="mobile-menu"/);
     assert.match(html, /<nav class="mobile-menu[^"]*" id="mobile-menu" aria-label="[^"]+"/);
     assert.match(html, /<nav class="language-links" aria-label="[^"]+"/);

@@ -282,7 +282,7 @@ export function JJWineSite({ locale }: Props) {
         </div>
       </nav>
 
-      <section className="hero" id="main-content" tabIndex={-1}>
+      <section className="hero grid-bg" id="main-content" tabIndex={-1}>
         <div className="pointer-glow" aria-hidden="true" />
         <div className="motion-stage" aria-hidden="true">
           <div className="motion-orbit motion-orbit-a" />
@@ -296,15 +296,15 @@ export function JJWineSite({ locale }: Props) {
           <h1>
             {copy.hero.line1}
             <br />
-            <em>{copy.hero.emphasis}</em> {copy.hero.line2}
+            <span className="grad-word">{copy.hero.emphasis}</span> {copy.hero.line2}
           </h1>
           <p className="hero-copy">{copy.hero.copy}</p>
           <div className="hero-actions">
             <button className="button button-primary" type="button" onClick={openBrief}>
-              {copy.hero.primary} <span aria-hidden="true">↗</span>
+              {copy.hero.primary} <span aria-hidden="true">→</span>
             </button>
-            <a className="text-link" href="#capabilities">
-              {copy.hero.secondary} <span aria-hidden="true">↓</span>
+            <a className="button button-outline" href="#capabilities">
+              {copy.hero.secondary} <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
@@ -319,7 +319,7 @@ export function JJWineSite({ locale }: Props) {
         </div>
       </section>
 
-      <section className="intro-section section-dark">
+      <section className="intro-section section-dark grid-bg">
         <div className="section-index" aria-hidden="true">01</div>
         <div className="intro-grid">
           <div data-reveal>
@@ -362,7 +362,7 @@ export function JJWineSite({ locale }: Props) {
         </div>
       </section>
 
-      <section className="process-section section-dark" id="process">
+      <section className="process-section section-dark grid-bg" id="process">
         <div className="process-sticky">
           <p className="eyebrow">{copy.process.kicker}</p>
           <h2>{copy.process.title}</h2>
@@ -401,7 +401,7 @@ export function JJWineSite({ locale }: Props) {
         </div>
       </section>
 
-      <section className="partnership-section section-dark" id="partnership">
+      <section className="partnership-section section-dark grid-bg" id="partnership">
         <div className="section-head partnership-head" data-reveal>
           <div><p className="eyebrow">{copy.partnership.kicker}</p><h2>{copy.partnership.title}</h2></div>
         </div>

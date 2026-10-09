@@ -26,18 +26,18 @@ export const content: Record<Locale, SiteContent> = {
     a11y: { skipToContent: "Skip to main content", home: "JJWine home", primaryNav: "Primary", languageNav: "Language", mobileNav: "Menu", closeDialog: "Close dialog" },
     nav: { capabilities: "Capabilities", process: "Process", quality: "Quality", partnership: "Partnership", start: "Start a project", menu: "Menu", close: "Close" },
     hero: {
-      kicker: "Independent production partner · China",
+      kicker: "00 / JJWine",
       line1: "Your standards.", emphasis: "Made real", line2: "in China.",
       copy: "JJWine coordinates localization, manufacturing, quality and compliance for global wine and beverage brands.",
       primary: "Start a project", secondary: "Explore capabilities", rail: ["Localize", "Produce", "Assure"],
     },
     intro: {
-      kicker: "The operating idea", title: "One brief. Full-chain execution.",
+      kicker: "01 / Overview", title: "One brief. Full-chain execution.",
       body: "You bring the brand standard. JJWine builds and coordinates the China production path—from product and packaging localization to qualified manufacturing, quality release and delivery.",
       side: "Brand standard in. Reliable execution out.",
     },
     capabilities: {
-      kicker: "Production formats", title: "Built around the product—not a fixed line.",
+      kicker: "02 / Formats", title: "Built around the product—not a fixed line.",
       body: "Format, liquid, channel and project requirements are assessed together before the production route is confirmed.",
       items: [
         { code: "01", title: "Bottle", body: "Still, sparkling and wine-based products across project-appropriate glass formats and closures.", note: "Glass · closures · secondary packaging" },
@@ -46,7 +46,7 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     process: {
-      kicker: "How we work", title: "A controlled path from standard to shelf.",
+      kicker: "03 / Process", title: "A controlled path from standard to shelf.",
       body: "Every project is scoped around the brand owner’s approvals, the target market and the qualified production site.",
       steps: [
         { title: "Align", body: "Brand brief, target channel, liquid, packaging, volume and approval rules." },
@@ -58,7 +58,7 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     quality: {
-      kicker: "Quality + compliance", title: "Quality is project architecture—not a final inspection.",
+      kicker: "04 / Quality", title: "Quality is project architecture—not a final inspection.",
       body: "The site, certification scope, product standard and control plan are confirmed for each project. Public claims stay tied to current evidence and authorization.",
       badge: "FSSC 22000", badgeNote: "Current production partner certification",
       pillars: [
@@ -69,12 +69,12 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     partnership: {
-      kicker: "Two ways to work with us", title: "Built for brand owners and retail operators.",
+      kicker: "05 / Partnership", title: "Built for brand owners and retail operators.",
       brandTitle: "For global brands", brandBody: "Translate global standards into controlled China production with one coordinated project path.", brandLink: "Discuss China production",
       retailTitle: "For retail & private label", retailBody: "Develop channel-relevant products with clear format, quality, scale and delivery requirements.", retailLink: "Develop a retail range",
     },
     contact: {
-      kicker: "Start with the standard", title: "Bring us what you want to make. We’ll map the execution.",
+      kicker: "06 / Brief", title: "Bring us what you want to make. We’ll map the execution.",
       body: "A useful first brief covers the product, target market, format, volume, approval requirements and intended launch timing.",
       button: "Prepare a project brief", note: "Your brief is generated on this device. No project data is uploaded.",
     },
@@ -94,17 +94,17 @@ export const content: Record<Locale, SiteContent> = {
     a11y: { skipToContent: "跳转到主要内容", home: "JJWine 首页", primaryNav: "主导航", languageNav: "语言选择", mobileNav: "菜单", closeDialog: "关闭对话框" },
     nav: { capabilities: "生产能力", process: "合作流程", quality: "质量合规", partnership: "合作对象", start: "启动项目", menu: "菜单", close: "关闭" },
     hero: {
-      kicker: "独立生产合作平台 · 中国", line1: "全球品牌标准，", emphasis: "在中国", line2: "真正落地。",
+      kicker: "00 / JJWine", line1: "全球品牌标准，", emphasis: "在中国", line2: "真正落地。",
       copy: "JJWine 为全球酒饮品牌统筹产品本地化、生产组织、质量治理与合规协调。",
       primary: "启动项目", secondary: "查看生产能力", rail: ["本地化", "生产", "质量保证"],
     },
     intro: {
-      kicker: "我们的业务逻辑", title: "一个需求，全链路承接。",
+      kicker: "01 / 概览", title: "一个需求，全链路承接。",
       body: "您提供品牌标准，JJWine 设计并统筹中国生产路径——从产品与包装本地化，到合格工厂生产、批次放行与交付。",
       side: "输入品牌标准，交付可靠结果。",
     },
     capabilities: {
-      kicker: "生产与包装形式", title: "围绕产品匹配能力，而不是套用固定产线。",
+      kicker: "02 / 形式", title: "围绕产品匹配能力，而不是套用固定产线。",
       body: "我们综合评估产品、液体、渠道和项目要求，再确认具体生产与包装方案。",
       items: [
         { code: "01", title: "瓶装", body: "覆盖静止、起泡及葡萄酒基产品，按项目匹配玻璃瓶型、封口和外包装。", note: "瓶型 · 封口 · 二级包装" },
@@ -113,7 +113,7 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     process: {
-      kicker: "合作方式", title: "从品牌标准到市场交付，全程受控。",
+      kicker: "03 / 流程", title: "从品牌标准到市场交付，全程受控。",
       body: "每个项目都围绕品牌方审批要求、目标市场和经确认的生产场地独立制定。",
       steps: [
         { title: "需求对齐", body: "确认品牌需求、目标渠道、液体、包装、数量和审批规则。" },
@@ -125,7 +125,7 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     quality: {
-      kicker: "质量 + 合规", title: "质量不是最后一道检查，而是项目架构。",
+      kicker: "04 / 质量", title: "质量不是最后一道检查，而是项目架构。",
       body: "每个项目分别确认生产场地、认证范围、产品标准与控制计划；所有公开能力表述均与现行证据和授权绑定。",
       badge: "FSSC 22000", badgeNote: "当前生产合作伙伴认证",
       pillars: [
@@ -136,12 +136,12 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     partnership: {
-      kicker: "两类合作入口", title: "服务海外品牌，也服务大型零售渠道。",
+      kicker: "05 / 合作", title: "服务海外品牌，也服务大型零售渠道。",
       brandTitle: "海外品牌方", brandBody: "把全球品牌标准转化为受控的中国生产路径，并由一个团队统筹项目。", brandLink: "讨论中国生产项目",
       retailTitle: "零售与自有品牌", retailBody: "围绕渠道需求开发产品，明确包装、质量、规模化与交付要求。", retailLink: "开发渠道专供产品",
     },
     contact: {
-      kicker: "从标准开始", title: "告诉我们您想做什么，我们来规划生产路径。",
+      kicker: "06 / 简报", title: "告诉我们您想做什么，我们来规划生产路径。",
       body: "一份有效的初始需求应包含产品、目标市场、包装形式、数量、审批要求与上市时间。",
       button: "生成项目需求简报", note: "简报仅在您的设备上生成，不上传任何项目数据。",
     },
@@ -161,17 +161,17 @@ export const content: Record<Locale, SiteContent> = {
     a11y: { skipToContent: "Saltar al contenido principal", home: "Inicio de JJWine", primaryNav: "Principal", languageNav: "Idioma", mobileNav: "Menú", closeDialog: "Cerrar diálogo" },
     nav: { capabilities: "Capacidades", process: "Proceso", quality: "Calidad", partnership: "Colaboración", start: "Iniciar proyecto", menu: "Menú", close: "Cerrar" },
     hero: {
-      kicker: "Socio independiente de producción · China", line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",
+      kicker: "00 / JJWine", line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",
       copy: "JJWine coordina la localización, la producción, la calidad y el cumplimiento para marcas internacionales de vinos y bebidas.",
       primary: "Iniciar proyecto", secondary: "Ver capacidades", rail: ["Localizar", "Producir", "Asegurar"],
     },
     intro: {
-      kicker: "La idea operativa", title: "Un brief. Ejecución integral.",
+      kicker: "01 / Resumen", title: "Un brief. Ejecución integral.",
       body: "Tú aportas el estándar de marca. JJWine diseña y coordina la ruta de producción en China: localización del producto y el envase, fabricación cualificada, liberación de lotes y entrega.",
       side: "Entra el estándar. Sale una ejecución fiable.",
     },
     capabilities: {
-      kicker: "Formatos de producción", title: "La capacidad se adapta al producto, no al revés.",
+      kicker: "02 / Formatos", title: "La capacidad se adapta al producto, no al revés.",
       body: "Evaluamos conjuntamente el formato, el líquido, el canal y los requisitos antes de confirmar la ruta de producción.",
       items: [
         { code: "01", title: "Botella", body: "Vinos tranquilos, espumosos y bebidas a base de vino en formatos de vidrio y cierres adecuados al proyecto.", note: "Vidrio · cierres · embalaje" },
@@ -180,7 +180,7 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     process: {
-      kicker: "Cómo trabajamos", title: "Una ruta controlada del estándar al mercado.",
+      kicker: "03 / Proceso", title: "Una ruta controlada del estándar al mercado.",
       body: "Cada proyecto se define según las aprobaciones de la marca, el mercado objetivo y la planta de producción cualificada.",
       steps: [
         { title: "Alinear", body: "Brief de marca, canal, líquido, envase, volumen y reglas de aprobación." },
@@ -192,7 +192,7 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     quality: {
-      kicker: "Calidad + cumplimiento", title: "La calidad es la arquitectura del proyecto, no la inspección final.",
+      kicker: "04 / Calidad", title: "La calidad es la arquitectura del proyecto, no la inspección final.",
       body: "Para cada proyecto se confirman la planta, el alcance de certificación, el estándar del producto y el plan de control. Las declaraciones públicas se vinculan a evidencia y autorización vigentes.",
       badge: "FSSC 22000", badgeNote: "Certificación del socio de producción actual",
       pillars: [
@@ -203,12 +203,12 @@ export const content: Record<Locale, SiteContent> = {
       ],
     },
     partnership: {
-      kicker: "Dos formas de colaborar", title: "Para propietarios de marca y operadores de retail.",
+      kicker: "05 / Colaboración", title: "Para propietarios de marca y operadores de retail.",
       brandTitle: "Marcas internacionales", brandBody: "Convierte los estándares globales en producción controlada en China mediante una ruta coordinada.", brandLink: "Hablar de producción en China",
       retailTitle: "Retail y marca privada", retailBody: "Desarrolla productos para el canal con requisitos claros de formato, calidad, escala y entrega.", retailLink: "Desarrollar una gama retail",
     },
     contact: {
-      kicker: "Empezar por el estándar", title: "Cuéntanos qué quieres producir. Trazaremos la ejecución.",
+      kicker: "06 / Brief", title: "Cuéntanos qué quieres producir. Trazaremos la ejecución.",
       body: "Un primer brief útil incluye producto, mercado, formato, volumen, requisitos de aprobación y fecha objetivo.",
       button: "Preparar brief de proyecto", note: "El brief se genera en tu dispositivo. No se carga ningún dato del proyecto.",
     },
