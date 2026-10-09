@@ -63,6 +63,12 @@ The current configuration deploys directly to the custom domain declared in `wra
 
 The deployment configuration is in `wrangler.jsonc`. Version 1.0 uses no D1, R2, KV or paid third-party runtime service.
 
+### Automatic test deploys (GitHub Actions)
+
+Every push to `main` (docs-only changes excluded) and every manual **Run workflow** runs `.github/workflows/deploy-test.yml`, which lints, tests, builds and runs `wrangler deploy --config wrangler.jsonc` to the **test site only** (`https://jjwine.ecomm101.cc`). A guard step fails the job if `wrangler.jsonc` ever targets any other domain; production `www.jiawine.com` is never deployed from this repo.
+
+Required repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Roll back with `npx wrangler rollback --config wrangler.jsonc`. Details (token permissions, rollback, pausing): `docs/ops/自动部署-测试站.md`.
+
 ## Temporary test deployment
 
 - URL: `https://jjwine.ecomm101.cc`

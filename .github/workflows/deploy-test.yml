@@ -1,0 +1,102 @@
+# Auto-deploy the TEST site only: Worker `jjwine-site` -> https://jjwine.ecomm101.cc
+#
+# Production (www.jiawine.com) is hosted by company IT and must NEVER be deployed
+# from this repository. The guard step below fails the job if wrangler.jsonc ever
+# references any domain other than the test custom domain.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   CLOUDFLARE_API_TOKEN   API token (Workers Scripts:Edit + Zone ecomm101.cc Workers Routes:Edit)
+#   CLOUDFLARE_ACCOUNT_ID  Cloudflare account id that owns Worker `jjwine-site`
+# See docs/ops/自动部署-测试站.md.
+name: Deploy test site (jjwine.ecomm101.cc)
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - "CLAUDE.md"
+      - ".openai/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-test-jjwine-site
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build, test and wrangler deploy (test site)
+    # Only the canonical repo, only main (also for manual dispatch).
+    if: github.repository == 'yiyunlu/jjwine-site' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: test
+      url: https://jjwine.ecomm101.cc
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Guard - test domain only, never production
+        run: |
+          set -euo pipefail
+          if grep -Eiq 'jiawine' wrangler.jsonc; then
+            echo "::error::wrangler.jsonc references jiawine (production). This pipeline deploys the TEST site only."
+            exit 1
+          fi
+          if ! grep -Eq '"name"[[:space:]]*:[[:space:]]*"jjwine-site"' wrangler.jsonc; then
+            echo "::error::Worker name in wrangler.jsonc is not jjwine-site."
+            exit 1
+          fi
+          patterns=$(grep -Eo '"pattern"[[:space:]]*:[[:space:]]*"[^"]*"' wrangler.jsonc | sed -E 's/.*"([^"]*)"$/\1/')
+          echo "Route patterns: ${patterns:-<none>}"
+          for p in $patterns; do
+            if [ "$p" != "jjwine.ecomm101.cc" ]; then
+              echo "::error::Unexpected route pattern '$p'. Only jjwine.ecomm101.cc is allowed."
+              exit 1
+            fi
+          done
+
+      - name: Check required secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          missing=0
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || { echo "::error::Missing repo secret CLOUDFLARE_API_TOKEN"; missing=1; }
+          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || { echo "::error::Missing repo secret CLOUDFLARE_ACCOUNT_ID"; missing=1; }
+          exit $missing
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # `npm test` runs `npm run build` first, so dist/ is ready for deploy.
+      - run: npm test
+
+      - name: wrangler deploy (test site)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_SEND_METRICS: "false"
+        run: npx wrangler deploy --config wrangler.jsonc --message "GitHub Actions ${GITHUB_SHA::7} run ${GITHUB_RUN_ID}"
+
+      - name: Smoke check
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' https://jjwine.ecomm101.cc/ || true)
+            echo "attempt $i: HTTP $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 10
+          done
+          echo "::error::https://jjwine.ecomm101.cc/ did not return 200"
+          exit 1
