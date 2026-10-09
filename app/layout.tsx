@@ -19,8 +19,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
 
-  // Locale-specific title, description, alternates, Open Graph and Twitter
-  // metadata come from each page via app/site-metadata.ts.
   return {
     metadataBase: new URL(origin),
     title: { default: "JJWine", template: "%s" },

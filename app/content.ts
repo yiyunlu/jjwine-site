@@ -13,7 +13,7 @@ type SiteContent = {
   quality: { kicker: string; title: string; body: string; badge: string; badgeNote: string; pillars: Array<{ title: string; body: string }> };
   partnership: { kicker: string; title: string; brandTitle: string; brandBody: string; brandLink: string; retailTitle: string; retailBody: string; retailLink: string };
   contact: { kicker: string; title: string; body: string; button: string; note: string };
-  brief: { title: string; intro: string; company: string; companyPlaceholder: string; market: string; marketPlaceholder: string; product: string; productPlaceholder: string; format: string; formatPlaceholder: string; volume: string; volumePlaceholder: string; timing: string; timingPlaceholder: string; details: string; detailsPlaceholder: string; download: string; privacy: string };
+  brief: { title: string; intro: string; company: string; companyPlaceholder: string; market: string; marketPlaceholder: string; product: string; productPlaceholder: string; format: string; formatPlaceholder: string; volume: string; volumePlaceholder: string; timing: string; timingPlaceholder: string; details: string; detailsPlaceholder: string; download: string; privacy: string; fileHeading: string; fileName: string };
   footer: { line: string; legal: string; top: string; legalNav: string; privacyLink: string; legalLink: string };
 };
 
@@ -88,6 +88,7 @@ export const content: Record<Locale, SiteContent> = {
       volume: "Initial volume", volumePlaceholder: "Estimated first run", timing: "Target timing", timingPlaceholder: "Desired launch window",
       details: "Standards and requirements", detailsPlaceholder: "Liquid, packaging, certification, approval or channel requirements",
       download: "Download brief", privacy: "This form does not transmit or store your information.",
+      fileHeading: "JJWINE — PROJECT BRIEF", fileName: "jjwine-project-brief.txt",
     },
     footer: { line: "Global standards. Local execution.", legal: "Capabilities and certifications are confirmed against each project, product and qualified production site.", top: "Back to top", legalNav: "Legal", privacyLink: "Privacy Policy", legalLink: "Legal Notice" },
   },
@@ -157,6 +158,7 @@ export const content: Record<Locale, SiteContent> = {
       volume: "首批数量", volumePlaceholder: "预计首次生产数量", timing: "目标时间", timingPlaceholder: "期望上市窗口",
       details: "标准及其他要求", detailsPlaceholder: "液体、包装、认证、审批或渠道要求",
       download: "下载需求简报", privacy: "本表单不会传输或储存您的信息。",
+      fileHeading: "JJWINE — 项目需求简报", fileName: "jjwine-项目需求简报.txt",
     },
     footer: { line: "全球标准，本地执行。", legal: "所有能力与认证均需结合具体项目、产品和经确认的生产场地核实。", top: "返回顶部", legalNav: "法律信息", privacyLink: "隐私政策", legalLink: "法律声明" },
   },
@@ -226,7 +228,81 @@ export const content: Record<Locale, SiteContent> = {
       volume: "Volumen inicial", volumePlaceholder: "Primera producción estimada", timing: "Fecha objetivo", timingPlaceholder: "Ventana de lanzamiento",
       details: "Estándares y requisitos", detailsPlaceholder: "Líquido, envase, certificación, aprobación o canal",
       download: "Descargar brief", privacy: "Este formulario no transmite ni almacena tu información.",
+      fileHeading: "JJWINE — BRIEF DE PROYECTO", fileName: "jjwine-brief-proyecto.txt",
     },
     footer: { line: "Estándares globales. Ejecución local.", legal: "Las capacidades y certificaciones se confirman para cada proyecto, producto y planta cualificada.", top: "Volver arriba", legalNav: "Información legal", privacyLink: "Política de privacidad", legalLink: "Aviso legal" },
+  },
+  fr: {
+    localeName: "Français",
+    meta: {
+      title: "JJWine — Production en Chine, livrée selon les standards internationaux",
+      description: "Solutions complètes de localisation, production, qualité et conformité en Chine pour les marques internationales de vins et boissons.",
+    },
+    a11y: { skipToContent: "Aller au contenu principal", home: "Accueil JJWine", primaryNav: "Principal", languageNav: "Langue", mobileNav: "Menu", closeDialog: "Fermer la boîte de dialogue", formatTags: "Étiquettes de format", sectionNav: "Navigation des sections" },
+    nav: { capabilities: "Capacités", process: "Processus", quality: "Qualité", partnership: "Partenariat", start: "Démarrer un projet", menu: "Menu", close: "Fermer" },
+    sectionRail: { top: "Accueil", capabilities: "Formats", process: "Processus", quality: "Qualité", partnership: "Partenaires", contact: "Brief" },
+    hero: {
+      kicker: "00 / JJWine", line1: "Vos standards.", emphasis: "Concrétisés", line2: "en Chine.",
+      copy: "JJWine coordonne la localisation, la production, la qualité et la conformité pour les marques internationales de vins et boissons.",
+      primary: "Démarrer un projet", secondary: "Découvrir nos capacités", rail: ["Localiser", "Produire", "Garantir"],
+    },
+    intro: {
+      kicker: "01 / Aperçu", title: "Un brief. Une exécution intégrale.",
+      body: "Vous apportez le standard de marque. JJWine conçoit et coordonne le parcours de production en Chine : localisation du produit et de l'emballage, fabrication qualifiée, libération des lots et livraison.",
+      side: "Le standard entre. L'exécution fiable sort.",
+    },
+    capabilities: {
+      kicker: "02 / Formats", title: "La capacité s'adapte au produit, pas l'inverse.",
+      body: "Nous évaluons conjointement le format, le liquide, le circuit et les exigences avant de confirmer la route de production.",
+      explore: "Explorer",
+      items: [
+        { code: "01", title: "Bouteille", body: "Vins tranquilles, effervescents et boissons à base de vin dans des formats de verre et fermetures adaptés au projet.", note: "Verre · fermetures · emballage", tagline: "750 ml · 375 ml", tags: ["Verre", "Bouchon / Liège", "Marque privée"] },
+        { code: "02", title: "Canette", body: "Formats contemporains pour les concepts effervescents, à base de vin et prêts à boire, sous réserve de validation.", note: "Compact · portable · adapté au circuit", tagline: "250 ml · 375 ml", tags: ["Aluminium", "Portion individuelle", "Impression totale"] },
+        { code: "03", title: "Bag-in-Box", body: "Formats multidoses efficaces pour la distribution et la restauration, avec revue des matériaux par projet.", note: "Distribution · restauration · multidoses", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Robinet", "Fret réduit"] },
+      ],
+    },
+    process: {
+      kicker: "03 / Processus", title: "Un parcours maîtrisé du standard au marché.",
+      body: "Chaque projet est défini selon les validations de la marque, le marché cible et le site de production qualifié.",
+      steps: [
+        { title: "Aligner", body: "Brief de marque, circuit, liquide, emballage, volume et règles de validation." },
+        { title: "Localiser", body: "Convertir les spécifications globales en un plan produit et matériaux pour la Chine." },
+        { title: "Valider", body: "Échantillons, revue technique, maquettes et vérifications de conformité du projet." },
+        { title: "Produire", body: "Fabrication coordonnée sur le site de production confirmé." },
+        { title: "Libérer", body: "Contrôles en cours de production, analyses de lot, documentation et traçabilité." },
+        { title: "Livrer", body: "Coordination du stockage et de la livraison pour le circuit convenu." },
+      ],
+    },
+    quality: {
+      kicker: "04 / Qualité", title: "La qualité est l'architecture du projet, pas l'inspection finale.",
+      body: "Pour chaque projet, le site, le périmètre de certification, le standard produit et le plan de contrôle sont confirmés. Les déclarations publiques sont liées aux preuves et autorisations en vigueur.",
+      badge: "FSSC 22000", badgeNote: "Certification du partenaire de production actuel",
+      pillars: [
+        { title: "Qualification", body: "Capacité et périmètre de certification vérifiés par rapport au projet." },
+        { title: "Contrôle de marque", body: "Spécifications, échantillons, maquettes et modifications avec validations définies." },
+        { title: "Libération", body: "Analyses, documentation, échantillons de retenue et traçabilité par projet." },
+        { title: "Prêt pour l'audit", body: "Échange structuré de preuves et revue qualité avec les équipes concernées." },
+      ],
+    },
+    partnership: {
+      kicker: "05 / Partenariat", title: "Pour les propriétaires de marques et les opérateurs de distribution.",
+      brandTitle: "Marques internationales", brandBody: "Transformez vos standards globaux en production contrôlée en Chine via un parcours coordonné.", brandLink: "Discuter de la production en Chine",
+      retailTitle: "Distribution et marque propre", retailBody: "Développez des produits adaptés au circuit avec des exigences claires de format, qualité, échelle et livraison.", retailLink: "Développer une gamme distribution",
+    },
+    contact: {
+      kicker: "06 / Brief", title: "Dites-nous ce que vous voulez produire. Nous tracerons l'exécution.",
+      body: "Un premier brief utile inclut le produit, le marché, le format, le volume, les exigences de validation et la date cible.",
+      button: "Préparer un brief de projet", note: "Le brief est généré sur votre appareil. Aucune donnée de projet n'est transmise.",
+    },
+    brief: {
+      title: "Brief de projet", intro: "Créez un brief structuré à partager avec votre contact JJWine.",
+      company: "Entreprise", companyPlaceholder: "Marque ou distributeur", market: "Marché cible", marketPlaceholder: "Pays, région ou circuit",
+      product: "Produit", productPlaceholder: "Vin, effervescent, RTD…", format: "Format", formatPlaceholder: "Bouteille, canette, BIB…",
+      volume: "Volume initial", volumePlaceholder: "Première production estimée", timing: "Date cible", timingPlaceholder: "Fenêtre de lancement",
+      details: "Standards et exigences", detailsPlaceholder: "Liquide, emballage, certification, validation ou circuit",
+      download: "Télécharger le brief", privacy: "Ce formulaire ne transmet ni ne stocke vos informations.",
+      fileHeading: "JJWINE — BRIEF DE PROJET", fileName: "jjwine-brief-projet.txt",
+    },
+    footer: { line: "Standards globaux. Exécution locale.", legal: "Les capacités et certifications sont confirmées pour chaque projet, produit et site qualifié.", top: "Retour en haut", legalNav: "Informations légales", privacyLink: "Politique de confidentialité", legalLink: "Mentions légales" },
   },
 };

@@ -36,6 +36,11 @@ const localeMeta = {
     ogLocale: "es_ES",
     skip: "Saltar al contenido principal",
   },
+  fr: {
+    title: "JJWine — Production en Chine, livrée selon les standards internationaux",
+    ogLocale: "fr_FR",
+    skip: "Aller au contenu principal",
+  },
 };
 
 for (const [pathname, expected, lang, canonicalPath] of [
@@ -43,6 +48,7 @@ for (const [pathname, expected, lang, canonicalPath] of [
   ["/en", "One brief. Full-chain execution.", "en", "/en"],
   ["/zh-cn", "一个需求，全链路承接。", "zh-CN", "/zh-cn"],
   ["/es", "Un brief. Ejecución integral.", "es", "/es"],
+  ["/fr", "Un brief. Une exécution intégrale.", "fr", "/fr"],
 ]) {
   test(`renders ${pathname}`, async () => {
     const response = await render(pathname);
@@ -69,6 +75,7 @@ for (const [pathname, expected, lang, canonicalPath] of [
       ["en", "/en"],
       ["zh-CN", "/zh-cn"],
       ["es", "/es"],
+      ["fr", "/fr"],
       ["x-default", "/en"],
     ]) {
       assert.match(
@@ -117,6 +124,7 @@ for (const [pathname, expected, lang, canonicalPath] of [
     // (case-insensitive: the SSR serializer emits React's camelCase hrefLang,
     // which HTML parses identically to hreflang)
     assert.match(html, /<a[^>]*href="\/zh-cn"[^>]*hreflang="zh-CN"[^>]*lang="zh-CN"/i);
+    assert.match(html, /<a[^>]*href="\/fr"[^>]*hreflang="fr"[^>]*lang="fr"/i);
     // The brief dialog only mounts on demand; it must not be server-rendered.
     assert.doesNotMatch(html, /role="dialog"/);
   });
@@ -126,6 +134,7 @@ for (const [pathname, productionCopy, certificationCopy, obsoleteCopy] of [
   ["/en", "Coordinated manufacturing at the confirmed production site.", "Current production partner certification", "qualified production partners"],
   ["/zh-cn", "在经确认的生产场地组织量产。", "当前生产合作伙伴认证", "核心生产合作伙伴认证"],
   ["/es", "Fabricación coordinada en la planta de producción confirmada.", "Certificación del socio de producción actual", "socios de producción cualificados"],
+  ["/fr", "Fabrication coordonnée sur le site de production confirmé.", "Certification du partenaire de production actuel", "partenaires de production qualifiés"],
 ]) {
   test(`does not imply multiple current production partners on ${pathname}`, async () => {
     const html = await (await render(pathname)).text();
@@ -164,12 +173,15 @@ const legalRoutes = [
   ["/zh-cn/legal", "zh-CN", "法律声明", "依据当时的现行证据逐一确认"],
   ["/es/privacy", "es", "Política de privacidad", "no utiliza scripts de analítica ni de publicidad"],
   ["/es/legal", "es", "Aviso legal", "se confirman para cada proyecto, producto y mercado"],
+  ["/fr/privacy", "fr", "Politique de confidentialité", "ne dispose pas de comptes utilisateurs ni de connexion"],
+  ["/fr/legal", "fr", "Mentions légales", "sur la base des preuves en vigueur à ce moment"],
 ];
 
 const localBriefMarkers = {
   en: "processed entirely on your own device",
   "zh-CN": "完全在您自己的设备和浏览器中处理",
   es: "se procesa íntegramente en su propio dispositivo",
+  fr: "traité entièrement sur votre propre appareil",
 };
 
 for (const [pathname, lang, title, marker] of legalRoutes) {
@@ -209,6 +221,7 @@ for (const [pathname, lang, title, marker] of legalRoutes) {
       ["en", "/en"],
       ["zh-CN", "/zh-cn"],
       ["es", "/es"],
+      ["fr", "/fr"],
       ["x-default", "/en"],
     ]) {
       assert.match(
@@ -230,14 +243,14 @@ for (const [pathname, lang, title, marker] of legalRoutes) {
     assert.match(html, new RegExp(`<a href="/${escape(locale)}">`));
     assert.match(html, new RegExp(`href="/${escape(locale)}/${sibling}"`));
     // Language switch links point at the same document in the other locales.
-    for (const other of ["en", "zh-cn", "es"]) {
+    for (const other of ["en", "zh-cn", "es", "fr"]) {
       const page = pathname.split("/").pop();
       assert.match(html, new RegExp(`href="/${other}/${page}"`));
     }
   });
 }
 
-for (const locale of ["en", "zh-cn", "es"]) {
+for (const locale of ["en", "zh-cn", "es", "fr"]) {
   test(`home /${locale} footer links to its privacy and legal pages`, async () => {
     const html = await (await render(`/${locale}`)).text();
     assert.match(html, new RegExp(`<a href="/${locale}/privacy">`));
@@ -253,6 +266,7 @@ for (const [locale, privacyText, legalText] of [
   ["en", "Privacy Policy", "Legal Notice"],
   ["zh-cn", "隐私政策", "法律声明"],
   ["es", "Política de privacidad", "Aviso legal"],
+  ["fr", "Politique de confidentialité", "Mentions légales"],
 ]) {
   test(`home /${locale} mobile menu links to its privacy and legal pages`, async () => {
     const html = await (await render(`/${locale}`)).text();

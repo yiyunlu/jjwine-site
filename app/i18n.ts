@@ -28,10 +28,11 @@ export const LOCALE_CONFIG: readonly LocaleConfig[] = [
   { pathSegment: "en", htmlLang: "en", hreflang: "en", ogLocale: "en_US", switcherLabel: "EN" },
   { pathSegment: "zh-cn", htmlLang: "zh-CN", hreflang: "zh-CN", ogLocale: "zh_CN", switcherLabel: "中文" },
   { pathSegment: "es", htmlLang: "es", hreflang: "es", ogLocale: "es_ES", switcherLabel: "ES" },
+  { pathSegment: "fr", htmlLang: "fr", hreflang: "fr", ogLocale: "fr_FR", switcherLabel: "FR" },
 ] as const;
 
 /** All supported locale path segments */
-export const locales = LOCALE_CONFIG.map((l) => l.pathSegment) as unknown as readonly ["en", "zh-cn", "es"];
+export const locales = LOCALE_CONFIG.map((l) => l.pathSegment) as unknown as readonly ["en", "zh-cn", "es", "fr"];
 
 export type Locale = (typeof locales)[number];
 
@@ -84,4 +85,13 @@ export function resolveLang(pathname: string): string {
     }
   }
   return localeConfigByPath[DEFAULT_LOCALE].htmlLang;
+}
+
+/**
+ * Get Open Graph alternate locales (all except the current one).
+ */
+export function getOgAlternateLocales(currentLocale: Locale): string[] {
+  return LOCALE_CONFIG
+    .filter((config) => config.pathSegment !== currentLocale)
+    .map((config) => config.ogLocale);
 }
