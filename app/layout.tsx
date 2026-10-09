@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { resolveLang } from "./i18n";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,12 +22,6 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
   };
-}
-
-function resolveLang(pathname: string): string {
-  if (pathname === "/zh-cn" || pathname.startsWith("/zh-cn/")) return "zh-CN";
-  if (pathname === "/es" || pathname.startsWith("/es/")) return "es";
-  return "en";
 }
 
 export default async function RootLayout({

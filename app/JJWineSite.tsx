@@ -3,14 +3,9 @@
 import type { CSSProperties, FormEvent, MouseEvent, PointerEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import { content, type Locale } from "./content";
+import { localeLinks } from "./i18n";
 
 type Props = { locale: Locale };
-
-const localeLinks: Array<{ locale: Locale; short: string; lang: string }> = [
-  { locale: "en", short: "EN", lang: "en" },
-  { locale: "zh-cn", short: "中文", lang: "zh-CN" },
-  { locale: "es", short: "ES", lang: "es" },
-];
 
 export function JJWineSite({ locale }: Props) {
   const copy = content[locale];

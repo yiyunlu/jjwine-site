@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { content, type Locale } from "./content";
+import { localePaths, openGraphLocales, languageAlternates, LOCALE_CONFIG, DEFAULT_LOCALE } from "./i18n";
 import { legalContent, type LegalPageKey } from "./legal-content";
 
-const localePaths: Record<Locale, string> = { en: "/en", "zh-cn": "/zh-cn", es: "/es" };
-const openGraphLocales: Record<Locale, string> = { en: "en_US", "zh-cn": "zh_CN", es: "es_ES" };
-
-const languageAlternates = { en: "/en", "zh-CN": "/zh-cn", es: "/es", "x-default": "/en" };
+function legalPageAlternates(page: LegalPageKey): Record<string, string> {
+  const alternates: Record<string, string> = {};
+  for (const config of LOCALE_CONFIG) {
+    alternates[config.hreflang] = `/${config.pathSegment}/${page}`;
+  }
+  alternates["x-default"] = `/${DEFAULT_LOCALE}/${page}`;
+  return alternates;
+}
 
 // public/og.png's real pixel size; tests/rendered-html.test.mjs asserts the
 // emitted og:image:width/height match the file so the two cannot drift.
@@ -50,12 +55,7 @@ export function legalPageMetadata(locale: Locale, page: LegalPageKey): Metadata 
     description,
     alternates: {
       canonical: path,
-      languages: {
-        en: `/en/${page}`,
-        "zh-CN": `/zh-cn/${page}`,
-        es: `/es/${page}`,
-        "x-default": `/en/${page}`,
-      },
+      languages: legalPageAlternates(page),
     },
     openGraph: {
       title,
