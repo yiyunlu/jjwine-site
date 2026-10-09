@@ -34,8 +34,6 @@ export function JJWineSite({ locale }: Props) {
   const briefTriggerRef = useRef<HTMLElement | null>(null);
 
   const openBrief = (event: MouseEvent<HTMLElement>) => {
-    // Use the actual control rather than document.activeElement: Safari does
-    // not consistently focus buttons when they are clicked with a pointer.
     briefTriggerRef.current = event.currentTarget;
     setMenuOpen(false);
     setBriefOpen(true);
@@ -45,8 +43,6 @@ export function JJWineSite({ locale }: Props) {
     const trigger = briefTriggerRef.current;
     briefTriggerRef.current = null;
     setBriefOpen(false);
-    // Defer until React unmounts the dialog and its effect releases `inert`
-    // from the page behind it.
     window.setTimeout(() => { if (trigger?.isConnected) trigger.focus(); }, 0);
   };
 
@@ -91,8 +87,6 @@ export function JJWineSite({ locale }: Props) {
     };
   }, [locale]);
 
-  // While the mobile menu is open: keep keyboard focus in the menu/toggle,
-  // close on Escape, and make the covered page content inert.
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (event: KeyboardEvent) => {
@@ -145,9 +139,6 @@ export function JJWineSite({ locale }: Props) {
     };
   }, [menuOpen]);
 
-  // While the brief dialog is open: move focus in, trap Tab inside it,
-  // close on Escape, and lock background scrolling. Focus returns to the
-  // trigger via closeBrief.
   useEffect(() => {
     if (!briefOpen) return;
     closeButtonRef.current?.focus();
@@ -190,8 +181,6 @@ export function JJWineSite({ locale }: Props) {
     };
   }, [briefOpen]);
 
-  // A single shared scroll lock avoids competing cleanup effects if UI state
-  // changes quickly (for example, opening the brief while the menu is open).
   useEffect(() => {
     if (!menuOpen && !briefOpen) return;
     const previousOverflow = document.body.style.overflow;
@@ -231,7 +220,7 @@ export function JJWineSite({ locale }: Props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const lines = [
-      "JJWINE — PROJECT BRIEF",
+      copy.brief.fileHeading,
       "",
       `${copy.brief.company}: ${data.get("company") ?? ""}`,
       `${copy.brief.market}: ${data.get("market") ?? ""}`,
@@ -247,7 +236,7 @@ export function JJWineSite({ locale }: Props) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "jjwine-project-brief.txt";
+    anchor.download = copy.brief.fileName;
     anchor.click();
     URL.revokeObjectURL(url);
   };

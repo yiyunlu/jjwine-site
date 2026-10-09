@@ -28,6 +28,7 @@ const locales = [
   { pathname: "/en", lang: "en", label: "Menu" },
   { pathname: "/zh-cn", lang: "zh-CN", label: "菜单" },
   { pathname: "/es", lang: "es", label: "Menú" },
+  { pathname: "/fr", lang: "fr", label: "Menu" },
 ];
 
 // The four in-page destinations the mobile menu offers.
@@ -114,9 +115,7 @@ for (const { pathname, lang, label } of locales) {
   });
 }
 
-test("mobile menu labels are read from the rendered HTML and differ across locales", async () => {
-  const labelsByRoute = new Map();
-
+test("mobile menu labels are read from the rendered HTML and match their locale's content", async () => {
   for (const { pathname, label } of locales) {
     const html = await (await render(pathname)).text();
     const menu = extractMobileMenu(html);
@@ -126,15 +125,12 @@ test("mobile menu labels are read from the rendered HTML and differ across local
     assert.ok(menuTag, `expected an opening <nav> tag on ${pathname}`);
     const renderedLabel = getAttr(menuTag, "aria-label");
     assert.ok(renderedLabel, `expected nav#mobile-menu to carry an aria-label on ${pathname}`);
-    labelsByRoute.set(pathname, renderedLabel);
 
-    // ...and the rendered value is this locale's own copy, not another's.
-    assert.equal(renderedLabel, label);
+    // The rendered value must match this locale's own expected copy.
+    // Note: some words (like "Menu" in English and French) may be identical
+    // across languages, which is linguistically correct.
+    assert.equal(renderedLabel, label, `expected ${pathname} to render label "${label}"`);
   }
-
-  // A shared label would mean untranslated copy leaking between locales.
-  const renderedLabels = [...labelsByRoute.values()];
-  assert.equal(new Set(renderedLabels).size, renderedLabels.length);
 });
 
 test("mobile menu links are server-rendered, not injected at runtime", async () => {

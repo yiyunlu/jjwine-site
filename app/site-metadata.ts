@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { content, type Locale } from "./content";
-import { localePaths, openGraphLocales, languageAlternates, LOCALE_CONFIG, DEFAULT_LOCALE } from "./i18n";
+import { localePaths, openGraphLocales, languageAlternates, LOCALE_CONFIG, DEFAULT_LOCALE, getOgAlternateLocales } from "./i18n";
 import { legalContent, type LegalPageKey } from "./legal-content";
 
 function legalPageAlternates(page: LegalPageKey): Record<string, string> {
@@ -35,7 +35,7 @@ export function localeMetadata(locale: Locale): Metadata {
       siteName: "JJWine",
       type: "website",
       locale: openGraphLocales[locale],
-      alternateLocale: Object.values(openGraphLocales).filter((item) => item !== openGraphLocales[locale]),
+      alternateLocale: getOgAlternateLocales(locale),
       images: [ogImage],
     },
     twitter: { card: "summary_large_image", title, description, images: [ogImage.url] },
@@ -50,6 +50,7 @@ export function localeMetadata(locale: Locale): Metadata {
 export function legalPageMetadata(locale: Locale, page: LegalPageKey): Metadata {
   const { metaTitle: title, metaDescription: description } = legalContent[locale][page];
   const path = `${localePaths[locale]}/${page}`;
+
   return {
     title,
     description,
@@ -64,7 +65,7 @@ export function legalPageMetadata(locale: Locale, page: LegalPageKey): Metadata 
       siteName: "JJWine",
       type: "website",
       locale: openGraphLocales[locale],
-      alternateLocale: Object.values(openGraphLocales).filter((item) => item !== openGraphLocales[locale]),
+      alternateLocale: getOgAlternateLocales(locale),
       images: [ogImage],
     },
     twitter: { card: "summary_large_image", title, description, images: [ogImage.url] },

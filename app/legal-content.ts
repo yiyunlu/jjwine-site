@@ -1,4 +1,4 @@
-import type { Locale } from "./content";
+import type { Locale } from "./i18n";
 
 /**
  * Content for the Privacy Policy and Legal Notice pages.
@@ -68,6 +68,13 @@ export const legalUi: Record<Locale, LegalUiStrings> = {
     contactHeading: "Contacto",
     contactLine: "Las consultas de privacidad o legales pueden dirigirse a 上海捷嘉酒业有限公司 en",
   },
+  fr: {
+    backToHome: "Retour à l'accueil JJWine",
+    languageNav: "Langue",
+    otherDocument: { privacy: "Politique de confidentialité", legal: "Mentions légales" },
+    contactHeading: "Contact",
+    contactLine: "Les questions relatives à la confidentialité ou aux mentions légales peuvent être adressées à 上海捷嘉酒业有限公司 à",
+  },
 };
 
 export const legalContent: Record<Locale, Record<LegalPageKey, LegalDocument>> = {
@@ -85,7 +92,7 @@ export const legalContent: Record<Locale, Record<LegalPageKey, LegalDocument>> =
           heading: "1. Operator and scope",
           paragraphs: [
             "This website is operated by 上海捷嘉酒业有限公司, referred to on this site as “JJWine” or “the operator”. The Chinese registered name above is the authoritative operator name used on this website; this policy does not state a separate English legal name.",
-            "This policy covers this public website (the English, Simplified Chinese and Spanish pages served under /en, /zh-cn and /es) and email correspondence used to respond to an inquiry or manage a potential business relationship, unless a more specific notice or agreement supplements it. Contractual relationships may be governed by additional notices and terms.",
+            "This policy covers this public website (the English, Simplified Chinese, Spanish and French pages served under /en, /zh-cn, /es and /fr) and email correspondence used to respond to an inquiry or manage a potential business relationship, unless a more specific notice or agreement supplements it. Contractual relationships may be governed by additional notices and terms.",
           ],
         },
         {
@@ -231,7 +238,7 @@ export const legalContent: Record<Locale, Record<LegalPageKey, LegalDocument>> =
           heading: "一、运营者与适用范围",
           paragraphs: [
             "本网站由上海捷嘉酒业有限公司运营（在本网站中称为“JJWine”或“运营者”）。本网站以该中文注册名称作为运营者名称，不另行列示英文法定名称。",
-            "本政策适用于本公开网站（/en、/zh-cn、/es 下的英文、简体中文和西班牙语页面），以及为回复咨询或管理潜在业务关系而进行的邮件往来；如有更具体的告知或协议，则由其补充本政策。合同关系还可能适用其他告知与条款。",
+            "本政策适用于本公开网站（/en、/zh-cn、/es、/fr 下的英文、简体中文、西班牙语和法语页面），以及为回复咨询或管理潜在业务关系而进行的邮件往来；如有更具体的告知或协议，则由其补充本政策。合同关系还可能适用其他告知与条款。",
           ],
         },
         {
@@ -377,7 +384,7 @@ export const legalContent: Record<Locale, Record<LegalPageKey, LegalDocument>> =
           heading: "1. Operador y ámbito de aplicación",
           paragraphs: [
             "Este sitio web es operado por 上海捷嘉酒业有限公司, denominada en este sitio “JJWine” o “el operador”. El nombre registrado en chino indicado es el nombre del operador utilizado en este sitio; esta política no declara una denominación legal separada en inglés.",
-            "Esta política cubre este sitio web público (las páginas en inglés, chino simplificado y español bajo /en, /zh-cn y /es) y la correspondencia utilizada para responder a una consulta o gestionar una posible relación comercial, salvo que un aviso o acuerdo más específico la complemente. Las relaciones contractuales pueden estar sujetas a avisos y condiciones adicionales.",
+            "Esta política cubre este sitio web público (las páginas en inglés, chino simplificado, español y francés bajo /en, /zh-cn, /es y /fr) y la correspondencia utilizada para responder a una consulta o gestionar una posible relación comercial, salvo que un aviso o acuerdo más específico la complemente. Las relaciones contractuales pueden estar sujetas a avisos y condiciones adicionales.",
           ],
         },
         {
@@ -506,6 +513,153 @@ export const legalContent: Record<Locale, Record<LegalPageKey, LegalDocument>> =
           heading: "8. Cambios",
           paragraphs: [
             "El operador puede actualizar este aviso; la fecha de entrada en vigor indicada arriba corresponde a la versión actual.",
+          ],
+        },
+      ],
+    },
+  },
+  fr: {
+    privacy: {
+      metaTitle: "Politique de confidentialité — JJWine",
+      metaDescription:
+        "Comment le site web JJWine traite les informations personnelles : traitement minimal, sans analyse, sans suivi, sans compte et sans formulaire côté serveur.",
+      title: "Politique de confidentialité",
+      effectiveDate: "Date d'entrée en vigueur : 20 août 2026",
+      disclaimer:
+        "Cette page est la politique de confidentialité du site publiée par l'opérateur. Elle décrit le fonctionnement de ce site ; il s'agit d'informations générales sur ce site web et non d'un avis juridique adapté à votre situation particulière.",
+      sections: [
+        {
+          heading: "1. Opérateur et champ d'application",
+          paragraphs: [
+            "Ce site web est exploité par 上海捷嘉酒业有限公司, désignée sur ce site comme « JJWine » ou « l'opérateur ». La dénomination enregistrée en chinois ci-dessus est le nom de l'opérateur utilisé sur ce site ; cette politique ne mentionne pas de dénomination légale distincte en anglais.",
+            "Cette politique couvre ce site web public (les pages en anglais, chinois simplifié, espagnol et français sous /en, /zh-cn, /es et /fr) et la correspondance utilisée pour répondre à une demande ou gérer une relation commerciale potentielle, sauf si un avis ou accord plus spécifique la complète. Les relations contractuelles peuvent être régies par des avis et conditions supplémentaires.",
+          ],
+        },
+        {
+          heading: "2. Ce que ce site web traite réellement",
+          paragraphs: [
+            "Ce site web est un site informatif statique. Il ne dispose pas de comptes utilisateurs ni de connexion, n'utilise pas de scripts d'analyse ou de publicité, ne réalise pas de suivi tiers et ne dispose pas de formulaire de contact côté serveur. Nous ne vendons pas d'informations personnelles.",
+            "En utilisation normale, le site lui-même ne collecte aucune information personnelle vous concernant au-delà des données techniques décrites à la section 5 (hébergement).",
+          ],
+        },
+        {
+          heading: "3. L'outil de brief de projet",
+          paragraphs: [
+            "Le formulaire « brief de projet » de ce site est traité entièrement sur votre propre appareil, dans votre navigateur. Rien de ce que vous y saisissez n'est transmis ni stocké sur un serveur contrôlé par l'opérateur. Le fichier texte résultant est généré et téléchargé localement sur votre appareil jusqu'à ce que vous décidiez de le partager.",
+          ],
+        },
+        {
+          heading: "4. Contact par e-mail",
+          paragraphs: [
+            "Les liens e-mail de ce site (liens mailto) ouvrent votre propre client de messagerie. Si vous choisissez de nous écrire, nous recevons ce que vous envoyez — généralement votre nom, adresse e-mail, entreprise et message — et nous l'utilisons uniquement pour répondre à votre demande et gérer une relation commerciale potentielle. Veuillez ne pas envoyer d'informations personnelles sensibles par e-mail.",
+          ],
+        },
+        {
+          heading: "5. Hébergement sur Cloudflare",
+          paragraphs: [
+            "Ce site web est servi via Cloudflare Workers et le réseau mondial de Cloudflare. Le Worker de l'opérateur reçoit nécessairement des données techniques limitées — telles que l'adresse IP, les en-têtes de requête, les horodatages et les informations de sécurité ou d'erreur — pour délivrer, sécuriser et diagnostiquer le site. L'opérateur n'utilise pas les données techniques qu'il contrôle pour établir des profils de visiteurs.",
+            "Cloudflare traite séparément des données techniques conformément à ses propres conditions et documentation de confidentialité pour la livraison réseau, la sécurité et les services associés. Cloudflare exploite des centres de données dans le monde entier, et ses finalités, emplacements et pratiques de conservation sont régis par sa propre documentation et les services configurés pour ce site.",
+          ],
+        },
+        {
+          heading: "6. Cookies et suivi",
+          paragraphs: [
+            "Ce site web n'installe pas de cookies d'analyse, de publicité ou autres cookies non essentiels, et n'utilise pas d'empreinte numérique ni de suivi inter-sites. Cloudflare peut installer des cookies techniques strictement nécessaires ou utiliser des mécanismes équivalents uniquement pour des raisons de sécurité et d'intégrité du trafic lorsque cela est nécessaire pour servir le site.",
+          ],
+        },
+        {
+          heading: "7. Finalités et bases juridiques",
+          paragraphs: [
+            "Nous traitons les données techniques limitées décrites ci-dessus pour exploiter, sécuriser et diagnostiquer ce site web, et nous traitons le contenu des e-mails que vous nous envoyez pour vous répondre.",
+            "Lorsque la loi chinoise sur la protection des informations personnelles (PIPL) s'applique, nous traitons les informations personnelles uniquement dans les conditions autorisées par la PIPL et obtenons le consentement lorsqu'il est requis ; les informations que vous fournissez lors d'une demande de projet peuvent être traitées dans la mesure nécessaire pour répondre et prendre les mesures que vous demandez. Lorsque le traitement concerné entre dans le champ d'application territorial du Règlement général sur la protection des données de l'UE/EEE (RGPD), nous nous fondons sur l'intérêt légitime (art. 6(1)(f) RGPD) pour l'exploitation et la sécurisation de ce site web et, le cas échéant, sur les mesures précontractuelles prises à votre demande (art. 6(1)(b) RGPD) lorsque vous nous contactez au sujet d'un projet.",
+          ],
+        },
+        {
+          heading: "8. Vos droits",
+          paragraphs: [
+            "Si la PIPL vous est applicable, vous pouvez — sous réserve de ses conditions — demander l'accès, la copie, la rectification, la suppression ou une explication du traitement de vos informations personnelles, et vous pouvez retirer votre consentement lorsque le traitement est fondé sur le consentement.",
+            "Si le RGPD vous est applicable, vous pouvez — sous réserve de ses conditions — demander l'accès, la rectification, l'effacement, la limitation du traitement, la portabilité des données, vous opposer au traitement fondé sur l'intérêt légitime, et déposer une plainte auprès de votre autorité de contrôle locale.",
+            "Pour exercer l'un de ces droits, utilisez l'adresse de contact ci-dessous. Étant donné que ce site web ne stocke presque aucune information personnelle, la plupart des demandes concerneront la correspondance par e-mail.",
+          ],
+        },
+        {
+          heading: "9. Transferts internationaux, conservation et sécurité",
+          paragraphs: [
+            "Le site étant délivré via le réseau mondial de Cloudflare et les e-mails pouvant être gérés par des prestataires, les données techniques et la correspondance peuvent être transférées à l'étranger. Pour les transferts contrôlés par l'opérateur, nous les limitons à ce qui est nécessaire pour exploiter ce site web et communiquer avec vous, ne les utilisons pas à des fins de marketing ou de profilage, et appliquons tout avis, consentement, contrat, évaluation ou autre garantie requis par la loi applicable. Cloudflare décrit ses propres dispositions de transfert dans sa documentation de confidentialité.",
+            "L'opérateur conserve les journaux techniques ou de sécurité qu'il contrôle uniquement pendant la durée raisonnablement nécessaire aux opérations, à la sécurité et aux obligations légales applicables. La conservation de Cloudflare est régie par ses propres conditions, politiques et services configurés. La correspondance est conservée tant qu'elle est pertinente pour une demande ou une relation commerciale, puis supprimée ou archivée conformément aux obligations applicables.",
+            "Nous appliquons des mesures techniques et organisationnelles raisonnables, adaptées à un petit site informatif, y compris la livraison du site via HTTPS.",
+          ],
+        },
+        {
+          heading: "10. Mineurs et public professionnel",
+          paragraphs: [
+            "Il s'agit d'un site web B2B sur la production de boissons alcoolisées, destiné à un public professionnel. Il ne s'adresse pas aux mineurs et nous ne collectons pas sciemment d'informations personnelles auprès de mineurs.",
+          ],
+        },
+        {
+          heading: "11. Modifications de cette politique",
+          paragraphs: [
+            "Nous pouvons mettre à jour cette politique lorsque le site web ou la législation applicable change. La date d'entrée en vigueur ci-dessus indique la version actuelle. Les modifications substantielles seront publiées sur cette page.",
+          ],
+        },
+      ],
+    },
+    legal: {
+      metaTitle: "Mentions légales — JJWine",
+      metaDescription:
+        "Mentions légales du site web JJWine : contenu informatif, vérification des capacités et certifications par projet, propriété intellectuelle et conditions d'utilisation.",
+      title: "Mentions légales",
+      effectiveDate: "Date d'entrée en vigueur : 20 août 2026",
+      disclaimer:
+        "Cette page constitue les mentions légales du site web publiées par l'opérateur. Elle définit les conditions dans lesquelles ce site est fourni ; elle ne constitue pas un avis juridique.",
+      sections: [
+        {
+          heading: "1. Opérateur et nature de ce site",
+          paragraphs: [
+            "Ce site web est exploité par 上海捷嘉酒业有限公司 (désignée comme « JJWine » ou « l'opérateur »). Il s'agit d'un site informatif destiné aux entreprises. Rien de son contenu ne constitue une offre contraignante, un devis, un conseil en investissement ou une offre de vente de boissons alcoolisées aux consommateurs. Toute relation commerciale naît exclusivement d'un accord écrit négocié séparément.",
+          ],
+        },
+        {
+          heading: "2. Capacités et certifications vérifiées par projet",
+          paragraphs: [
+            "Les descriptions des capacités de production, des formats, des systèmes qualité et des certifications sur ce site sont de nature générale. Le site de production applicable, le périmètre de certification, le standard produit et le plan de contrôle sont confirmés pour chaque projet, produit et marché spécifiques, sur la base des preuves en vigueur à ce moment. Aucune déclaration sur ce site ne doit être interprétée comme une garantie qu'une capacité, certification ou autorisation particulière s'applique à un projet ou une relation client spécifique.",
+          ],
+        },
+        {
+          heading: "3. Propriété intellectuelle et marques de tiers",
+          paragraphs: [
+            "Sauf indication contraire, le contenu de ce site — y compris les textes, la mise en page, les graphiques et la marque verbale JJWine — peut être protégé par des droits de propriété intellectuelle détenus par l'opérateur ou ses concédants et ne peut être reproduit à des fins commerciales sans l'autorisation du titulaire concerné. Les noms, marques et labels de certification de tiers qui peuvent être mentionnés restent la propriété de leurs titulaires respectifs ; une mention n'implique pas d'approbation, de partenariat ou d'autorisation au-delà de ce qui est expressément indiqué.",
+          ],
+        },
+        {
+          heading: "4. Utilisation acceptable",
+          paragraphs: [
+            "Vous ne pouvez utiliser ce site qu'à des fins licites et informatives. Vous ne devez pas tenter de perturber le site, de sonder ou de violer sa sécurité, de l'explorer de manière abusive, ni d'utiliser son contenu pour induire en erreur sur l'opérateur ou ses relations commerciales.",
+          ],
+        },
+        {
+          heading: "5. Liens externes",
+          paragraphs: [
+            "Ce site peut contenir des liens vers des sites web externes. L'opérateur n'a aucun contrôle sur le contenu externe et, dans la mesure permise par la loi applicable, n'assume aucune responsabilité à son égard. Un lien n'implique pas d'approbation.",
+          ],
+        },
+        {
+          heading: "6. Absence de garantie et limitation de responsabilité",
+          paragraphs: [
+            "Le site est fourni « tel quel ». L'opérateur s'efforce raisonnablement de maintenir le contenu exact et à jour, mais ne garantit pas qu'il soit complet, exempt d'erreurs ou disponible en permanence.",
+            "Dans la mesure permise par la loi applicable, l'opérateur n'est pas responsable des dommages résultant de l'utilisation ou de l'impossibilité d'utiliser ce site ou son contenu. Rien dans cet avis n'exclut ou ne limite la responsabilité qui ne peut être exclue ou limitée en vertu du droit impératif applicable, y compris la responsabilité découlant d'une intention ou d'une négligence grave lorsque de telles limites ne sont pas autorisées.",
+          ],
+        },
+        {
+          heading: "7. Droit applicable et litiges",
+          paragraphs: [
+            "Les lois et règles impératives s'appliquent selon leur propre champ d'application territorial et matériel. Cet avis ne choisit pas de loi applicable ni de for exclusifs. Les parties doivent d'abord chercher à résoudre tout litige lié au site par une consultation de bonne foi ; un litige non résolu peut être soumis à l'autorité ou au tribunal compétent en vertu de la loi applicable.",
+          ],
+        },
+        {
+          heading: "8. Modifications",
+          paragraphs: [
+            "L'opérateur peut mettre à jour cet avis ; la date d'entrée en vigueur ci-dessus indique la version actuelle.",
           ],
         },
       ],
