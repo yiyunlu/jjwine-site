@@ -7,6 +7,17 @@ import { localeLinks } from "./i18n";
 
 type Props = { locale: Locale };
 
+function Eyebrow({ children, className = "eyebrow" }: { children: string; className?: string }) {
+  const parts = children.split(" / ");
+  if (parts.length < 2) return <p className={className}>{children}</p>;
+  return (
+    <p className={className}>
+      <span className="eyebrow-num">{parts[0]}</span>
+      <span> / {parts.slice(1).join(" / ")}</span>
+    </p>
+  );
+}
+
 export function JJWineSite({ locale }: Props) {
   const copy = content[locale];
   const [menuOpen, setMenuOpen] = useState(false);
@@ -292,7 +303,11 @@ export function JJWineSite({ locale }: Props) {
         </div>
 
         <div className="hero-content">
-          <div className="hero-kicker">{copy.hero.kicker}</div>
+          <div className="hero-kicker">
+            {copy.hero.kicker.split(" / ").map((part, i) => (
+              i === 0 ? <span key={i} className="kicker-num">{part}</span> : <span key={i}> / {part}</span>
+            ))}
+          </div>
           <h1>
             {copy.hero.line1}
             <br />
@@ -323,7 +338,7 @@ export function JJWineSite({ locale }: Props) {
         <div className="section-index" aria-hidden="true">01</div>
         <div className="intro-grid">
           <div data-reveal>
-            <p className="eyebrow">{copy.intro.kicker}</p>
+            <Eyebrow>{copy.intro.kicker}</Eyebrow>
             <h2>{copy.intro.title}</h2>
           </div>
           <div className="intro-body" data-reveal>
@@ -337,7 +352,7 @@ export function JJWineSite({ locale }: Props) {
       <section className="capabilities-section" id="capabilities">
         <div className="section-head" data-reveal>
           <div>
-            <p className="eyebrow">{copy.capabilities.kicker}</p>
+            <Eyebrow>{copy.capabilities.kicker}</Eyebrow>
             <h2>{copy.capabilities.title}</h2>
           </div>
           <p>{copy.capabilities.body}</p>
@@ -364,7 +379,7 @@ export function JJWineSite({ locale }: Props) {
 
       <section className="process-section section-dark grid-bg" id="process">
         <div className="process-sticky">
-          <p className="eyebrow">{copy.process.kicker}</p>
+          <Eyebrow>{copy.process.kicker}</Eyebrow>
           <h2>{copy.process.title}</h2>
           <p>{copy.process.body}</p>
           <div className="process-signal" aria-hidden="true"><span /></div>
@@ -381,7 +396,7 @@ export function JJWineSite({ locale }: Props) {
 
       <section className="quality-section" id="quality">
         <div className="quality-lead" data-reveal>
-          <p className="eyebrow">{copy.quality.kicker}</p>
+          <Eyebrow>{copy.quality.kicker}</Eyebrow>
           <h2>{copy.quality.title}</h2>
           <p>{copy.quality.body}</p>
         </div>
@@ -403,7 +418,7 @@ export function JJWineSite({ locale }: Props) {
 
       <section className="partnership-section section-dark grid-bg" id="partnership">
         <div className="section-head partnership-head" data-reveal>
-          <div><p className="eyebrow">{copy.partnership.kicker}</p><h2>{copy.partnership.title}</h2></div>
+          <div><Eyebrow>{copy.partnership.kicker}</Eyebrow><h2>{copy.partnership.title}</h2></div>
         </div>
         <div className="audience-grid">
           <article data-reveal>
@@ -428,7 +443,7 @@ export function JJWineSite({ locale }: Props) {
       <section className="contact-section" id="contact">
         <div className="contact-orbit" aria-hidden="true"><i /><i /><i /></div>
         <div className="contact-content" data-reveal>
-          <p className="eyebrow">{copy.contact.kicker}</p>
+          <Eyebrow>{copy.contact.kicker}</Eyebrow>
           <h2>{copy.contact.title}</h2>
           <p>{copy.contact.body}</p>
           <button className="button button-dark" type="button" onClick={openBrief}>

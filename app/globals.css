@@ -178,11 +178,26 @@ button {
 .hero-kicker {
   position: relative;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
   margin-bottom: 28px;
-  color: rgba(243, 238, 229, 0.62);
-  font-size: 10px;
-  letter-spacing: 0.24em;
+  font-family: var(--jj-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--jj-paper-muted);
+}
+
+.hero-kicker::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--jj-wine-bright);
+}
+
+.hero-kicker .kicker-num {
+  color: var(--jj-wine-bright);
 }
 
 .hero h1 {
@@ -238,14 +253,16 @@ button {
 }
 
 .button-primary {
-  background: var(--paper);
-  color: var(--ink);
-  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  background: var(--jj-wine);
+  color: var(--jj-paper);
+  border: 1px solid var(--jj-wine);
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .button-primary:hover {
-  background: var(--wine-bright);
-  color: #fff;
+  background: var(--jj-wine-bright);
+  border-color: var(--jj-wine-bright);
+  box-shadow: 0 10px 30px -8px var(--jj-wine-glow);
   transform: translateY(-2px);
 }
 
@@ -733,6 +750,22 @@ body::selection {
 
 .eyebrow-num {
   color: var(--jj-wine-bright);
+}
+
+/* Eyebrow on light sections */
+.capabilities-section .eyebrow,
+.quality-section .eyebrow {
+  color: var(--jj-ink-muted);
+}
+
+.capabilities-section .eyebrow::before,
+.quality-section .eyebrow::before {
+  background: var(--jj-wine);
+}
+
+.capabilities-section .eyebrow-num,
+.quality-section .eyebrow-num {
+  color: var(--jj-wine);
 }
 
 .intro-section,
