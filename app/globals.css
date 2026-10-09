@@ -648,6 +648,86 @@ body::selection {
   color: var(--paper);
 }
 
+/* ------------------------------------------------------------------ */
+/* Section rail: vertical anchor navigation for desktop                */
+/* ------------------------------------------------------------------ */
+
+.section-rail {
+  position: fixed;
+  z-index: 40;
+  top: 50%;
+  left: clamp(16px, 2vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transform: translateY(-50%);
+}
+
+.section-rail a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(243, 238, 229, 0.5);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.section-rail a:hover {
+  color: rgba(243, 238, 229, 0.85);
+}
+
+.section-rail a.is-active {
+  color: var(--paper);
+}
+
+.section-rail-dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.section-rail a.is-active .section-rail-dot {
+  background: var(--wine-bright);
+  border-color: var(--wine-bright);
+  box-shadow: 0 0 8px rgba(209, 46, 79, 0.6);
+}
+
+.section-rail-label {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.section-rail:hover .section-rail-label,
+.section-rail:focus-within .section-rail-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.section-rail a:focus-visible {
+  outline: 2px solid var(--wine-bright);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+@media (max-width: 1040px) {
+  .section-rail {
+    display: none;
+  }
+}
+
+/* Chinese rail labels need slightly larger type */
+.locale-zh-cn .section-rail a {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
 .hero-content {
   position: relative;
   z-index: 2;

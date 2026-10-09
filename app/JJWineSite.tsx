@@ -18,10 +18,14 @@ function Eyebrow({ children, className = "eyebrow" }: { children: string; classN
   );
 }
 
+type SectionId = "top" | "capabilities" | "process" | "quality" | "partnership" | "contact";
+const sectionIds: SectionId[] = ["top", "capabilities", "process", "quality", "partnership", "contact"];
+
 export function JJWineSite({ locale }: Props) {
   const copy = content[locale];
   const [menuOpen, setMenuOpen] = useState(false);
   const [briefOpen, setBriefOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<SectionId>("top");
   const siteShellRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
@@ -195,6 +199,28 @@ export function JJWineSite({ locale }: Props) {
     return () => { document.body.style.overflow = previousOverflow; };
   }, [menuOpen, briefOpen]);
 
+  // Track active section for the section rail navigation.
+  useEffect(() => {
+    const sectionElements = sectionIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    if (sectionElements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+        if (visibleEntries.length > 0) {
+          const topmost = visibleEntries.reduce((prev, current) =>
+            current.boundingClientRect.top < prev.boundingClientRect.top ? current : prev
+          );
+          setActiveSection(topmost.target.id as SectionId);
+        }
+      },
+      { rootMargin: "-30% 0px -50% 0px", threshold: 0 },
+    );
+
+    sectionElements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
   const onPointerMove = (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType === "touch") return;
     event.currentTarget.style.setProperty("--pointer-x", `${event.clientX}px`);
@@ -229,6 +255,19 @@ export function JJWineSite({ locale }: Props) {
   return (
     <main className={`site-shell locale-${locale}`} id="top" ref={siteShellRef} onPointerMove={onPointerMove}>
       <a className="skip-link" href="#main-content">{copy.a11y.skipToContent}</a>
+      <nav className="section-rail" aria-label={copy.a11y.sectionNav}>
+        {sectionIds.map((id) => (
+          <a
+            key={id}
+            href={`#${id}`}
+            className={activeSection === id ? "is-active" : ""}
+            aria-current={activeSection === id ? "true" : undefined}
+          >
+            <span className="section-rail-dot" aria-hidden="true" />
+            <span className="section-rail-label">{copy.sectionRail[id]}</span>
+          </a>
+        ))}
+      </nav>
       <header className="topbar">
         <a className="wordmark" href="#top" aria-label={copy.a11y.home}>
           JJ<span>WINE</span>

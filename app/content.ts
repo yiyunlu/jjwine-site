@@ -3,8 +3,9 @@ export { locales, type Locale } from "./i18n";
 type SiteContent = {
   localeName: string;
   meta: { title: string; description: string };
-  a11y: { skipToContent: string; home: string; primaryNav: string; languageNav: string; mobileNav: string; closeDialog: string; formatTags: string };
+  a11y: { skipToContent: string; home: string; primaryNav: string; languageNav: string; mobileNav: string; closeDialog: string; formatTags: string; sectionNav: string };
   nav: { capabilities: string; process: string; quality: string; partnership: string; start: string; menu: string; close: string };
+  sectionRail: { top: string; capabilities: string; process: string; quality: string; partnership: string; contact: string };
   hero: { kicker: string; line1: string; emphasis: string; line2: string; copy: string; primary: string; secondary: string; rail: string[] };
   intro: { kicker: string; title: string; body: string; side: string };
   capabilities: { kicker: string; title: string; body: string; explore: string; items: Array<{ code: string; title: string; body: string; note: string; tagline: string; tags: string[] }> };
@@ -23,8 +24,9 @@ export const content: Record<Locale, SiteContent> = {
       title: "JJWine — China Production, Delivered to Global Standards",
       description: "End-to-end China production solutions for global wine and beverage brands.",
     },
-    a11y: { skipToContent: "Skip to main content", home: "JJWine home", primaryNav: "Primary", languageNav: "Language", mobileNav: "Menu", closeDialog: "Close dialog", formatTags: "Format tags" },
+    a11y: { skipToContent: "Skip to main content", home: "JJWine home", primaryNav: "Primary", languageNav: "Language", mobileNav: "Menu", closeDialog: "Close dialog", formatTags: "Format tags", sectionNav: "Section navigation" },
     nav: { capabilities: "Capabilities", process: "Process", quality: "Quality", partnership: "Partnership", start: "Start a project", menu: "Menu", close: "Close" },
+    sectionRail: { top: "Home", capabilities: "Formats", process: "Process", quality: "Quality", partnership: "Partners", contact: "Brief" },
     hero: {
       kicker: "00 / JJWine",
       line1: "Your standards.", emphasis: "Made real", line2: "in China.",
@@ -48,7 +50,7 @@ export const content: Record<Locale, SiteContent> = {
     },
     process: {
       kicker: "03 / Process", title: "A controlled path from standard to shelf.",
-      body: "Every project is scoped around the brand owner’s approvals, the target market and the qualified production site.",
+      body: "Every project is scoped around the brand owner's approvals, the target market and the qualified production site.",
       steps: [
         { title: "Align", body: "Brand brief, target channel, liquid, packaging, volume and approval rules." },
         { title: "Localize", body: "Translate global specifications into a China-ready product and material plan." },
@@ -75,7 +77,7 @@ export const content: Record<Locale, SiteContent> = {
       retailTitle: "For retail & private label", retailBody: "Develop channel-relevant products with clear format, quality, scale and delivery requirements.", retailLink: "Develop a retail range",
     },
     contact: {
-      kicker: "06 / Brief", title: "Bring us what you want to make. We’ll map the execution.",
+      kicker: "06 / Brief", title: "Bring us what you want to make. We'll map the execution.",
       body: "A useful first brief covers the product, target market, format, volume, approval requirements and intended launch timing.",
       button: "Prepare a project brief", note: "Your brief is generated on this device. No project data is uploaded.",
     },
@@ -92,8 +94,9 @@ export const content: Record<Locale, SiteContent> = {
   "zh-cn": {
     localeName: "简体中文",
     meta: { title: "JJWine — 全球酒饮品牌的中国生产落地伙伴", description: "为全球酒饮品牌提供产品本地化、生产组织、质量治理与合规协调的一站式解决方案。" },
-    a11y: { skipToContent: "跳转到主要内容", home: "JJWine 首页", primaryNav: "主导航", languageNav: "语言选择", mobileNav: "菜单", closeDialog: "关闭对话框", formatTags: "包装标签" },
+    a11y: { skipToContent: "跳转到主要内容", home: "JJWine 首页", primaryNav: "主导航", languageNav: "语言选择", mobileNav: "菜单", closeDialog: "关闭对话框", formatTags: "包装标签", sectionNav: "板块导航" },
     nav: { capabilities: "生产能力", process: "合作流程", quality: "质量合规", partnership: "合作对象", start: "启动项目", menu: "菜单", close: "关闭" },
+    sectionRail: { top: "首页", capabilities: "生产形式", process: "流程", quality: "质量", partnership: "合作", contact: "需求" },
     hero: {
       kicker: "00 / JJWine", line1: "全球品牌标准，", emphasis: "在中国", line2: "真正落地。",
       copy: "JJWine 为全球酒饮品牌统筹产品本地化、生产组织、质量治理与合规协调。",
@@ -160,8 +163,9 @@ export const content: Record<Locale, SiteContent> = {
   es: {
     localeName: "Español",
     meta: { title: "JJWine — Producción en China conforme a estándares globales", description: "Soluciones integrales de localización, producción, calidad y cumplimiento en China para marcas internacionales de vinos y bebidas." },
-    a11y: { skipToContent: "Saltar al contenido principal", home: "Inicio de JJWine", primaryNav: "Principal", languageNav: "Idioma", mobileNav: "Menú", closeDialog: "Cerrar diálogo", formatTags: "Etiquetas de formato" },
+    a11y: { skipToContent: "Saltar al contenido principal", home: "Inicio de JJWine", primaryNav: "Principal", languageNav: "Idioma", mobileNav: "Menú", closeDialog: "Cerrar diálogo", formatTags: "Etiquetas de formato", sectionNav: "Navegación de secciones" },
     nav: { capabilities: "Capacidades", process: "Proceso", quality: "Calidad", partnership: "Colaboración", start: "Iniciar proyecto", menu: "Menú", close: "Cerrar" },
+    sectionRail: { top: "Inicio", capabilities: "Formatos", process: "Proceso", quality: "Calidad", partnership: "Socios", contact: "Brief" },
     hero: {
       kicker: "00 / JJWine", line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",
       copy: "JJWine coordina la localización, la producción, la calidad y el cumplimiento para marcas internacionales de vinos y bebidas.",
