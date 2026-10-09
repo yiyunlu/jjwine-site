@@ -349,7 +349,7 @@ export function JJWineSite({ locale }: Props) {
         <div className="red-thread red-thread-intro" aria-hidden="true" />
       </section>
 
-      <section className="capabilities-section" id="capabilities">
+      <section className="capabilities-section section-dark" id="capabilities">
         <div className="section-head" data-reveal>
           <div>
             <Eyebrow>{copy.capabilities.kicker}</Eyebrow>
@@ -365,12 +365,22 @@ export function JJWineSite({ locale }: Props) {
               key={item.title}
               style={{ "--card-delay": `${index * 100}ms` } as CSSProperties}
             >
-              <div className="format-orb" aria-hidden="true"><span>{item.code}</span></div>
+              <div className="format-preview" aria-hidden="true">
+                <div className="format-orb" />
+                <span className="format-tagline">{item.tagline}</span>
+              </div>
               <div className="format-card-content">
                 <span>{item.code}</span>
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
-                <small>{item.note}</small>
+                <ul className="format-tags" aria-label={copy.a11y.formatTags}>
+                  {item.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+                <a className="format-link" href="#contact" onClick={(event) => { event.preventDefault(); openBrief(event); }}>
+                  {copy.capabilities.explore} <span aria-hidden="true">↗</span>
+                </a>
               </div>
             </article>
           ))}
