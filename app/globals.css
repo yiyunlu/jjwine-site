@@ -1,13 +1,57 @@
 @import "tailwindcss";
 
 :root {
+  /* Brand colors — keep original names for compatibility */
   --ink: #120c0d;
   --paper: #f3eee5;
   --wine: #8f1831;
   --wine-bright: #d12e4f;
   --line: rgba(243, 238, 229, 0.22);
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
+
+  /* Scheme A design tokens */
+  --jj-bg: #120c0d;
+  --jj-bg-elevated: #1a1214;
+  --jj-paper: #f3eee5;
+  --jj-paper-muted: rgba(243, 238, 229, 0.68);
+  --jj-paper-faint: rgba(243, 238, 229, 0.42);
+  --jj-paper-ghost: rgba(243, 238, 229, 0.08);
+  --jj-line: rgba(243, 238, 229, 0.18);
+  --jj-grid: rgba(243, 238, 229, 0.055);
+  --jj-wine: #8f1831;
+  --jj-wine-bright: #d12e4f;
+  --jj-wine-glow: rgba(209, 46, 79, 0.35);
+  --jj-wine-glow-soft: rgba(209, 46, 79, 0.14);
+  --jj-wine-deep: #4a0c19;
+  --jj-wine-night: #23090f;
+  --jj-gradient-word: linear-gradient(90deg, #f3eee5 0%, #d12e4f 55%, #8f1831 100%);
+  --jj-accent-01: #d12e4f;
+  --jj-accent-02: #b82645;
+  --jj-accent-03: #8f1831;
+  --jj-surface-light: #f3eee5;
+  --jj-ink-on-light: #120c0d;
+  --jj-ink-muted: rgba(18, 12, 13, 0.66);
+  --jj-ink-line: rgba(18, 12, 13, 0.14);
+  --jj-ink-grid: rgba(18, 12, 13, 0.045);
+  --jj-bg-glass: rgba(18, 12, 13, 0.72);
+  --jj-shadow: rgba(0, 0, 0, 0.45);
+  --jj-shadow-light: rgba(18, 12, 13, 0.16);
+
+  /* Typography — ArtCraft-aligned fonts */
+  --jj-font-display: "Archivo", system-ui, "PingFang SC", "Noto Sans SC", sans-serif;
+  --jj-font-sans: "Inter", system-ui, "PingFang SC", "Noto Sans SC", sans-serif;
+  --jj-font-serif: "Instrument Serif", Georgia, "Songti SC", "Noto Serif SC", serif;
+  --jj-font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--jj-font-sans);
+  --font-serif: var(--jj-font-serif);
+
+  /* Spacing and chrome */
+  --jj-radius-btn: 2px;
+  --jj-radius-card: 2px;
+  --jj-grid-size: 56px;
+  --jj-container: 1240px;
+  --jj-gutter: clamp(20px, 4vw, 56px);
+  --jj-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --jj-dur: 320ms;
 }
 
 * {
@@ -22,7 +66,9 @@ body {
   margin: 0;
   background: var(--ink);
   color: var(--paper);
-  font-family: var(--font-sans);
+  font-family: var(--jj-font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -93,9 +139,11 @@ button {
 }
 
 .wordmark {
+  font-family: var(--jj-font-display);
   font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -0.05em;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.02em;
 }
 
 .wordmark span {
@@ -130,11 +178,26 @@ button {
 .hero-kicker {
   position: relative;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
   margin-bottom: 28px;
-  color: rgba(243, 238, 229, 0.62);
-  font-size: 10px;
-  letter-spacing: 0.24em;
+  font-family: var(--jj-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--jj-paper-muted);
+}
+
+.hero-kicker::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--jj-wine-bright);
+}
+
+.hero-kicker .kicker-num {
+  color: var(--jj-wine-bright);
 }
 
 .hero h1 {
@@ -142,10 +205,12 @@ button {
   z-index: 2;
   max-width: 920px;
   margin: 0;
+  font-family: var(--jj-font-display);
   font-size: clamp(62px, 8.8vw, 145px);
-  font-weight: 500;
-  letter-spacing: -0.075em;
-  line-height: 0.83;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
 }
 
 .hero h1 em {
@@ -180,22 +245,64 @@ button {
   justify-content: space-between;
   gap: 34px;
   padding: 0 20px;
-  border-radius: 100px;
+  border-radius: var(--jj-radius-btn);
+  font-family: var(--jj-font-mono);
   font-size: 12px;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .button-primary {
-  background: var(--paper);
-  color: var(--ink);
-  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  background: var(--jj-wine);
+  color: var(--jj-paper);
+  border: 1px solid var(--jj-wine);
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .button-primary:hover {
-  background: var(--wine-bright);
-  color: #fff;
+  background: var(--jj-wine-bright);
+  border-color: var(--jj-wine-bright);
+  box-shadow: 0 10px 30px -8px var(--jj-wine-glow);
   transform: translateY(-2px);
+}
+
+/* Outline button variant (dual CTA pattern) */
+.button-outline {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid var(--jj-line);
+  transition: background var(--jj-dur) var(--jj-ease), border-color var(--jj-dur) var(--jj-ease), transform 180ms ease;
+}
+
+.button-outline:hover {
+  border-color: var(--paper);
+  background: var(--jj-paper-ghost);
+  transform: translateY(-2px);
+}
+
+/* Blueprint grid background for dark sections */
+.grid-bg {
+  position: relative;
+  background-color: var(--jj-bg);
+  background-image:
+    linear-gradient(var(--jj-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--jj-grid) 1px, transparent 1px);
+  background-size: var(--jj-grid-size) var(--jj-grid-size);
+  background-position: -1px -1px;
+}
+
+/* One-word gradient emphasis */
+.grad-word {
+  background: var(--jj-gradient-word);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--jj-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  padding-right: 0.06em;
 }
 
 .text-link {
@@ -481,7 +588,8 @@ body::selection {
   min-height: 34px;
   padding: 0 16px;
   border: 1px solid rgba(243, 238, 229, 0.42);
-  border-radius: 999px;
+  border-radius: var(--jj-radius-btn);
+  font-family: var(--jj-font-mono);
   transition: background 180ms ease, color 180ms ease;
 }
 
@@ -621,11 +729,43 @@ body::selection {
 }
 
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
   margin: 0 0 24px;
-  font-size: 9px !important;
-  letter-spacing: 0.25em;
+  font-family: var(--jj-font-mono);
+  font-size: 10px !important;
+  letter-spacing: 0.14em;
   line-height: 1.4 !important;
   text-transform: uppercase;
+  color: var(--jj-paper-muted);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--jj-wine-bright);
+}
+
+.eyebrow-num {
+  color: var(--jj-wine-bright);
+}
+
+/* Eyebrow on light sections */
+.capabilities-section .eyebrow,
+.quality-section .eyebrow {
+  color: var(--jj-ink-muted);
+}
+
+.capabilities-section .eyebrow::before,
+.quality-section .eyebrow::before {
+  background: var(--jj-wine);
+}
+
+.capabilities-section .eyebrow-num,
+.quality-section .eyebrow-num {
+  color: var(--jj-wine);
 }
 
 .intro-section,
@@ -671,11 +811,12 @@ body::selection {
 .contact-content h2,
 .brief-dialog h2 {
   margin: 0;
-  font-family: var(--font-serif);
+  font-family: var(--jj-font-display);
   font-size: clamp(52px, 7.8vw, 126px);
-  font-weight: 400;
-  letter-spacing: -0.065em;
-  line-height: 0.9;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
 }
 
 .intro-body {
@@ -819,10 +960,11 @@ body::selection {
 
 .format-card h3 {
   margin: 0 0 18px;
-  font-family: var(--font-serif);
+  font-family: var(--jj-font-display);
   font-size: clamp(36px, 4vw, 64px);
-  font-weight: 400;
-  letter-spacing: -0.05em;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.035em;
 }
 
 .format-card p {
@@ -928,10 +1070,11 @@ body::selection {
 
 .process-list h3 {
   margin: 0 0 14px;
-  font-family: var(--font-serif);
+  font-family: var(--jj-font-display);
   font-size: clamp(38px, 4.2vw, 68px);
-  font-weight: 400;
-  letter-spacing: -0.055em;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.035em;
 }
 
 .process-list p {
@@ -996,9 +1139,11 @@ body::selection {
 
 .quality-badge span {
   color: var(--wine);
-  font-family: var(--font-serif);
+  font-family: var(--jj-font-display);
   font-size: clamp(38px, 5vw, 70px);
-  letter-spacing: -0.05em;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.035em;
 }
 
 .quality-badge small {
@@ -1049,10 +1194,11 @@ body::selection {
 
 .quality-grid h3 {
   margin: 110px 0 16px;
-  font-family: var(--font-serif);
+  font-family: var(--jj-font-display);
   font-size: clamp(28px, 3vw, 44px);
-  font-weight: 400;
-  letter-spacing: -0.04em;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.035em;
 }
 
 .quality-grid p {
@@ -1128,10 +1274,11 @@ body::selection {
 
 .audience-grid h3 {
   margin: 0 0 24px;
-  font-family: var(--font-serif);
+  font-family: var(--jj-font-display);
   font-size: clamp(44px, 5.4vw, 82px);
-  font-weight: 400;
-  letter-spacing: -0.055em;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.035em;
 }
 
 .audience-grid p {
