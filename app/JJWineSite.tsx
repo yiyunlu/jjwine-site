@@ -21,6 +21,11 @@ function Eyebrow({ children, className = "eyebrow" }: { children: string; classN
 type SectionId = "top" | "capabilities" | "process" | "quality" | "partnership" | "contact";
 const sectionIds: SectionId[] = ["top", "capabilities", "process", "quality", "partnership", "contact"];
 
+const formatPreviewPhotos: Partial<Record<string, string>> = {
+  "01": "/media/formats/bottle.webp",
+  "03": "/media/formats/bib.webp",
+};
+
 export function JJWineSite({ locale }: Props) {
   const copy = content[locale];
   const [menuOpen, setMenuOpen] = useState(false);
@@ -386,15 +391,24 @@ export function JJWineSite({ locale }: Props) {
           <p>{copy.capabilities.body}</p>
         </div>
         <div className="format-grid">
-          {copy.capabilities.items.map((item, index) => (
+          {copy.capabilities.items.map((item, index) => {
+            const previewPhoto = formatPreviewPhotos[item.code];
+            return (
             <article
               className="format-card"
               data-reveal
               key={item.title}
               style={{ "--card-delay": `${index * 100}ms` } as CSSProperties}
             >
-              <div className="format-preview" aria-hidden="true">
-                <div className="format-orb" />
+              <div
+                className={`format-preview${previewPhoto ? " format-preview--photo" : ""}`}
+                {...(previewPhoto ? {} : { "aria-hidden": true })}
+              >
+                {previewPhoto ? (
+                  <img className="format-photo" src={previewPhoto} alt={item.title} />
+                ) : (
+                  <div className="format-orb" />
+                )}
                 <span className="format-tagline">{item.tagline}</span>
               </div>
               <div className="format-card-content">
@@ -411,7 +425,8 @@ export function JJWineSite({ locale }: Props) {
                 </a>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </section>
 
