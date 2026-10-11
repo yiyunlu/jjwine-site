@@ -1871,6 +1871,34 @@ footer > a:last-child {
   to { opacity: 1; }
 }
 
+/* Desktop nav stays one row. Between the menu breakpoint and 1440,
+   es/fr labels ("Calidad y cumplimiento", "Démarrer un projet")
+   overflow the right edge. Drop the tagline and tighten gaps only
+   while that desktop row is showing — same links, same order. */
+@media (max-width: 1399px) and (min-width: 1181px) {
+  .brand-tag { display: none; }
+
+  .topbar-inner { gap: 12px; }
+
+  .desktop-nav {
+    gap: clamp(8px, 1.15vw, 22px);
+    font-size: 13px;
+  }
+
+  .topbar-actions { gap: 10px; }
+
+  .lang-switch {
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .nav-cta {
+    flex-shrink: 0;
+    padding: 0 12px;
+    font-size: 12.5px;
+  }
+}
+
 @media (max-width: 1180px) {
   .desktop-nav,
   .lang-switch,
