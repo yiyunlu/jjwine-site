@@ -4,7 +4,12 @@ export type SiteHeroMotionCopy = {
   source: string;
   produce: string;
   deliver: string;
-  metric: string;
+  metricSource: string;
+  metricProduce: string;
+  metricDeliver: string;
+  formatBottle: string;
+  formatCan: string;
+  formatBib: string;
   pause: string;
   play: string;
 };
@@ -47,7 +52,12 @@ export const content: Record<Locale, SiteContent> = {
       source: "Source",
       produce: "Produce",
       deliver: "Deliver",
-      metric: "—",
+      metricSource: "Region · TBD",
+      metricProduce: "Capacity · TBD bph",
+      metricDeliver: "Lead time · TBD days",
+      formatBottle: "Bottle",
+      formatCan: "Can",
+      formatBib: "BIB",
       pause: "Pause hero animation",
       play: "Play hero animation",
     },
@@ -122,10 +132,15 @@ export const content: Record<Locale, SiteContent> = {
       primary: "启动项目", secondary: "查看生产能力", rail: ["本地化", "生产", "质量保证"],
     },
     heroMotion: {
-      source: "溯源",
+      source: "源头",
       produce: "生产",
       deliver: "交付",
-      metric: "—",
+      metricSource: "产区 · 待业务补",
+      metricProduce: "产能 · 待业务补 bph",
+      metricDeliver: "交期 · 待业务补 天",
+      formatBottle: "瓶",
+      formatCan: "罐",
+      formatBib: "BIB",
       pause: "暂停首页动画",
       play: "播放首页动画",
     },
@@ -201,9 +216,14 @@ export const content: Record<Locale, SiteContent> = {
     },
     heroMotion: {
       source: "Origen",
-      produce: "Producir",
-      deliver: "Entregar",
-      metric: "—",
+      produce: "Producción",
+      deliver: "Entrega",
+      metricSource: "Región · pendiente",
+      metricProduce: "Capacidad · pendiente bph",
+      metricDeliver: "Plazo · pendiente días",
+      formatBottle: "Botella",
+      formatCan: "Lata",
+      formatBib: "BIB",
       pause: "Pausar animación del hero",
       play: "Reproducir animación del hero",
     },
@@ -284,7 +304,12 @@ export const content: Record<Locale, SiteContent> = {
       source: "Source",
       produce: "Production",
       deliver: "Livraison",
-      metric: "—",
+      metricSource: "Région · à compléter",
+      metricProduce: "Capacité · à compléter bph",
+      metricDeliver: "Délai · à compléter jours",
+      formatBottle: "Bouteille",
+      formatCan: "Canette",
+      formatBib: "BIB",
       pause: "Mettre en pause l’animation du hero",
       play: "Lire l’animation du hero",
     },

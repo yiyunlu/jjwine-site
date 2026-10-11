@@ -376,8 +376,9 @@ button {
   mix-blend-mode: overlay;
 }
 
+/* Hero motion V1 — r3 storyboard (~11s loop, beats 01–06 + 09) */
 .hero-motion-stage {
-  --hero-motion-dur: 10.5s;
+  --hero-motion-dur: 11s;
 }
 
 .hero-motion-svg {
@@ -389,7 +390,8 @@ button {
 
 .hero-motion-svg line,
 .hero-motion-svg path,
-.hero-motion-svg circle.hero-motion-node-ring {
+.hero-motion-svg ellipse,
+.hero-motion-svg rect.hero-motion-draw {
   fill: none;
   stroke: #f3eee5;
   stroke-linecap: round;
@@ -401,56 +403,75 @@ button {
   stroke-width: 0.75;
 }
 
+.hero-motion-ghost * {
+  stroke: rgba(243, 238, 229, 0.22);
+  stroke-dasharray: 3 5;
+  stroke-width: 1;
+}
+
 .hero-motion-route {
-  stroke: rgba(243, 238, 229, 0.72);
-  stroke-width: 1.6;
+  stroke: rgba(243, 238, 229, 0.68);
+  stroke-width: 1.5;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
 }
 
-.hero-motion-node-ring {
-  stroke-width: 1.4;
+.hero-motion-route--extend {
+  stroke-dasharray: 4 6;
+  opacity: 0;
+}
+
+.hero-motion-draw {
+  stroke-width: 1.25;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
+}
+
+.hero-motion-bib-inner {
+  stroke-dasharray: 2 4;
 }
 
 .hero-motion-bridge {
-  stroke: rgba(227, 66, 96, 0.78);
+  stroke: rgba(243, 238, 229, 0.82);
   stroke-width: 1.2;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
+  opacity: 0;
 }
 
-.hero-motion-format path,
-.hero-motion-container path {
-  stroke-width: 1.2;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
-.hero-motion-beat-label,
-.hero-motion-format text,
-.hero-motion-metric {
-  fill: rgba(243, 238, 229, 0.82);
+.hero-motion-station-id,
+.hero-motion-format-label {
+  fill: rgba(243, 238, 229, 0.78);
   stroke: none;
   font-family: var(--jj-font-mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
+  font-size: 8px;
+  letter-spacing: 0.14em;
   text-anchor: middle;
   text-transform: uppercase;
 }
 
 .hero-motion-metric {
-  fill: rgba(243, 238, 229, 0.48);
-  font-size: 11px;
+  fill: #b3263b;
+  stroke: none;
+  font-family: var(--jj-font-mono);
+  font-size: 9px;
   letter-spacing: 0.04em;
-  text-transform: none;
+  text-anchor: middle;
+  opacity: 0;
+}
+
+.hero-motion-liquid-fill {
+  stroke: none;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transform: scaleY(0);
+  opacity: 0;
 }
 
 .hero-motion-flow-dot {
-  fill: #e34260;
+  fill: #f3eee5;
   stroke: none;
-  offset-path: path("M 72 292 C 120 248, 168 220, 208 196 S 296 132, 328 108");
+  offset-path: path("M 44 248 L 476 248");
   offset-distance: 0%;
   opacity: 0;
 }
@@ -458,18 +479,17 @@ button {
 .hero-motion-pause {
   position: absolute;
   z-index: 3;
+  top: 10px;
   right: 10px;
-  bottom: 10px;
-  min-height: 36px;
-  padding: 0 12px;
+  width: 36px;
+  height: 36px;
   border: 1px solid rgba(243, 238, 229, 0.28);
   border-radius: var(--jj-radius-btn);
   background: rgba(18, 12, 13, 0.62);
   color: rgba(243, 238, 229, 0.86);
   font-family: var(--jj-font-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 1;
   cursor: pointer;
 }
 
@@ -478,64 +498,77 @@ button {
 }
 
 .hero-motion-pause:focus-visible {
-  outline: 2px solid #e34260;
+  outline: 2px solid #b3263b;
   outline-offset: 2px;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-grid {
-  opacity: 0;
-  animation: hero-motion-grid-fade var(--hero-motion-dur) ease-in-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-grid,
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-ghost {
+  animation: hero-motion-grid-ghost var(--hero-motion-dur) ease-in-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-route {
-  animation: hero-motion-route-draw var(--hero-motion-dur) ease-in-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-route--base {
+  animation: hero-motion-route-base var(--hero-motion-dur) ease-in-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-beat--source {
-  opacity: 0;
-  animation: hero-motion-beat-source var(--hero-motion-dur) ease-in-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-station--source .hero-motion-draw {
+  animation: hero-motion-ink-source var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-beat--source .hero-motion-node-ring {
-  animation: hero-motion-ring-source var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-liquid-fill--source {
+  animation: hero-motion-liquid-source var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-beat--produce {
-  opacity: 0;
-  animation: hero-motion-beat-produce var(--hero-motion-dur) ease-in-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-metric--source,
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-station--source .hero-motion-station-id {
+  animation: hero-motion-label-source var(--hero-motion-dur) ease-in-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-beat--produce .hero-motion-node-ring {
-  animation: hero-motion-ring-produce var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-station--produce .hero-motion-draw {
+  animation: hero-motion-ink-produce var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-beat--produce .hero-motion-bridge {
-  animation: hero-motion-bridge-draw var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-liquid-fill--produce {
+  animation: hero-motion-liquid-produce var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-beat--deliver {
-  opacity: 0;
-  animation: hero-motion-beat-deliver var(--hero-motion-dur) ease-in-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-metric--produce,
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-station--produce .hero-motion-station-id {
+  animation: hero-motion-label-produce var(--hero-motion-dur) ease-in-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-beat--deliver .hero-motion-node-ring {
-  animation: hero-motion-ring-deliver var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-bridge {
+  animation: hero-motion-bridge var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-format--bottle path {
-  animation: hero-motion-format-bottle var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-station--deliver .hero-motion-tray,
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-container .hero-motion-draw {
+  animation: hero-motion-ink-deliver-base var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-format--can path {
-  animation: hero-motion-format-can var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-format--bottle .hero-motion-draw {
+  animation: hero-motion-ink-bottle var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-format--bib path {
-  animation: hero-motion-format-bib var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-format--can .hero-motion-draw {
+  animation: hero-motion-ink-can var(--hero-motion-dur) ease-out infinite;
 }
 
-.hero-motion-stage:not(.is-reduced-motion) .hero-motion-container path {
-  animation: hero-motion-container-draw var(--hero-motion-dur) ease-out infinite;
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-format--bib .hero-motion-draw {
+  animation: hero-motion-ink-bib var(--hero-motion-dur) ease-out infinite;
+}
+
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-format-label {
+  animation: hero-motion-format-label var(--hero-motion-dur) ease-in-out infinite;
+}
+
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-metric--deliver,
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-station--deliver .hero-motion-station-id {
+  animation: hero-motion-label-deliver var(--hero-motion-dur) ease-in-out infinite;
+}
+
+.hero-motion-stage:not(.is-reduced-motion) .hero-motion-route--extend {
+  animation: hero-motion-route-extend var(--hero-motion-dur) ease-in-out infinite;
 }
 
 .hero-motion-stage:not(.is-reduced-motion) .hero-motion-flow-dot {
@@ -546,31 +579,27 @@ button {
   animation-play-state: paused !important;
 }
 
-@keyframes hero-motion-grid-fade {
+@keyframes hero-motion-grid-ghost {
   0%,
   100% {
     opacity: 0;
   }
 
-  4%,
-  88% {
+  7.3%,
+  94.5% {
     opacity: 1;
-  }
-
-  96% {
-    opacity: 0;
   }
 }
 
-@keyframes hero-motion-route-draw {
+@keyframes hero-motion-route-base {
   0%,
-  5% {
+  7.3% {
     stroke-dashoffset: 1;
     opacity: 0;
   }
 
-  8%,
-  88% {
+  7.3%,
+  94.5% {
     stroke-dashoffset: 0;
     opacity: 1;
   }
@@ -581,24 +610,74 @@ button {
   }
 }
 
-@keyframes hero-motion-beat-source {
+@keyframes hero-motion-ink-source {
   0%,
-  8% {
+  7.3% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  7.3%,
+  27.3% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  27.3%,
+  94.5% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes hero-motion-liquid-source {
+  0%,
+  10% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  10%,
+  27.3% {
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
+
+  27.3%,
+  94.5% {
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+@keyframes hero-motion-label-source {
+  0%,
+  9% {
     opacity: 0;
   }
 
   10%,
-  21% {
+  27.3% {
     opacity: 1;
   }
 
-  23%,
-  71% {
+  27.3%,
+  78.2% {
     opacity: 0;
   }
 
-  72%,
-  90% {
+  78.2%,
+  94.5% {
     opacity: 1;
   }
 
@@ -607,81 +686,74 @@ button {
   }
 }
 
-@keyframes hero-motion-ring-source {
+@keyframes hero-motion-ink-produce {
   0%,
-  8% {
+  27.3% {
     stroke-dashoffset: 1;
+    opacity: 0;
   }
 
-  14%,
-  100% {
+  27.3%,
+  52.7% {
+    opacity: 1;
     stroke-dashoffset: 0;
   }
-}
 
-@keyframes hero-motion-beat-produce {
-  0%,
-  22% {
-    opacity: 0;
-  }
-
-  24%,
-  35% {
+  52.7%,
+  94.5% {
     opacity: 1;
-  }
-
-  37%,
-  71% {
-    opacity: 0;
-  }
-
-  72%,
-  90% {
-    opacity: 1;
+    stroke-dashoffset: 0;
   }
 
   100% {
     opacity: 0;
+    stroke-dashoffset: 1;
   }
 }
 
-@keyframes hero-motion-ring-produce {
+@keyframes hero-motion-liquid-produce {
   0%,
-  22% {
-    stroke-dashoffset: 1;
+  30% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  30%,
+  52.7% {
+    opacity: 0.85;
+    transform: scaleY(1);
+  }
+
+  52.7%,
+  94.5% {
+    opacity: 0.85;
+    transform: scaleY(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+@keyframes hero-motion-label-produce {
+  0%,
+  27.3% {
+    opacity: 0;
   }
 
   28%,
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes hero-motion-bridge-draw {
-  0%,
-  28% {
-    stroke-dashoffset: 1;
-  }
-
-  34%,
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes hero-motion-beat-deliver {
-  0%,
-  36% {
-    opacity: 0;
-  }
-
-  38%,
-  71% {
+  52.7% {
     opacity: 1;
   }
 
-  72%,
-  90% {
+  52.7%,
+  78.2% {
+    opacity: 0;
+  }
+
+  78.2%,
+  94.5% {
     opacity: 1;
   }
 
@@ -690,78 +762,210 @@ button {
   }
 }
 
-@keyframes hero-motion-ring-deliver {
+@keyframes hero-motion-bridge {
   0%,
-  36% {
+  50% {
     stroke-dashoffset: 1;
+    opacity: 0;
   }
 
-  42%,
-  100% {
+  50%,
+  52.7% {
     stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  52.7%,
+  94.5% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 1;
   }
 }
 
-@keyframes hero-motion-format-bottle {
+@keyframes hero-motion-ink-bottle {
   0%,
-  38% {
+  52.7% {
     stroke-dashoffset: 1;
+    opacity: 0;
   }
 
-  44%,
-  100% {
+  52.7%,
+  58% {
+    opacity: 1;
     stroke-dashoffset: 0;
-  }
-}
-
-@keyframes hero-motion-format-can {
-  0%,
-  42% {
-    stroke-dashoffset: 1;
-  }
-
-  48%,
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes hero-motion-format-bib {
-  0%,
-  46% {
-    stroke-dashoffset: 1;
-  }
-
-  52%,
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes hero-motion-container-draw {
-  0%,
-  52% {
-    stroke-dashoffset: 1;
   }
 
   58%,
-  100% {
+  94.5% {
+    opacity: 1;
     stroke-dashoffset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes hero-motion-ink-can {
+  0%,
+  56% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  56%,
+  61% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  61%,
+  94.5% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes hero-motion-ink-bib {
+  0%,
+  59% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  59%,
+  64% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  64%,
+  94.5% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes hero-motion-ink-deliver-base {
+  0%,
+  64% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  64%,
+  72.7% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  72.7%,
+  94.5% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes hero-motion-format-label {
+  0%,
+  54% {
+    opacity: 0;
+  }
+
+  55%,
+  94.5% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-motion-label-deliver {
+  0%,
+  52.7% {
+    opacity: 0;
+  }
+
+  53%,
+  72.7% {
+    opacity: 1;
+  }
+
+  72.7%,
+  78.2% {
+    opacity: 0;
+  }
+
+  78.2%,
+  94.5% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-motion-route-extend {
+  0%,
+  66% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+
+  66%,
+  72.7% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  72.7%,
+  94.5% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 1;
   }
 }
 
 @keyframes hero-motion-flow-dot {
   0%,
-  57% {
+  72.7% {
     offset-distance: 0%;
     opacity: 0;
   }
 
-  59% {
+  73% {
     opacity: 1;
   }
 
-  72%,
+  78.2%,
   100% {
     offset-distance: 100%;
     opacity: 0;
@@ -769,19 +973,25 @@ button {
 }
 
 .hero-motion-stage.is-reduced-motion .hero-motion-grid,
+.hero-motion-stage.is-reduced-motion .hero-motion-ghost,
 .hero-motion-stage.is-reduced-motion .hero-motion-route,
-.hero-motion-stage.is-reduced-motion .hero-motion-beat,
-.hero-motion-stage.is-reduced-motion .hero-motion-format,
-.hero-motion-stage.is-reduced-motion .hero-motion-container {
+.hero-motion-stage.is-reduced-motion .hero-motion-draw,
+.hero-motion-stage.is-reduced-motion .hero-motion-bridge,
+.hero-motion-stage.is-reduced-motion .hero-motion-format-label,
+.hero-motion-stage.is-reduced-motion .hero-motion-station-id,
+.hero-motion-stage.is-reduced-motion .hero-motion-metric,
+.hero-motion-stage.is-reduced-motion .hero-motion-liquid-fill {
   opacity: 1 !important;
 }
 
 .hero-motion-stage.is-reduced-motion .hero-motion-route,
-.hero-motion-stage.is-reduced-motion .hero-motion-node-ring,
-.hero-motion-stage.is-reduced-motion .hero-motion-bridge,
-.hero-motion-stage.is-reduced-motion .hero-motion-format path,
-.hero-motion-stage.is-reduced-motion .hero-motion-container path {
+.hero-motion-stage.is-reduced-motion .hero-motion-draw,
+.hero-motion-stage.is-reduced-motion .hero-motion-bridge {
   stroke-dashoffset: 0 !important;
+}
+
+.hero-motion-stage.is-reduced-motion .hero-motion-liquid-fill {
+  transform: scaleY(1) !important;
 }
 
 .hero-motion-stage.is-reduced-motion .hero-motion-flow-dot {
@@ -2199,19 +2409,25 @@ footer > a:last-child {
   }
 
   .hero-motion-stage .hero-motion-grid,
+  .hero-motion-stage .hero-motion-ghost,
   .hero-motion-stage .hero-motion-route,
-  .hero-motion-stage .hero-motion-beat,
-  .hero-motion-stage .hero-motion-format,
-  .hero-motion-stage .hero-motion-container {
+  .hero-motion-stage .hero-motion-draw,
+  .hero-motion-stage .hero-motion-bridge,
+  .hero-motion-stage .hero-motion-format-label,
+  .hero-motion-stage .hero-motion-station-id,
+  .hero-motion-stage .hero-motion-metric,
+  .hero-motion-stage .hero-motion-liquid-fill {
     opacity: 1 !important;
   }
 
   .hero-motion-stage .hero-motion-route,
-  .hero-motion-stage .hero-motion-node-ring,
-  .hero-motion-stage .hero-motion-bridge,
-  .hero-motion-stage .hero-motion-format path,
-  .hero-motion-stage .hero-motion-container path {
+  .hero-motion-stage .hero-motion-draw,
+  .hero-motion-stage .hero-motion-bridge {
     stroke-dashoffset: 0 !important;
+  }
+
+  .hero-motion-stage .hero-motion-liquid-fill {
+    transform: scaleY(1) !important;
   }
 
   .hero-motion-stage .hero-motion-flow-dot {

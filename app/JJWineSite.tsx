@@ -330,14 +330,7 @@ export function JJWineSite({ locale }: Props) {
 
       <section className="hero grid-bg" id="main-content" tabIndex={-1}>
         <div className="pointer-glow" aria-hidden="true" />
-        <HeroMotionStage
-          copy={copy.heroMotion}
-          formatLabels={[
-            copy.capabilities.items[0].title,
-            copy.capabilities.items[1].title,
-            copy.capabilities.items[2].title,
-          ]}
-        />
+        <HeroMotionStage copy={copy.heroMotion} />
 
         <div className="hero-content">
           <div className="hero-kicker">
