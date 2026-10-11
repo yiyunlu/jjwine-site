@@ -1,52 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand colors — keep original names for compatibility */
-  --ink: #120c0d;
-  --paper: #f3eee5;
-  --wine: #8f1831;
-  --wine-bright: #d12e4f;
-  --line: rgba(243, 238, 229, 0.22);
+  /* UI V2 replica-90 primitives (cream + burgundy) */
+  --cream-50: #fdfaf5;
+  --cream-100: #fbf8f5;
+  --cream-75: #fcfaf8;
+  --cream-200: #f1eae0;
+  --cream-300: #e7ded1;
+  --burgundy-700: #6f1d2a;
+  --burgundy-600: #7f2533;
+  --burgundy-100: #f3e5e4;
+  --charcoal-900: #1f1b1c;
+  --charcoal-700: #3b3536;
+  --stone-500: #7b7274;
 
-  /* Scheme A design tokens */
-  --jj-bg: #120c0d;
-  --jj-bg-elevated: #1a1214;
-  --jj-paper: #f3eee5;
-  --jj-paper-muted: rgba(243, 238, 229, 0.68);
-  --jj-paper-faint: rgba(243, 238, 229, 0.42);
-  --jj-paper-ghost: rgba(243, 238, 229, 0.08);
-  --jj-line: rgba(243, 238, 229, 0.18);
-  --jj-grid: rgba(243, 238, 229, 0.055);
-  --jj-wine: #8f1831;
-  --jj-wine-bright: #d12e4f;
-  --jj-wine-glow: rgba(209, 46, 79, 0.35);
-  --jj-wine-glow-soft: rgba(209, 46, 79, 0.14);
-  --jj-wine-deep: #4a0c19;
-  --jj-wine-night: #23090f;
-  --jj-gradient-word: linear-gradient(90deg, #f3eee5 0%, #d12e4f 55%, #8f1831 100%);
-  --jj-accent-01: #d12e4f;
-  --jj-accent-02: #b82645;
-  --jj-accent-03: #8f1831;
-  --jj-surface-light: #f3eee5;
-  --jj-ink-on-light: #120c0d;
-  --jj-ink-muted: rgba(18, 12, 13, 0.66);
-  --jj-ink-line: rgba(18, 12, 13, 0.14);
-  --jj-ink-grid: rgba(18, 12, 13, 0.045);
-  --jj-bg-glass: rgba(18, 12, 13, 0.72);
-  --jj-shadow: rgba(0, 0, 0, 0.45);
-  --jj-shadow-light: rgba(18, 12, 13, 0.16);
+  /* Legacy brand aliases — remapped for light page chrome */
+  --ink: var(--charcoal-900);
+  --paper: var(--cream-50);
+  --wine: var(--burgundy-700);
+  --wine-bright: var(--burgundy-600);
+  --line: rgba(31, 27, 28, 0.1);
 
-  /* Typography — ArtCraft-aligned fonts */
-  --jj-font-display: "Archivo", system-ui, "PingFang SC", "Noto Sans SC", sans-serif;
-  --jj-font-sans: "Inter", system-ui, "PingFang SC", "Noto Sans SC", sans-serif;
-  --jj-font-serif: "Instrument Serif", Georgia, "Songti SC", "Noto Serif SC", serif;
+  /* Scheme tokens (semantic mappings for existing components) */
+  --jj-bg: var(--cream-100);
+  --jj-bg-elevated: var(--cream-50);
+  --jj-paper: var(--charcoal-900);
+  --jj-paper-muted: rgba(31, 27, 28, 0.68);
+  --jj-paper-faint: rgba(31, 27, 28, 0.42);
+  --jj-paper-ghost: rgba(31, 27, 28, 0.06);
+  --jj-line: rgba(31, 27, 28, 0.12);
+  --jj-grid: rgba(31, 27, 28, 0.04);
+  --jj-wine: var(--burgundy-700);
+  --jj-wine-bright: var(--burgundy-600);
+  --jj-wine-glow: rgba(111, 29, 42, 0.28);
+  --jj-wine-glow-soft: rgba(111, 29, 42, 0.12);
+  --jj-wine-deep: #4a1520;
+  --jj-wine-night: #2a0c12;
+  --jj-gradient-word: linear-gradient(90deg, var(--charcoal-900) 0%, var(--burgundy-600) 55%, var(--burgundy-700) 100%);
+  --jj-accent-01: var(--burgundy-600);
+  --jj-accent-02: var(--burgundy-700);
+  --jj-accent-03: #5c1824;
+  --jj-surface-light: var(--cream-75);
+  --jj-ink-on-light: var(--charcoal-900);
+  --jj-ink-muted: rgba(31, 27, 28, 0.66);
+  --jj-ink-line: rgba(31, 27, 28, 0.14);
+  --jj-ink-grid: rgba(31, 27, 28, 0.045);
+  --jj-bg-glass: rgba(251, 248, 245, 0.92);
+  --jj-shadow: rgba(31, 27, 28, 0.12);
+  --jj-shadow-light: rgba(31, 27, 28, 0.08);
+  --jj-ring: rgba(111, 29, 42, 0.35);
+
+  /* Typography — replica-90 font roles */
+  --font-cjk: "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", sans-serif;
+  --jj-font-display: "Montserrat", var(--font-cjk), "Inter", system-ui, sans-serif;
+  --jj-font-sans: "Inter", var(--font-cjk), system-ui, sans-serif;
+  --jj-font-serif: Georgia, "Songti SC", "Noto Serif SC", "Source Han Serif SC", serif;
   --jj-font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-sans: var(--jj-font-sans);
   --font-serif: var(--jj-font-serif);
 
   /* Spacing and chrome */
-  --jj-radius-btn: 2px;
-  --jj-radius-card: 2px;
+  --jj-radius-btn: 6px;
+  --jj-radius-card: 10px;
   --jj-grid-size: 56px;
   --jj-container: 1240px;
   --jj-gutter: clamp(20px, 4vw, 56px);
@@ -60,12 +76,13 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--cream-100);
 }
 
 body {
   margin: 0;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--cream-100);
+  color: var(--charcoal-900);
   font-family: var(--jj-font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -88,7 +105,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--wine-bright);
+  outline: 2px solid var(--jj-ring);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -105,8 +122,8 @@ button {
   top: 12px;
   left: 12px;
   padding: 12px 18px;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--charcoal-900);
+  color: var(--cream-50);
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -120,9 +137,7 @@ button {
 .site-shell {
   min-height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 74% 47%, rgba(126, 17, 39, 0.15), transparent 38%),
-    var(--ink);
+  background: var(--cream-100);
 }
 
 .topbar {
@@ -147,7 +162,7 @@ button {
 }
 
 .wordmark span {
-  color: #bc2c47;
+  color: var(--jj-wine);
 }
 
 .topbar-meta {
@@ -182,11 +197,12 @@ button {
   align-items: center;
   gap: 0.5em;
   margin-bottom: 28px;
-  font-family: var(--jj-font-mono);
+  font-family: var(--jj-font-display);
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--jj-paper-muted);
+  color: var(--stone-500);
+  font-weight: 500;
 }
 
 .hero-kicker::before {
@@ -214,7 +230,7 @@ button {
 }
 
 .hero h1 em {
-  color: #c22c48;
+  color: var(--jj-wine);
   font-family: var(--font-serif);
   font-weight: 400;
 }
@@ -224,7 +240,7 @@ button {
   z-index: 2;
   max-width: 490px;
   margin: 34px 0 0 min(34vw, 510px);
-  color: rgba(243, 238, 229, 0.72);
+  color: var(--jj-paper-muted);
   font-size: 16px;
   line-height: 1.6;
 }
@@ -269,13 +285,13 @@ button {
 /* Outline button variant (dual CTA pattern) */
 .button-outline {
   background: transparent;
-  color: var(--paper);
+  color: var(--charcoal-900);
   border: 1px solid var(--jj-line);
   transition: background var(--jj-dur) var(--jj-ease), border-color var(--jj-dur) var(--jj-ease), transform 180ms ease;
 }
 
 .button-outline:hover {
-  border-color: var(--paper);
+  border-color: var(--charcoal-700);
   background: var(--jj-paper-ghost);
   transform: translateY(-2px);
 }
@@ -307,10 +323,11 @@ button {
 
 .text-link {
   padding-bottom: 6px;
-  border-bottom: 1px solid rgba(243, 238, 229, 0.45);
+  border-bottom: 1px solid var(--jj-line);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: var(--charcoal-700);
 }
 
 .motion-stage {
@@ -364,7 +381,7 @@ button {
 
 .motion-orbit-b {
   inset: 1%;
-  border-color: rgba(243, 238, 229, 0.1);
+  border-color: rgba(31, 27, 28, 0.1);
   animation-duration: 26s;
   animation-direction: reverse;
 }
@@ -403,10 +420,10 @@ button {
   right: 10px;
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(243, 238, 229, 0.28);
+  border: 1px solid var(--jj-line);
   border-radius: var(--jj-radius-btn);
-  background: rgba(18, 12, 13, 0.62);
-  color: rgba(243, 238, 229, 0.86);
+  background: rgba(251, 248, 245, 0.88);
+  color: var(--charcoal-700);
   font-family: var(--jj-font-mono);
   font-size: 11px;
   line-height: 1;
@@ -414,7 +431,7 @@ button {
 }
 
 .hero-motion-pause:hover {
-  border-color: rgba(243, 238, 229, 0.5);
+  border-color: var(--charcoal-700);
 }
 
 .hero-motion-pause:focus-visible {
@@ -432,7 +449,8 @@ button {
   display: flex;
   align-items: center;
   gap: 18px;
-  color: rgba(243, 238, 229, 0.62);
+  color: var(--stone-500);
+  font-family: var(--jj-font-display);
   font-size: 9px;
   letter-spacing: 0.22em;
 }
@@ -543,8 +561,8 @@ body {
 }
 
 body::selection {
-  background: var(--wine-bright);
-  color: #fff;
+  background: var(--burgundy-100);
+  color: var(--charcoal-900);
 }
 
 .site-shell {
@@ -558,8 +576,9 @@ body::selection {
   z-index: 50;
   padding-top: 22px;
   padding-bottom: 22px;
-  background: linear-gradient(to bottom, rgba(18, 12, 13, 0.92), rgba(18, 12, 13, 0.58));
-  backdrop-filter: blur(18px);
+  background: var(--cream-100);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
 }
 
 .desktop-nav {
@@ -581,7 +600,7 @@ body::selection {
 
 .desktop-nav a {
   position: relative;
-  color: rgba(243, 238, 229, 0.68);
+  color: var(--charcoal-700);
   transition: color 180ms ease;
 }
 
@@ -599,7 +618,7 @@ body::selection {
 }
 
 .desktop-nav a:hover {
-  color: var(--paper);
+  color: var(--jj-wine);
 }
 
 .desktop-nav a:hover::after {
@@ -621,11 +640,12 @@ body::selection {
 }
 
 .language-links a {
-  color: rgba(243, 238, 229, 0.6);
+  color: var(--stone-500);
 }
 
 .language-links a[aria-current="page"] {
-  color: var(--paper);
+  color: var(--charcoal-900);
+  font-weight: 600;
 }
 
 .nav-cta,
@@ -638,15 +658,17 @@ body::selection {
 .nav-cta {
   min-height: 34px;
   padding: 0 16px;
-  border: 1px solid rgba(243, 238, 229, 0.42);
-  border-radius: var(--jj-radius-btn);
-  font-family: var(--jj-font-mono);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--jj-wine);
+  color: #fff;
+  font-family: var(--jj-font-sans);
   transition: background 180ms ease, color 180ms ease;
 }
 
 .nav-cta:hover {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--jj-wine-bright);
+  color: #fff;
 }
 
 .menu-button {
@@ -663,7 +685,8 @@ body::selection {
   justify-content: center;
   gap: 14px;
   padding: 100px 24px 40px;
-  background: rgba(18, 12, 13, 0.98);
+  background: rgba(251, 248, 245, 0.98);
+  color: var(--charcoal-900);
   opacity: 0;
   pointer-events: none;
   transform: translateY(-12px);
@@ -692,11 +715,11 @@ body::selection {
 }
 
 .mobile-language-links a {
-  color: rgba(243, 238, 229, 0.6);
+  color: var(--stone-500);
 }
 
 .mobile-language-links a[aria-current="page"] {
-  color: var(--paper);
+  color: var(--charcoal-900);
 }
 
 /* ------------------------------------------------------------------ */
@@ -718,20 +741,21 @@ body::selection {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: rgba(243, 238, 229, 0.5);
+  color: var(--stone-500);
   font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  font-family: var(--jj-font-display);
   text-decoration: none;
   transition: color 200ms ease;
 }
 
 .section-rail a:hover {
-  color: rgba(243, 238, 229, 0.85);
+  color: var(--charcoal-700);
 }
 
 .section-rail a.is-active {
-  color: var(--paper);
+  color: var(--charcoal-900);
 }
 
 .section-rail-dot {
@@ -797,7 +821,7 @@ body::selection {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background: radial-gradient(circle 420px at var(--pointer-x) var(--pointer-y), rgba(202, 38, 72, 0.1), transparent 66%);
+  background: radial-gradient(circle 420px at var(--pointer-x) var(--pointer-y), rgba(111, 29, 42, 0.06), transparent 66%);
   pointer-events: none;
 }
 
@@ -869,8 +893,8 @@ body::selection {
 }
 
 .section-dark {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--jj-bg);
+  color: var(--jj-paper);
 }
 
 .eyebrow {
@@ -878,12 +902,13 @@ body::selection {
   align-items: center;
   gap: 0.5em;
   margin: 0 0 24px;
-  font-family: var(--jj-font-mono);
+  font-family: var(--jj-font-display);
   font-size: 10px !important;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.24em;
   line-height: 1.4 !important;
   text-transform: uppercase;
-  color: var(--jj-paper-muted);
+  color: var(--stone-500);
+  font-weight: 500;
 }
 
 .eyebrow::before {
@@ -931,7 +956,8 @@ body::selection {
   position: absolute;
   top: 7vw;
   left: 4vw;
-  color: rgba(243, 238, 229, 0.2);
+  color: rgba(31, 27, 28, 0.2);
+  font-family: var(--jj-font-display);
   font-size: 10px;
   letter-spacing: 0.18em;
 }
@@ -967,7 +993,7 @@ body::selection {
 
 .intro-body p {
   margin: 0;
-  color: rgba(243, 238, 229, 0.72);
+  color: var(--jj-paper-muted);
   font-size: clamp(18px, 2vw, 28px);
   line-height: 1.5;
 }
@@ -977,7 +1003,8 @@ body::selection {
   margin-top: 48px;
   padding-top: 18px;
   border-top: 1px solid var(--line);
-  color: rgba(243, 238, 229, 0.6);
+  color: var(--stone-500);
+  font-family: var(--jj-font-display);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1072,7 +1099,7 @@ body::selection {
 
 .format-preview--photo {
   display: block;
-  background-color: #120c0d;
+  background-color: var(--cream-200);
   background-image: none;
 }
 
@@ -1080,7 +1107,7 @@ body::selection {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(18, 12, 13, 0.82) 0%, transparent 52%);
+  background: linear-gradient(to top, rgba(31, 27, 28, 0.12) 0%, transparent 52%);
   pointer-events: none;
 }
 
@@ -1218,7 +1245,7 @@ body::selection {
 .process-sticky > p:not(.eyebrow) {
   max-width: 500px;
   margin: 36px 0 0;
-  color: rgba(243, 238, 229, 0.58);
+  color: var(--jj-paper-muted);
   font-size: 16px;
   line-height: 1.7;
 }
@@ -1236,7 +1263,7 @@ body::selection {
 .process-signal::before,
 .process-signal::after {
   position: absolute;
-  border: 1px solid rgba(243, 238, 229, 0.1);
+  border: 1px solid rgba(31, 27, 28, 0.1);
   border-radius: 50%;
   content: "";
 }
@@ -1276,7 +1303,9 @@ body::selection {
 
 .process-list li > span {
   color: var(--wine-bright);
+  font-family: var(--jj-font-display);
   font-size: 10px;
+  font-weight: 600;
   letter-spacing: 0.2em;
 }
 
@@ -1292,7 +1321,7 @@ body::selection {
 .process-list p {
   max-width: 560px;
   margin: 0;
-  color: rgba(243, 238, 229, 0.56);
+  color: var(--jj-paper-muted);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -1302,7 +1331,7 @@ body::selection {
   grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
   gap: 5vw 9vw;
   overflow: hidden;
-  background: #f6f3ec;
+  background: var(--cream-75);
   color: var(--ink);
 }
 
@@ -1430,7 +1459,7 @@ body::selection {
 
 .partnership-head h2 {
   max-width: 1080px;
-  color: var(--paper);
+  color: var(--charcoal-900);
 }
 
 .audience-grid {
@@ -1467,7 +1496,7 @@ body::selection {
   position: absolute;
   top: -0.2em;
   right: 0.02em;
-  color: rgba(243, 238, 229, 0.035);
+  color: rgba(31, 27, 28, 0.04);
   font-family: var(--font-serif);
   font-size: clamp(280px, 36vw, 540px);
   line-height: 0.8;
@@ -1496,7 +1525,7 @@ body::selection {
 .audience-grid p {
   max-width: 520px;
   margin: 0;
-  color: rgba(243, 238, 229, 0.62);
+  color: var(--jj-paper-muted);
   font-size: 16px;
   line-height: 1.6;
 }
@@ -1505,9 +1534,9 @@ body::selection {
   margin-top: 36px;
   padding: 0 0 8px;
   border: 0;
-  border-bottom: 1px solid rgba(243, 238, 229, 0.48);
+  border-bottom: 1px solid var(--jj-line);
   background: transparent;
-  color: var(--paper);
+  color: var(--charcoal-900);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1596,22 +1625,22 @@ footer {
   gap: 4vw;
   padding: 56px 4vw;
   border-top: 1px solid var(--line);
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--cream-100);
+  color: var(--charcoal-900);
 }
 
 footer p,
 footer small { margin: 0; }
 
 footer p {
-  color: rgba(243, 238, 229, 0.76);
+  color: var(--charcoal-700);
   font-family: var(--font-serif);
   font-size: 18px;
 }
 
 footer small {
   max-width: 560px;
-  color: rgba(243, 238, 229, 0.58);
+  color: var(--jj-paper-muted);
   font-size: 9px;
   line-height: 1.55;
 }
@@ -1860,9 +1889,11 @@ footer > a:last-child {
 /* ------------------------------------------------------------------ */
 
 .locale-zh-cn {
-  --font-sans: Arial, Helvetica, "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-sans: "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", sans-serif;
   --font-serif: Georgia, "Songti SC", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
-  font-family: var(--font-sans);
+  --jj-font-sans: "Inter", var(--font-sans);
+  font-family: var(--jj-font-sans);
   line-break: strict;
 }
 
@@ -2001,7 +2032,7 @@ footer > a:last-child {
 }
 
 .footer-legal-links a {
-  color: rgba(243, 238, 229, 0.72);
+  color: var(--charcoal-700);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2009,7 +2040,7 @@ footer > a:last-child {
   text-underline-offset: 3px;
 }
 
-.footer-legal-links a:hover { color: var(--paper); }
+.footer-legal-links a:hover { color: var(--jj-wine); }
 
 .locale-zh-cn .footer-legal-links a { font-size: 11px; letter-spacing: 0.08em; }
 
@@ -2017,8 +2048,8 @@ footer > a:last-child {
 
 .legal-shell {
   min-height: 100vh;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--cream-100);
+  color: var(--charcoal-900);
 }
 
 .legal-topbar {
@@ -2048,7 +2079,7 @@ footer > a:last-child {
 
 .legal-effective {
   margin: 0 0 22px;
-  color: rgba(243, 238, 229, 0.62);
+  color: var(--stone-500);
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2060,8 +2091,8 @@ footer > a:last-child {
   margin: 0 0 40px;
   padding: 16px 18px;
   border-left: 3px solid var(--wine-bright);
-  background: rgba(243, 238, 229, 0.05);
-  color: rgba(243, 238, 229, 0.78);
+  background: var(--burgundy-100);
+  color: var(--charcoal-700);
   font-size: 14px;
   line-height: 1.7;
 }
@@ -2079,7 +2110,7 @@ footer > a:last-child {
 .legal-section p,
 .legal-section li {
   margin: 0 0 12px;
-  color: rgba(243, 238, 229, 0.82);
+  color: var(--charcoal-700);
   font-size: 15px;
   line-height: 1.75;
 }
@@ -2087,7 +2118,7 @@ footer > a:last-child {
 .legal-section ul { margin: 0 0 12px; padding-left: 22px; }
 
 .legal-section a {
-  color: var(--paper);
+  color: var(--jj-wine);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -2102,13 +2133,13 @@ footer > a:last-child {
 }
 
 .legal-footer a {
-  color: rgba(243, 238, 229, 0.72);
+  color: var(--charcoal-700);
   font-size: 13px;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.legal-footer a:hover { color: var(--paper); }
+.legal-footer a:hover { color: var(--jj-wine); }
 
 /* Override the home-footer's compact final-link treatment. */
 .legal-footer > a:last-child {
