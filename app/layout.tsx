@@ -8,7 +8,8 @@ const fontLinks = [
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" as const },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href:
+      "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&family=Montserrat:ital,wght@0,400..800;1,400..800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap",
   },
   { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.1.0/index.css" },
 ];
