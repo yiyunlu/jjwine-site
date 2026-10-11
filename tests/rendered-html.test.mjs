@@ -116,10 +116,12 @@ for (const [pathname, expected, lang, canonicalPath] of [
     const meta = localeMeta[lang];
 
     assert.match(html, new RegExp(`<a class="skip-link" href="#main-content">${escape(meta.skip)}</a>`));
-    assert.match(html, /<section class="hero[^"]*" id="main-content" tabindex="-1">/);
+    assert.match(html, /<section class="hero" id="main-content" tabindex="-1">/);
     assert.match(html, /<button class="menu-button"[^>]*aria-expanded="false"[^>]*aria-controls="mobile-menu"/);
     assert.match(html, /<nav class="mobile-menu[^"]*" id="mobile-menu" aria-label="[^"]+"/);
-    assert.match(html, /<nav class="language-links" aria-label="[^"]+"/);
+    assert.match(html, /<nav class="lang-switch" aria-label="[^"]+"/);
+    assert.match(html, /<nav class="desktop-nav" aria-label="[^"]+"/);
+    assert.match(html, /<a class="brand" href="#top"/);
     // Language switch links declare the language of their target and label.
     // (case-insensitive: the SSR serializer emits React's camelCase hrefLang,
     // which HTML parses identically to hreflang)

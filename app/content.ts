@@ -9,13 +9,56 @@ type SiteContent = {
   localeName: string;
   meta: { title: string; description: string };
   a11y: { skipToContent: string; home: string; primaryNav: string; languageNav: string; mobileNav: string; closeDialog: string; formatTags: string; sectionNav: string };
-  nav: { capabilities: string; process: string; quality: string; partnership: string; start: string; menu: string; close: string };
+  nav: {
+    brandTagline: [string, string, string];
+    home: string;
+    formats: string;
+    process: string;
+    quality: string;
+    partnership: string;
+    about: string;
+    start: string;
+    menu: string;
+    close: string;
+  };
   sectionRail: { top: string; capabilities: string; process: string; quality: string; partnership: string; contact: string };
-  hero: { kicker: string; line1: string; emphasis: string; line2: string; copy: string; primary: string; secondary: string; rail: string[] };
+  hero: {
+    eyebrow: string;
+    line1: string;
+    emphasis: string;
+    line2: string;
+    copy: string;
+    pillars: Array<{ icon: "globe" | "gear" | "shield"; title: string; body: string }>;
+    panels: {
+      mainCapTop: string[];
+      mainCapBottom: string;
+      sideCap: string[];
+      mainAlt: string;
+      sideAlt: string;
+      mainNote: string;
+      sideNote: string;
+    };
+    primary: string;
+  };
   heroMotion: SiteHeroMotionCopy;
+  banner: { left: string[]; right: string; placeholder: string; imageAlt: string };
   intro: { kicker: string; title: string; body: string; side: string };
-  capabilities: { kicker: string; title: string; body: string; explore: string; items: Array<{ code: string; title: string; body: string; note: string; tagline: string; tags: string[] }> };
-  process: { kicker: string; title: string; body: string; steps: Array<{ title: string; body: string }> };
+  capabilities: {
+    kicker: string;
+    title: string;
+    titleBreak?: string;
+    body: string;
+    linkLabel: string;
+    explore: string;
+    items: Array<{ code: string; title: string; titleEn?: string; body: string; badge: string; note: string; tagline: string; tags: string[] }>;
+  };
+  process: {
+    kicker: string;
+    title: string;
+    body: string;
+    linkLabel: string;
+    steps: Array<{ icon: "chat" | "file" | "flask" | "gear" | "shield" | "truck"; title: string; body: string }>;
+  };
   quality: { kicker: string; title: string; body: string; badge: string; badgeNote: string; pillars: Array<{ title: string; body: string }> };
   partnership: { kicker: string; title: string; brandTitle: string; brandBody: string; brandLink: string; retailTitle: string; retailBody: string; retailLink: string };
   contact: { kicker: string; title: string; body: string; button: string; note: string };
@@ -31,13 +74,44 @@ export const content: Record<Locale, SiteContent> = {
       description: "End-to-end China production solutions for global wine and beverage brands.",
     },
     a11y: { skipToContent: "Skip to main content", home: "JJWine home", primaryNav: "Primary", languageNav: "Language", mobileNav: "Menu", closeDialog: "Close dialog", formatTags: "Format tags", sectionNav: "Section navigation" },
-    nav: { capabilities: "Capabilities", process: "Process", quality: "Quality", partnership: "Partnership", start: "Start a project", menu: "Menu", close: "Close" },
+    nav: {
+      brandTagline: ["Bridging", "global brands", "to China"],
+      home: "Home",
+      formats: "Formats",
+      process: "Process",
+      quality: "Quality & compliance",
+      partnership: "Partners",
+      about: "About us",
+      start: "Start a project",
+      menu: "Menu",
+      close: "Close",
+    },
     sectionRail: { top: "Home", capabilities: "Formats", process: "Process", quality: "Quality", partnership: "Partners", contact: "Brief" },
     hero: {
-      kicker: "00 / JJWine",
+      eyebrow: "Your partner for wines & beverages in China",
       line1: "Your standards.", emphasis: "Made real", line2: "in China.",
       copy: "JJWine coordinates localization, manufacturing, quality and compliance for global wine and beverage brands.",
-      primary: "Start a project", secondary: "Explore capabilities", rail: ["Localize", "Produce", "Assure"],
+      pillars: [
+        { icon: "globe", title: "Localization", body: "China market and regulatory context" },
+        { icon: "gear", title: "Production coordination", body: "Qualified capacity matched to the project" },
+        { icon: "shield", title: "Quality & compliance", body: "Controls from source to delivery" },
+      ],
+      panels: {
+        mainCapTop: ["Same", "standards", "greater", "possibilities"],
+        mainCapBottom: "Helping global drinks go further in China",
+        sideCap: ["Bottle.", "Can.", "Bag-in-box.", "Made possible."],
+        mainAlt: "Abstract bottling line illustration (placeholder, not a factory photo)",
+        sideAlt: "JJWine formats can product image on dark background",
+        mainNote: "Placeholder illustration · replace with approved factory photography",
+        sideNote: "Formats product image · brand authorization pending",
+      },
+      primary: "Start a project",
+    },
+    banner: {
+      left: ["Good drinks", "& a brighter tomorrow"],
+      right: "Connecting great drinks with China’s market\nand broader possibilities",
+      placeholder: "Illustration placeholder · vineyard photo when authorized",
+      imageAlt: "Vineyard landscape illustration (placeholder, not a photo)",
     },
     heroMotion: {
       pause: "Pause hero animation",
@@ -49,25 +123,30 @@ export const content: Record<Locale, SiteContent> = {
       side: "Brand standard in. Reliable execution out.",
     },
     capabilities: {
-      kicker: "02 / Formats", title: "Built around the product—not a fixed line.",
-      body: "Format, liquid, channel and project requirements are assessed together before the production route is confirmed.",
-      explore: "Explore",
+      kicker: "Product formats",
+      title: "Formats built around your product",
+      titleBreak: "and channel needs.",
+      body: "Flexible production routes aligned to your product positioning and market strategy.",
+      linkLabel: "Explore formats",
+      explore: "Learn more",
       items: [
-        { code: "01", title: "Bottle", body: "Still, sparkling and wine-based products across project-appropriate glass formats and closures.", note: "Glass · closures · secondary packaging", tagline: "750 ml · 375 ml", tags: ["Glass", "Screwcap / Cork", "Private label"] },
-        { code: "02", title: "Can", body: "Contemporary formats for sparkling, wine-based and ready-to-drink concepts, subject to product validation.", note: "Compact · portable · channel-ready", tagline: "250 ml · 375 ml", tags: ["Aluminium", "Single-serve", "Full wrap"] },
-        { code: "03", title: "Bag-in-Box", body: "Efficient multi-serve formats for retail and professional channels, with project-specific material review.", note: "Retail · food service · multi-serve", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Tap dispense", "Low freight"] },
+        { code: "01", title: "Bottle", body: "A classic choice across categories and markets.", badge: "750 ml", note: "Glass · closures · secondary packaging", tagline: "750 ml · 375 ml", tags: ["Glass", "Screwcap / Cork", "Private label"] },
+        { code: "02", title: "Can", body: "Lightweight and portable for contemporary consumption.", badge: "330 ml", note: "Compact · portable · channel-ready", tagline: "250 ml · 375 ml", tags: ["Aluminium", "Single-serve", "Full wrap"] },
+        { code: "03", title: "Bag-in-Box", titleEn: "BIB", body: "Efficient multi-serve formats for retail and professional channels.", badge: "3 L", note: "Retail · food service · multi-serve", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Tap dispense", "Low freight"] },
       ],
     },
     process: {
-      kicker: "03 / Process", title: "A controlled path from standard to shelf.",
-      body: "Every project is scoped around the brand owner's approvals, the target market and the qualified production site.",
+      kicker: "Our process",
+      title: "One brief. Full-chain execution.",
+      body: "From concept to delivery, JJWine works alongside you to make complex production manageable.",
+      linkLabel: "See the process",
       steps: [
-        { title: "Align", body: "Brand brief, target channel, liquid, packaging, volume and approval rules." },
-        { title: "Localize", body: "Translate global specifications into a China-ready product and material plan." },
-        { title: "Validate", body: "Sampling, technical review, artwork and project-specific compliance checks." },
-        { title: "Produce", body: "Coordinated manufacturing at the confirmed production site." },
-        { title: "Release", body: "In-process controls, batch testing, release documents and traceability." },
-        { title: "Deliver", body: "Warehousing and delivery coordination for the agreed channel." },
+        { icon: "chat", title: "Align", body: "Brand goals and market requirements." },
+        { icon: "file", title: "Localize", body: "Formulation, regulation and labelling." },
+        { icon: "flask", title: "Validate", body: "Samples, testing and brand sign-off." },
+        { icon: "gear", title: "Produce", body: "Coordinated manufacturing at the confirmed production site." },
+        { icon: "shield", title: "Release", body: "Quality review and batch release." },
+        { icon: "truck", title: "Deliver", body: "On-time, compliant delivery." },
       ],
     },
     quality: {
@@ -106,12 +185,44 @@ export const content: Record<Locale, SiteContent> = {
     localeName: "简体中文",
     meta: { title: "JJWine — 全球酒饮品牌的中国生产落地伙伴", description: "为全球酒饮品牌提供产品本地化、生产组织、质量治理与合规协调的一站式解决方案。" },
     a11y: { skipToContent: "跳转到主要内容", home: "JJWine 首页", primaryNav: "主导航", languageNav: "语言选择", mobileNav: "菜单", closeDialog: "关闭对话框", formatTags: "包装标签", sectionNav: "板块导航" },
-    nav: { capabilities: "生产能力", process: "合作流程", quality: "质量合规", partnership: "合作对象", start: "启动项目", menu: "菜单", close: "关闭" },
+    nav: {
+      brandTagline: ["Bridging", "global brands", "to China"],
+      home: "首页",
+      formats: "包装形式",
+      process: "合作流程",
+      quality: "质量与合规",
+      partnership: "合作对象",
+      about: "关于我们",
+      start: "启动项目",
+      menu: "菜单",
+      close: "关闭",
+    },
     sectionRail: { top: "首页", capabilities: "生产形式", process: "流程", quality: "质量", partnership: "合作", contact: "需求" },
     hero: {
-      kicker: "00 / JJWine", line1: "全球品牌标准，", emphasis: "在中国", line2: "真正落地。",
-      copy: "JJWine 为全球酒饮品牌统筹产品本地化、生产组织、质量治理与合规协调。",
-      primary: "启动项目", secondary: "查看生产能力", rail: ["本地化", "生产", "质量保证"],
+      eyebrow: "Your partner for wines & beverages in China",
+      line1: "全球品牌标准，", emphasis: "在中国", line2: "真正落地。",
+      copy: "从产品本地化、生产组织到质量治理与交付，一站式统筹。",
+      pillars: [
+        { icon: "globe", title: "本地化落地", body: "理解中国市场与法规" },
+        { icon: "gear", title: "稳定的生产组织", body: "匹配合适的产能与资源" },
+        { icon: "shield", title: "质量合规保障", body: "从源头到交付的全流程管控" },
+      ],
+      panels: {
+        mainCapTop: ["Same", "standards", "greater", "possibilities"],
+        mainCapBottom: "让世界的好酒饮在中国走得更远",
+        sideCap: ["Bottle.", "Can.", "Bag-in-box.", "Made possible."],
+        mainAlt: "抽象灌装线插画（占位，非实拍）",
+        sideAlt: "JJWine Formats 罐装产品图（深色底）",
+        mainNote: "占位插画 · 待替换为已确认出处的合作工厂实拍",
+        sideNote: "Formats 产品图 · 品牌授权待确认",
+      },
+      primary: "启动项目",
+    },
+    banner: {
+      left: ["Good drinks", "& a brighter tomorrow"],
+      right: "连接好酒饮与中国市场\n创造更广阔的可能",
+      placeholder: "插画占位 · 可换授权葡萄园图",
+      imageAlt: "葡萄园远景插画（占位，非实拍）",
     },
     heroMotion: {
       pause: "暂停首页动画",
@@ -123,25 +234,30 @@ export const content: Record<Locale, SiteContent> = {
       side: "输入品牌标准，交付可靠结果。",
     },
     capabilities: {
-      kicker: "02 / 形式", title: "围绕产品匹配能力，而不是套用固定产线。",
-      body: "我们综合评估产品、液体、渠道和项目要求，再确认具体生产与包装方案。",
+      kicker: "Product formats",
+      title: "多种包装形式，",
+      titleBreak: "满足不同品牌需求。",
+      body: "灵活的生产方案，匹配您的产品定位与市场策略。",
+      linkLabel: "了解包装形式",
       explore: "了解更多",
       items: [
-        { code: "01", title: "瓶装", body: "覆盖静止、起泡及葡萄酒基产品，按项目匹配玻璃瓶型、封口和外包装。", note: "瓶型 · 封口 · 二级包装", tagline: "750 ml · 375 ml", tags: ["玻璃瓶", "螺旋盖 / 橡木塞", "自有品牌"] },
-        { code: "02", title: "罐装", body: "适用于起泡、葡萄酒基和即饮产品，具体可行性以产品验证结果为准。", note: "便携 · 现代 · 渠道适配", tagline: "250 ml · 375 ml", tags: ["铝罐", "单人份", "全包覆印刷"] },
-        { code: "03", title: "盒中袋", body: "面向零售和专业渠道的多容量包装，并按项目审核液袋、纸盒与灌装适配。", note: "零售 · 餐饮 · 多人分享", tagline: "3 L · 5 L · 10 L", tags: ["3–10 升", "龙头出酒", "低运费"] },
+        { code: "01", title: "瓶装", body: "经典之选，\n适配多种品类与市场。", badge: "750 ml", note: "瓶型 · 封口 · 二级包装", tagline: "750 ml · 375 ml", tags: ["玻璃瓶", "螺旋盖 / 橡木塞", "自有品牌"] },
+        { code: "02", title: "罐装", body: "轻量、便捷，\n面向新消费场景。", badge: "330 ml", note: "便携 · 现代 · 渠道适配", tagline: "250 ml · 375 ml", tags: ["铝罐", "单人份", "全包覆印刷"] },
+        { code: "03", title: "盒中袋", titleEn: "BIB", body: "高性价比与环保优势，\n适合多种渠道与场景。", badge: "3 L", note: "零售 · 餐饮 · 多人分享", tagline: "3 L · 5 L · 10 L", tags: ["3–10 升", "龙头出酒", "低运费"] },
       ],
     },
     process: {
-      kicker: "03 / 流程", title: "从品牌标准到市场交付，全程受控。",
-      body: "每个项目都围绕品牌方审批要求、目标市场和经确认的生产场地独立制定。",
+      kicker: "Our process",
+      title: "一个需求，全链路承接。",
+      body: "从概念到交付，JJWine 与您并肩，把复杂的事情变简单。",
+      linkLabel: "了解合作流程",
       steps: [
-        { title: "需求对齐", body: "确认品牌需求、目标渠道、液体、包装、数量和审批规则。" },
-        { title: "本地化", body: "把全球规格转化为适合中国生产的产品与物料方案。" },
-        { title: "验证", body: "完成打样、技术评估、包材稿件及项目所需合规核查。" },
-        { title: "生产", body: "在经确认的生产场地组织量产。" },
-        { title: "放行", body: "执行过程控制、批次检测、放行文件与追溯管理。" },
-        { title: "交付", body: "按照约定渠道统筹仓储与交付。" },
+        { icon: "chat", title: "需求对齐", body: "理解品牌目标与市场需求" },
+        { icon: "file", title: "产品本地化", body: "配方、法规与标签合规" },
+        { icon: "flask", title: "验证", body: "样品测试与品牌确认" },
+        { icon: "gear", title: "生产", body: "在经确认的生产场地组织量产。" },
+        { icon: "shield", title: "放行", body: "质量审核与批次放行" },
+        { icon: "truck", title: "交付", body: "按时、合规、高效交付" },
       ],
     },
     quality: {
@@ -180,12 +296,44 @@ export const content: Record<Locale, SiteContent> = {
     localeName: "Español",
     meta: { title: "JJWine — Producción en China conforme a estándares globales", description: "Soluciones integrales de localización, producción, calidad y cumplimiento en China para marcas internacionales de vinos y bebidas." },
     a11y: { skipToContent: "Saltar al contenido principal", home: "Inicio de JJWine", primaryNav: "Principal", languageNav: "Idioma", mobileNav: "Menú", closeDialog: "Cerrar diálogo", formatTags: "Etiquetas de formato", sectionNav: "Navegación de secciones" },
-    nav: { capabilities: "Capacidades", process: "Proceso", quality: "Calidad", partnership: "Colaboración", start: "Iniciar proyecto", menu: "Menú", close: "Cerrar" },
+    nav: {
+      brandTagline: ["Bridging", "global brands", "to China"],
+      home: "Inicio",
+      formats: "Formatos",
+      process: "Proceso",
+      quality: "Calidad y cumplimiento",
+      partnership: "Colaboración",
+      about: "Nosotros",
+      start: "Iniciar proyecto",
+      menu: "Menú",
+      close: "Cerrar",
+    },
     sectionRail: { top: "Inicio", capabilities: "Formatos", process: "Proceso", quality: "Calidad", partnership: "Socios", contact: "Brief" },
     hero: {
-      kicker: "00 / JJWine", line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",
+      eyebrow: "Your partner for wines & beverages in China",
+      line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",
       copy: "JJWine coordina la localización, la producción, la calidad y el cumplimiento para marcas internacionales de vinos y bebidas.",
-      primary: "Iniciar proyecto", secondary: "Ver capacidades", rail: ["Localizar", "Producir", "Asegurar"],
+      pillars: [
+        { icon: "globe", title: "Localización", body: "Mercado y normativa en China" },
+        { icon: "gear", title: "Coordinación de producción", body: "Capacidad cualificada por proyecto" },
+        { icon: "shield", title: "Calidad y cumplimiento", body: "Control de origen a entrega" },
+      ],
+      panels: {
+        mainCapTop: ["Same", "standards", "greater", "possibilities"],
+        mainCapBottom: "Ayudando a las bebidas globales a llegar más lejos en China",
+        sideCap: ["Bottle.", "Can.", "Bag-in-box.", "Made possible."],
+        mainAlt: "Ilustración abstracta de línea de envasado (marcador de posición)",
+        sideAlt: "Imagen de producto en lata JJWine Formats (fondo oscuro)",
+        mainNote: "Ilustración provisional · sustituir por foto de fábrica autorizada",
+        sideNote: "Imagen de producto Formats · autorización de marca pendiente",
+      },
+      primary: "Iniciar proyecto",
+    },
+    banner: {
+      left: ["Good drinks", "& a brighter tomorrow"],
+      right: "Conectar grandes bebidas con el mercado chino\ny ampliar las posibilidades",
+      placeholder: "Marcador de ilustración · foto de viñedo cuando esté autorizada",
+      imageAlt: "Ilustración de viñedo (marcador de posición, no es una foto)",
     },
     heroMotion: {
       pause: "Pausar animación del hero",
@@ -197,25 +345,30 @@ export const content: Record<Locale, SiteContent> = {
       side: "Entra el estándar. Sale una ejecución fiable.",
     },
     capabilities: {
-      kicker: "02 / Formatos", title: "La capacidad se adapta al producto, no al revés.",
-      body: "Evaluamos conjuntamente el formato, el líquido, el canal y los requisitos antes de confirmar la ruta de producción.",
-      explore: "Explorar",
+      kicker: "Product formats",
+      title: "Formatos adaptados",
+      titleBreak: "a su producto y canal.",
+      body: "Rutas de producción flexibles alineadas con su posicionamiento y estrategia de mercado.",
+      linkLabel: "Ver formatos",
+      explore: "Más información",
       items: [
-        { code: "01", title: "Botella", body: "Vinos tranquilos, espumosos y bebidas a base de vino en formatos de vidrio y cierres adecuados al proyecto.", note: "Vidrio · cierres · embalaje", tagline: "750 ml · 375 ml", tags: ["Vidrio", "Tapón / Corcho", "Marca privada"] },
-        { code: "02", title: "Lata", body: "Formatos contemporáneos para conceptos espumosos, a base de vino y listos para beber, sujetos a validación.", note: "Compacto · portátil · para el canal", tagline: "250 ml · 375 ml", tags: ["Aluminio", "Monodosis", "Impresión total"] },
-        { code: "03", title: "Bag-in-Box", body: "Formatos multidosis eficientes para retail y canal profesional, con revisión de materiales por proyecto.", note: "Retail · hostelería · multidosis", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Grifo", "Bajo flete"] },
+        { code: "01", title: "Botella", body: "Opción clásica para múltiples categorías y mercados.", badge: "750 ml", note: "Vidrio · cierres · embalaje", tagline: "750 ml · 375 ml", tags: ["Vidrio", "Tapón / Corcho", "Marca privada"] },
+        { code: "02", title: "Lata", body: "Ligera y práctica para nuevos escenarios de consumo.", badge: "330 ml", note: "Compacto · portátil · para el canal", tagline: "250 ml · 375 ml", tags: ["Aluminio", "Monodosis", "Impresión total"] },
+        { code: "03", title: "Bag-in-Box", titleEn: "BIB", body: "Formatos multidosis eficientes para retail y canal profesional.", badge: "3 L", note: "Retail · hostelería · multidosis", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Grifo", "Bajo flete"] },
       ],
     },
     process: {
-      kicker: "03 / Proceso", title: "Una ruta controlada del estándar al mercado.",
-      body: "Cada proyecto se define según las aprobaciones de la marca, el mercado objetivo y la planta de producción cualificada.",
+      kicker: "Our process",
+      title: "Un brief. Ejecución integral.",
+      body: "Del concepto a la entrega, JJWine le acompaña para hacer manejable la producción compleja.",
+      linkLabel: "Ver el proceso",
       steps: [
-        { title: "Alinear", body: "Brief de marca, canal, líquido, envase, volumen y reglas de aprobación." },
-        { title: "Localizar", body: "Convertir las especificaciones globales en un plan de producto y materiales para China." },
-        { title: "Validar", body: "Muestras, revisión técnica, artes y verificaciones de cumplimiento del proyecto." },
-        { title: "Producir", body: "Fabricación coordinada en la planta de producción confirmada." },
-        { title: "Liberar", body: "Controles en proceso, análisis de lote, documentación y trazabilidad." },
-        { title: "Entregar", body: "Coordinación de almacenamiento y entrega para el canal acordado." },
+        { icon: "chat", title: "Alinear", body: "Objetivos de marca y requisitos de mercado." },
+        { icon: "file", title: "Localizar", body: "Formulación, normativa y etiquetado." },
+        { icon: "flask", title: "Validar", body: "Muestras, pruebas y aprobación de marca." },
+        { icon: "gear", title: "Producir", body: "Fabricación coordinada en la planta de producción confirmada." },
+        { icon: "shield", title: "Liberar", body: "Revisión de calidad y liberación de lote." },
+        { icon: "truck", title: "Entregar", body: "Entrega puntual y conforme." },
       ],
     },
     quality: {
@@ -257,12 +410,44 @@ export const content: Record<Locale, SiteContent> = {
       description: "Solutions complètes de localisation, production, qualité et conformité en Chine pour les marques internationales de vins et boissons.",
     },
     a11y: { skipToContent: "Aller au contenu principal", home: "Accueil JJWine", primaryNav: "Principal", languageNav: "Langue", mobileNav: "Menu", closeDialog: "Fermer la boîte de dialogue", formatTags: "Étiquettes de format", sectionNav: "Navigation des sections" },
-    nav: { capabilities: "Capacités", process: "Processus", quality: "Qualité", partnership: "Partenariat", start: "Démarrer un projet", menu: "Menu", close: "Fermer" },
+    nav: {
+      brandTagline: ["Bridging", "global brands", "to China"],
+      home: "Accueil",
+      formats: "Formats",
+      process: "Processus",
+      quality: "Qualité et conformité",
+      partnership: "Partenariat",
+      about: "À propos",
+      start: "Démarrer un projet",
+      menu: "Menu",
+      close: "Fermer",
+    },
     sectionRail: { top: "Accueil", capabilities: "Formats", process: "Processus", quality: "Qualité", partnership: "Partenaires", contact: "Brief" },
     hero: {
-      kicker: "00 / JJWine", line1: "Vos standards.", emphasis: "Concrétisés", line2: "en Chine.",
+      eyebrow: "Your partner for wines & beverages in China",
+      line1: "Vos standards.", emphasis: "Concrétisés", line2: "en Chine.",
       copy: "JJWine coordonne la localisation, la production, la qualité et la conformité pour les marques internationales de vins et boissons.",
-      primary: "Démarrer un projet", secondary: "Découvrir nos capacités", rail: ["Localiser", "Produire", "Garantir"],
+      pillars: [
+        { icon: "globe", title: "Localisation", body: "Marché et réglementation en Chine" },
+        { icon: "gear", title: "Coordination de production", body: "Capacité qualifiée par projet" },
+        { icon: "shield", title: "Qualité et conformité", body: "Contrôles de la source à la livraison" },
+      ],
+      panels: {
+        mainCapTop: ["Same", "standards", "greater", "possibilities"],
+        mainCapBottom: "Aider les boissons mondiales à aller plus loin en Chine",
+        sideCap: ["Bottle.", "Can.", "Bag-in-box.", "Made possible."],
+        mainAlt: "Illustration abstraite de ligne de conditionnement (placeholder)",
+        sideAlt: "Image produit canette JJWine Formats (fond sombre)",
+        mainNote: "Illustration provisoire · à remplacer par une photo d'usine autorisée",
+        sideNote: "Image produit Formats · autorisation de marque en attente",
+      },
+      primary: "Démarrer un projet",
+    },
+    banner: {
+      left: ["Good drinks", "& a brighter tomorrow"],
+      right: "Relier les grandes boissons au marché chinois\net ouvrir de nouvelles possibilités",
+      placeholder: "Placeholder illustration · photo de vignoble lorsque autorisée",
+      imageAlt: "Illustration de vignoble (placeholder, pas une photo)",
     },
     heroMotion: {
       pause: "Mettre en pause l’animation du hero",
@@ -274,25 +459,30 @@ export const content: Record<Locale, SiteContent> = {
       side: "Le standard entre. L'exécution fiable sort.",
     },
     capabilities: {
-      kicker: "02 / Formats", title: "La capacité s'adapte au produit, pas l'inverse.",
-      body: "Nous évaluons conjointement le format, le liquide, le circuit et les exigences avant de confirmer la route de production.",
-      explore: "Explorer",
+      kicker: "Product formats",
+      title: "Des formats adaptés",
+      titleBreak: "à votre produit et circuit.",
+      body: "Des parcours de production flexibles alignés sur votre positionnement et votre stratégie de marché.",
+      linkLabel: "Découvrir les formats",
+      explore: "En savoir plus",
       items: [
-        { code: "01", title: "Bouteille", body: "Vins tranquilles, effervescents et boissons à base de vin dans des formats de verre et fermetures adaptés au projet.", note: "Verre · fermetures · emballage", tagline: "750 ml · 375 ml", tags: ["Verre", "Bouchon / Liège", "Marque privée"] },
-        { code: "02", title: "Canette", body: "Formats contemporains pour les concepts effervescents, à base de vin et prêts à boire, sous réserve de validation.", note: "Compact · portable · adapté au circuit", tagline: "250 ml · 375 ml", tags: ["Aluminium", "Portion individuelle", "Impression totale"] },
-        { code: "03", title: "Bag-in-Box", body: "Formats multidoses efficaces pour la distribution et la restauration, avec revue des matériaux par projet.", note: "Distribution · restauration · multidoses", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Robinet", "Fret réduit"] },
+        { code: "01", title: "Bouteille", body: "Un choix classique pour de nombreuses catégories et marchés.", badge: "750 ml", note: "Verre · fermetures · emballage", tagline: "750 ml · 375 ml", tags: ["Verre", "Bouchon / Liège", "Marque privée"] },
+        { code: "02", title: "Canette", body: "Légère et pratique pour de nouveaux usages.", badge: "330 ml", note: "Compact · portable · adapté au circuit", tagline: "250 ml · 375 ml", tags: ["Aluminium", "Portion individuelle", "Impression totale"] },
+        { code: "03", title: "Bag-in-Box", titleEn: "BIB", body: "Formats multidoses efficaces pour la distribution et la restauration.", badge: "3 L", note: "Distribution · restauration · multidoses", tagline: "3 L · 5 L · 10 L", tags: ["3–10 L", "Robinet", "Fret réduit"] },
       ],
     },
     process: {
-      kicker: "03 / Processus", title: "Un parcours maîtrisé du standard au marché.",
-      body: "Chaque projet est défini selon les validations de la marque, le marché cible et le site de production qualifié.",
+      kicker: "Our process",
+      title: "Un brief. Une exécution intégrale.",
+      body: "Du concept à la livraison, JJWine vous accompagne pour rendre la production complexe gérable.",
+      linkLabel: "Voir le processus",
       steps: [
-        { title: "Aligner", body: "Brief de marque, circuit, liquide, emballage, volume et règles de validation." },
-        { title: "Localiser", body: "Convertir les spécifications globales en un plan produit et matériaux pour la Chine." },
-        { title: "Valider", body: "Échantillons, revue technique, maquettes et vérifications de conformité du projet." },
-        { title: "Produire", body: "Fabrication coordonnée sur le site de production confirmé." },
-        { title: "Libérer", body: "Contrôles en cours de production, analyses de lot, documentation et traçabilité." },
-        { title: "Livrer", body: "Coordination du stockage et de la livraison pour le circuit convenu." },
+        { icon: "chat", title: "Aligner", body: "Objectifs de marque et exigences de marché." },
+        { icon: "file", title: "Localiser", body: "Formulation, réglementation et étiquetage." },
+        { icon: "flask", title: "Valider", body: "Échantillons, tests et validation de marque." },
+        { icon: "gear", title: "Produire", body: "Fabrication coordonnée sur le site de production confirmé." },
+        { icon: "shield", title: "Libérer", body: "Revue qualité et libération de lot." },
+        { icon: "truck", title: "Livrer", body: "Livraison ponctuelle et conforme." },
       ],
     },
     quality: {

@@ -19,7 +19,7 @@ export function LegalPage({ locale, page }: Props) {
     <main className={`site-shell legal-shell locale-${locale}`}>
       <header className="topbar legal-topbar">
         <a className="wordmark" href={`/${locale}`}>
-          JJ<span>WINE</span>
+          <span className="brand-mark"><b>JJ</b>WINE</span>
         </a>
         <nav className="language-links" aria-label={ui.languageNav}>
           {localeLinks.map((item) => (

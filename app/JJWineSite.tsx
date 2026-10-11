@@ -1,31 +1,37 @@
 "use client";
 
-import type { CSSProperties, FormEvent, MouseEvent, PointerEvent } from "react";
+import type { FormEvent, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import { content, type Locale } from "./content";
-import { HeroMotionStage } from "./HeroMotionStage";
+import { SiteIcon, SiteIconSprites } from "./SiteIcons";
 import { localeLinks } from "./i18n";
 
 type Props = { locale: Locale };
 
-function Eyebrow({ children, className = "eyebrow" }: { children: string; className?: string }) {
-  const parts = children.split(" / ");
-  if (parts.length < 2) return <p className={className}>{children}</p>;
+type SectionId = "top" | "intro" | "capabilities" | "process" | "quality" | "partnership" | "contact";
+const navTrackSectionIds: SectionId[] = ["top", "intro", "capabilities", "process", "quality", "partnership", "contact"];
+
+function GlobeIcon() {
   return (
-    <p className={className}>
-      <span className="eyebrow-num">{parts[0]}</span>
-      <span> / {parts.slice(1).join(" / ")}</span>
-    </p>
+    <svg className="lang-globe" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M3 12h18M12 3c2.6 2.8 3.9 5.8 3.9 9s-1.3 6.2-3.9 9c-2.6-2.8-3.9-5.8-3.9-9S9.4 5.8 12 3z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
   );
 }
 
-type SectionId = "top" | "capabilities" | "process" | "quality" | "partnership" | "contact";
-const sectionIds: SectionId[] = ["top", "capabilities", "process", "quality", "partnership", "contact"];
+function MenuIcon() {
+  return (
+    <svg className="menu-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
 
-const formatPreviewPhotos: Partial<Record<string, string>> = {
-  "01": "/media/formats/bottle.webp",
-  "02": "/media/formats/can.webp",
-  "03": "/media/formats/bib.webp",
+const formatV2Images: Record<string, string> = {
+  "01": "/media/v2/fmt-bottle-trio.webp",
+  "02": "/media/v2/fmt-can.webp",
+  "03": "/media/v2/fmt-bib.webp",
 };
 
 export function JJWineSite({ locale }: Props) {
@@ -70,26 +76,8 @@ export function JJWineSite({ locale }: Props) {
     );
     revealElements.forEach((element) => observer.observe(element));
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let ticking = false;
-    const updateScroll = () => {
-      document.documentElement.style.setProperty(
-        "--hero-shift",
-        `${Math.min(window.scrollY * 0.12, 130)}px`,
-      );
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScroll);
-        ticking = true;
-      }
-    };
-    if (!reducedMotion.matches) window.addEventListener("scroll", onScroll, { passive: true });
-
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
       document.documentElement.classList.remove("motion-ready");
     };
   }, [locale]);
@@ -135,7 +123,7 @@ export function JJWineSite({ locale }: Props) {
     );
     const headerBackground = Array.from(
       siteShellRef.current?.querySelectorAll<HTMLElement>(
-        "header > .wordmark, header .desktop-nav, header .language-links, header .nav-cta",
+        "header .brand, header .desktop-nav, header .lang-switch, header .nav-cta",
       ) ?? [],
     );
     const background = [...pageBackground, ...headerBackground];
@@ -197,7 +185,7 @@ export function JJWineSite({ locale }: Props) {
 
   // Track active section for the section rail navigation.
   useEffect(() => {
-    const sectionElements = sectionIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    const sectionElements = navTrackSectionIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
     if (sectionElements.length === 0) return;
 
     const observer = new IntersectionObserver(
@@ -216,12 +204,6 @@ export function JJWineSite({ locale }: Props) {
     sectionElements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
-
-  const onPointerMove = (event: PointerEvent<HTMLElement>) => {
-    if (event.pointerType === "touch") return;
-    event.currentTarget.style.setProperty("--pointer-x", `${event.clientX}px`);
-    event.currentTarget.style.setProperty("--pointer-y", `${event.clientY}px`);
-  };
 
   const downloadBrief = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -249,66 +231,83 @@ export function JJWineSite({ locale }: Props) {
   };
 
   return (
-    <main className={`site-shell locale-${locale}`} id="top" ref={siteShellRef} onPointerMove={onPointerMove}>
+    <main className={`site-shell locale-${locale}`} id="top" ref={siteShellRef}>
+      <SiteIconSprites />
       <a className="skip-link" href="#main-content">{copy.a11y.skipToContent}</a>
-      <nav className="section-rail" aria-label={copy.a11y.sectionNav}>
-        {sectionIds.map((id) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={activeSection === id ? "is-active" : ""}
-            aria-current={activeSection === id ? "true" : undefined}
-          >
-            <span className="section-rail-dot" aria-hidden="true" />
-            <span className="section-rail-label">{copy.sectionRail[id]}</span>
-          </a>
-        ))}
-      </nav>
       <header className="topbar">
-        <a className="wordmark" href="#top" aria-label={copy.a11y.home}>
-          JJ<span>WINE</span>
-        </a>
-        <nav className="desktop-nav" aria-label={copy.a11y.primaryNav}>
-          <a href="#capabilities">{copy.nav.capabilities}</a>
-          <a href="#process">{copy.nav.process}</a>
-          <a href="#quality">{copy.nav.quality}</a>
-          <a href="#partnership">{copy.nav.partnership}</a>
-        </nav>
-        <div className="topbar-actions">
-          <nav className="language-links" aria-label={copy.a11y.languageNav}>
-            {localeLinks.map((item) => (
-              <a
-                aria-current={item.locale === locale ? "page" : undefined}
-                href={`/${item.locale}`}
-                hrefLang={item.lang}
-                key={item.locale}
-                lang={item.lang}
-              >
-                {item.short}
-              </a>
-            ))}
+        <div className="topbar-inner">
+          <a className="brand" href="#top" aria-label={copy.a11y.home}>
+            <span className="brand-mark"><b>JJ</b>WINE</span>
+            <span className="brand-tag">
+              {copy.nav.brandTagline.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </span>
+          </a>
+          <nav className="desktop-nav" aria-label={copy.a11y.primaryNav}>
+            <a href="#top" className={activeSection === "top" ? "is-active" : undefined} aria-current={activeSection === "top" ? "page" : undefined}>
+              {copy.nav.home}
+            </a>
+            <a href="#capabilities" className={activeSection === "capabilities" ? "is-active" : undefined}>
+              {copy.nav.formats}
+            </a>
+            <a href="#process" className={activeSection === "process" ? "is-active" : undefined}>
+              {copy.nav.process}
+            </a>
+            <a href="#quality" className={activeSection === "quality" ? "is-active" : undefined}>
+              {copy.nav.quality}
+            </a>
+            <a href="#partnership" className={activeSection === "partnership" ? "is-active" : undefined}>
+              {copy.nav.partnership}
+            </a>
+            <a href="#intro" className={activeSection === "intro" ? "is-active" : undefined}>
+              {copy.nav.about}
+            </a>
           </nav>
-          <button className="nav-cta" type="button" onClick={openBrief}>
-            {copy.nav.start}
-          </button>
-          <button
-            className="menu-button"
-            ref={menuButtonRef}
-            type="button"
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMenuOpen((current) => !current)}
-          >
-            {menuOpen ? copy.nav.close : copy.nav.menu}
-          </button>
+          <div className="topbar-actions">
+            <nav className="lang-switch" aria-label={copy.a11y.languageNav}>
+              <GlobeIcon />
+              {localeLinks.map((item, index) => (
+                <span className="lang-switch-item" key={item.locale}>
+                  {index > 0 ? <span className="lang-sep" aria-hidden="true">|</span> : null}
+                  <a
+                    aria-current={item.locale === locale ? "page" : undefined}
+                    className={item.locale === locale ? "is-current" : undefined}
+                    href={`/${item.locale}`}
+                    hrefLang={item.lang}
+                    lang={item.lang}
+                  >
+                    {item.short}
+                  </a>
+                </span>
+              ))}
+            </nav>
+            <button className="nav-cta" type="button" onClick={openBrief}>
+              {copy.nav.start} <span className="nav-cta-arrow" aria-hidden="true">→</span>
+            </button>
+            <button
+              className="menu-button"
+              ref={menuButtonRef}
+              type="button"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? copy.nav.close : copy.nav.menu}
+              onClick={() => setMenuOpen((current) => !current)}
+            >
+              <MenuIcon />
+              <span className="menu-button-label">{menuOpen ? copy.nav.close : copy.nav.menu}</span>
+            </button>
+          </div>
         </div>
       </header>
 
       <nav className={`mobile-menu ${menuOpen ? "is-open" : ""}`} id="mobile-menu" ref={mobileMenuRef} aria-label={copy.a11y.mobileNav}>
-        <a href="#capabilities" onClick={() => setMenuOpen(false)}>{copy.nav.capabilities}</a>
+        <a href="#top" onClick={() => setMenuOpen(false)}>{copy.nav.home}</a>
+        <a href="#capabilities" onClick={() => setMenuOpen(false)}>{copy.nav.formats}</a>
         <a href="#process" onClick={() => setMenuOpen(false)}>{copy.nav.process}</a>
         <a href="#quality" onClick={() => setMenuOpen(false)}>{copy.nav.quality}</a>
         <a href="#partnership" onClick={() => setMenuOpen(false)}>{copy.nav.partnership}</a>
+        <a href="#intro" onClick={() => setMenuOpen(false)}>{copy.nav.about}</a>
         <div className="mobile-language-links">
           {localeLinks.map((item) => (
             <a
@@ -328,184 +327,187 @@ export function JJWineSite({ locale }: Props) {
         </div>
       </nav>
 
-      <section className="hero grid-bg" id="main-content" tabIndex={-1}>
-        <div className="pointer-glow" aria-hidden="true" />
-        <HeroMotionStage copy={copy.heroMotion} />
+      <div className="home-v2">
+        <section className="hero" id="main-content" tabIndex={-1}>
+          <div className="hero-copy">
+            <p className="eyebrow">{copy.hero.eyebrow}</p>
+            <h1>
+              {copy.hero.line1}
+              <br />
+              <em>{copy.hero.emphasis}</em>
+              {copy.hero.line2 ? ` ${copy.hero.line2}` : ""}
+            </h1>
+            <p className="lead">{copy.hero.copy}</p>
+            <hr className="rule" />
+            <ul className="pillars">
+              {copy.hero.pillars.map((pillar) => (
+                <li key={pillar.title}>
+                  <SiteIcon name={pillar.icon} className="ico-lg" />
+                  <div>
+                    <h3>{pillar.title}</h3>
+                    <p>{pillar.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="hero-media">
+            <figure className="panel panel-main">
+              <img src="/media/v2/hero-line.svg" alt={copy.hero.panels.mainAlt} />
+              <figcaption className="cap-top">
+                {copy.hero.panels.mainCapTop.map((line) => (
+                  <span key={line}>{line}<br /></span>
+                ))}
+              </figcaption>
+              <figcaption className="cap-bottom">{copy.hero.panels.mainCapBottom}</figcaption>
+              <span className="badge badge-placeholder">{copy.hero.panels.mainNote}</span>
+            </figure>
+            <figure className="panel panel-side">
+              <img src="/media/v2/hero-can-dark.jpg" alt={copy.hero.panels.sideAlt} />
+              <figcaption className="cap-side">
+                {copy.hero.panels.sideCap.map((line) => (
+                  <span key={line}>{line}<br /></span>
+                ))}
+              </figcaption>
+              <span className="badge badge-placeholder">{copy.hero.panels.sideNote}</span>
+            </figure>
+          </div>
+        </section>
 
-        <div className="hero-content">
-          <div className="hero-kicker">
-            {copy.hero.kicker.split(" / ").map((part, i) => (
-              i === 0 ? <span key={i} className="kicker-num">{part}</span> : <span key={i}> / {part}</span>
+        <section className="formats" id="capabilities">
+          <div className="v2-container formats-grid">
+            <div className="sec-intro">
+              <p className="eyebrow">{copy.capabilities.kicker}</p>
+              <h2>
+                {copy.capabilities.title}
+                {copy.capabilities.titleBreak ? <><br />{copy.capabilities.titleBreak}</> : null}
+              </h2>
+              <p>{copy.capabilities.body}</p>
+              <a className="link-arrow" href="#capabilities">
+                {copy.capabilities.linkLabel} <SiteIcon name="arrow" className="ico-sm" />
+              </a>
+            </div>
+            {copy.capabilities.items.map((item) => (
+              <article className="card fmt-card" key={item.code}>
+                <div className="fmt-img">
+                  <img src={formatV2Images[item.code]} alt={item.title} />
+                </div>
+                <div className="fmt-body">
+                  <h3>
+                    {item.title}
+                    {item.titleEn ? <> <span className="en">{item.titleEn}</span></> : null}
+                  </h3>
+                  <p>{item.body}</p>
+                  <span className="badge badge-soft">{item.badge}</span>
+                  <button className="link-arrow sm" type="button" onClick={openBrief}>
+                    {copy.capabilities.explore} <SiteIcon name="arrow" className="ico-sm" />
+                  </button>
+                </div>
+              </article>
             ))}
           </div>
-          <h1>
-            {copy.hero.line1}
-            <br />
-            <span className="grad-word">{copy.hero.emphasis}</span> {copy.hero.line2}
-          </h1>
-          <p className="hero-copy">{copy.hero.copy}</p>
-          <div className="hero-actions">
-            <button className="button button-primary" type="button" onClick={openBrief}>
-              {copy.hero.primary} <span aria-hidden="true">→</span>
-            </button>
-            <a className="button button-outline" href="#capabilities">
-              {copy.hero.secondary} <span aria-hidden="true">↗</span>
-            </a>
+        </section>
+
+        <section className="process" id="process">
+          <div className="v2-container process-grid">
+            <div className="sec-intro">
+              <p className="eyebrow">{copy.process.kicker}</p>
+              <h2>{copy.process.title}</h2>
+              <p>{copy.process.body}</p>
+              <a className="link-arrow" href="#process">
+                {copy.process.linkLabel} <SiteIcon name="arrow" className="ico-sm" />
+              </a>
+            </div>
+            <ol className="steps">
+              {copy.process.steps.map((step, index) => (
+                <li key={step.title}>
+                  <span className="step-n">{String(index + 1).padStart(2, "0")}</span>
+                  <SiteIcon name={step.icon} className="ico-md" />
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
+        </section>
 
-        <div className="hero-rail" aria-hidden="true">
-          {copy.hero.rail.map((item, index) => (
-            <span className="rail-item" key={item}>
-              <b>{item}</b>
-              {index < copy.hero.rail.length - 1 ? <i /> : null}
-            </span>
-          ))}
-        </div>
-      </section>
+        <section className="banner" id="vineyard" aria-label={copy.banner.imageAlt}>
+          <img src="/media/v2/vineyard.svg" alt="" />
+          <p className="banner-left">
+            {copy.banner.left.map((line) => (
+              <span key={line}>{line}<br /></span>
+            ))}
+          </p>
+          <p className="banner-right">{copy.banner.right}</p>
+          <span className="badge badge-placeholder on-banner">{copy.banner.placeholder}</span>
+        </section>
 
-      <section className="intro-section section-dark grid-bg">
-        <div className="section-index" aria-hidden="true">01</div>
-        <div className="intro-grid">
-          <div data-reveal>
-            <Eyebrow>{copy.intro.kicker}</Eyebrow>
-            <h2>{copy.intro.title}</h2>
+        <section className="home-light-section" id="intro">
+          <div className="about-grid">
+            <div>
+              <p className="eyebrow">{copy.intro.kicker}</p>
+              <h2>{copy.intro.title}</h2>
+            </div>
+            <div>
+              <p className="section-lead">{copy.intro.body}</p>
+              <p className="section-lead">{copy.intro.side}</p>
+            </div>
           </div>
-          <div className="intro-body" data-reveal>
-            <p>{copy.intro.body}</p>
-            <span>{copy.intro.side}</span>
-          </div>
-        </div>
-        <div className="red-thread red-thread-intro" aria-hidden="true" />
-      </section>
+        </section>
 
-      <section className="capabilities-section section-dark" id="capabilities">
-        <div className="section-head" data-reveal>
-          <div>
-            <Eyebrow>{copy.capabilities.kicker}</Eyebrow>
-            <h2>{copy.capabilities.title}</h2>
-          </div>
-          <p>{copy.capabilities.body}</p>
-        </div>
-        <div className="format-grid">
-          {copy.capabilities.items.map((item, index) => {
-            const previewPhoto = formatPreviewPhotos[item.code];
-            return (
-            <article
-              className="format-card"
-              data-reveal
-              key={item.title}
-              style={{ "--card-delay": `${index * 100}ms` } as CSSProperties}
-            >
-              <div
-                className={`format-preview${previewPhoto ? " format-preview--photo" : ""}`}
-                {...(previewPhoto ? {} : { "aria-hidden": true })}
-              >
-                {previewPhoto ? (
-                  <img
-                    className={`format-photo${item.code === "02" ? " format-photo--contain" : ""}`}
-                    src={previewPhoto}
-                    alt={item.title}
-                  />
-                ) : (
-                  <div className="format-orb" />
-                )}
-                <span className="format-tagline">{item.tagline}</span>
-              </div>
-              <div className="format-card-content">
-                <span>{item.code}</span>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-                <ul className="format-tags" aria-label={copy.a11y.formatTags}>
-                  {item.tags.map((tag) => (
-                    <li key={tag}>{tag}</li>
-                  ))}
-                </ul>
-                <a className="format-link" href="#contact" onClick={(event) => { event.preventDefault(); openBrief(event); }}>
-                  {copy.capabilities.explore} <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="process-section section-dark grid-bg" id="process">
-        <div className="process-sticky">
-          <Eyebrow>{copy.process.kicker}</Eyebrow>
-          <h2>{copy.process.title}</h2>
-          <p>{copy.process.body}</p>
-          <div className="process-signal" aria-hidden="true"><span /></div>
-        </div>
-        <ol className="process-list">
-          {copy.process.steps.map((step, index) => (
-            <li data-reveal key={step.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <div><h3>{step.title}</h3><p>{step.body}</p></div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="quality-section" id="quality">
-        <div className="quality-lead" data-reveal>
-          <Eyebrow>{copy.quality.kicker}</Eyebrow>
+        <section className="home-light-section" id="quality">
+          <p className="eyebrow">{copy.quality.kicker}</p>
           <h2>{copy.quality.title}</h2>
-          <p>{copy.quality.body}</p>
-        </div>
-        <div className="quality-badge" data-reveal>
-          <span>{copy.quality.badge}</span>
-          <small>{copy.quality.badgeNote}</small>
-          <i aria-hidden="true" />
-        </div>
-        <div className="quality-grid">
-          {copy.quality.pillars.map((pillar, index) => (
-            <article data-reveal key={pillar.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.body}</p>
+          <p className="section-lead">{copy.quality.body}</p>
+          <div className="quality-badge-light">
+            <span>{copy.quality.badge}</span>
+            <small>{copy.quality.badgeNote}</small>
+          </div>
+          <div className="quality-grid-light">
+            {copy.quality.pillars.map((pillar) => (
+              <article key={pillar.title}>
+                <h3>{pillar.title}</h3>
+                <p>{pillar.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="home-light-section" id="partnership">
+          <p className="eyebrow">{copy.partnership.kicker}</p>
+          <h2>{copy.partnership.title}</h2>
+          <div className="audience-grid-light">
+            <article>
+              <span className="audience-mark" aria-hidden="true">G</span>
+              <div>
+                <h3>{copy.partnership.brandTitle}</h3>
+                <p>{copy.partnership.brandBody}</p>
+                <button type="button" onClick={openBrief}>{copy.partnership.brandLink} ↗</button>
+              </div>
             </article>
-          ))}
-        </div>
-      </section>
+            <article>
+              <span className="audience-mark" aria-hidden="true">R</span>
+              <div>
+                <h3>{copy.partnership.retailTitle}</h3>
+                <p>{copy.partnership.retailBody}</p>
+                <button type="button" onClick={openBrief}>{copy.partnership.retailLink} ↗</button>
+              </div>
+            </article>
+          </div>
+        </section>
 
-      <section className="partnership-section section-dark grid-bg" id="partnership">
-        <div className="section-head partnership-head" data-reveal>
-          <div><Eyebrow>{copy.partnership.kicker}</Eyebrow><h2>{copy.partnership.title}</h2></div>
-        </div>
-        <div className="audience-grid">
-          <article data-reveal>
-            <span className="audience-mark" aria-hidden="true">G</span>
-            <div>
-              <h3>{copy.partnership.brandTitle}</h3>
-              <p>{copy.partnership.brandBody}</p>
-              <button type="button" onClick={openBrief}>{copy.partnership.brandLink} ↗</button>
-            </div>
-          </article>
-          <article data-reveal>
-            <span className="audience-mark" aria-hidden="true">R</span>
-            <div>
-              <h3>{copy.partnership.retailTitle}</h3>
-              <p>{copy.partnership.retailBody}</p>
-              <button type="button" onClick={openBrief}>{copy.partnership.retailLink} ↗</button>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="contact-section" id="contact">
-        <div className="contact-orbit" aria-hidden="true"><i /><i /><i /></div>
-        <div className="contact-content" data-reveal>
-          <Eyebrow>{copy.contact.kicker}</Eyebrow>
-          <h2>{copy.contact.title}</h2>
-          <p>{copy.contact.body}</p>
-          <button className="button button-dark" type="button" onClick={openBrief}>
-            {copy.contact.button} <span aria-hidden="true">↗</span>
-          </button>
-          <small>{copy.contact.note}</small>
-        </div>
-      </section>
+        <section className="home-light-section" id="contact">
+          <div className="contact-panel">
+            <p className="eyebrow">{copy.contact.kicker}</p>
+            <h2>{copy.contact.title}</h2>
+            <p className="section-lead">{copy.contact.body}</p>
+            <button className="button button-primary" type="button" onClick={openBrief}>
+              {copy.contact.button} <span aria-hidden="true">→</span>
+            </button>
+            <small>{copy.contact.note}</small>
+          </div>
+        </section>
+      </div>
 
       <footer>
         <a className="wordmark footer-mark" href="#top">JJ<span>WINE</span></a>
