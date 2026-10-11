@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./v2-home.css";
 
 :root {
   /* UI V2 replica-90 primitives (cream + burgundy) */
@@ -68,6 +69,7 @@
   --jj-gutter: clamp(20px, 4vw, 56px);
   --jj-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --jj-dur: 320ms;
+  --header-h: 76px;
 }
 
 * {
@@ -138,31 +140,6 @@ button {
   min-height: 100vh;
   overflow: hidden;
   background: var(--cream-100);
-}
-
-.topbar {
-  position: absolute;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 4vw;
-  border-bottom: 1px solid var(--line);
-}
-
-.wordmark {
-  font-family: var(--jj-font-display);
-  font-size: 20px;
-  font-weight: 620;
-  font-stretch: 118%;
-  letter-spacing: -0.02em;
-}
-
-.wordmark span {
-  color: var(--jj-wine);
 }
 
 .topbar-meta {
@@ -483,8 +460,16 @@ button {
 }
 
 @media (max-width: 760px) {
-  .topbar {
-    padding: 22px 20px;
+  :root {
+    --header-h: 64px;
+  }
+
+  .brand-tag {
+    display: none;
+  }
+
+  .topbar-inner {
+    padding: 0 20px;
   }
 
   .topbar-meta > span {
@@ -572,70 +557,143 @@ body::selection {
 }
 
 .topbar {
-  position: fixed;
+  position: sticky;
   z-index: 50;
-  padding-top: 22px;
-  padding-bottom: 22px;
+  top: 0;
+  width: 100%;
   background: var(--cream-100);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(10px);
 }
 
-.desktop-nav {
+.topbar-inner {
   display: flex;
+  width: 100%;
+  max-width: 1600px;
+  height: var(--header-h);
   align-items: center;
-  gap: clamp(18px, 2.2vw, 38px);
-  margin-left: auto;
-  margin-right: 4vw;
+  gap: clamp(16px, 2vw, 32px);
+  margin: 0 auto;
+  padding: 0 var(--jj-gutter);
 }
 
-.desktop-nav a,
-.language-links a,
-.nav-cta,
-.menu-button {
-  font-size: 10px;
-  letter-spacing: 0.1em;
+.brand {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-mark {
+  color: #626061;
+  font-family: var(--jj-font-display);
+  font-size: clamp(26px, 2.4vw, 35px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.brand-mark b {
+  color: var(--jj-wine);
+  font-weight: 700;
+}
+
+.brand-tag {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--line);
+  padding-left: 16px;
+  color: var(--stone-500);
+  font-family: var(--jj-font-display);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
   text-transform: uppercase;
 }
 
+.wordmark {
+  font-family: var(--jj-font-display);
+  font-size: clamp(26px, 2.4vw, 35px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #626061;
+}
+
+.wordmark span,
+.wordmark b {
+  color: var(--jj-wine);
+  font-weight: 700;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.6vw, 46px);
+  margin: 0 auto;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .desktop-nav a {
-  position: relative;
+  padding: 6px 2px;
   color: var(--charcoal-700);
-  transition: color 180ms ease;
+  transition: color 180ms ease, box-shadow 180ms ease;
 }
 
-.desktop-nav a::after {
-  position: absolute;
-  right: 0;
-  bottom: -7px;
-  left: 0;
-  height: 1px;
-  background: var(--wine-bright);
-  content: "";
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 180ms ease;
-}
-
-.desktop-nav a:hover {
+.desktop-nav a:hover,
+.desktop-nav a.is-active {
   color: var(--jj-wine);
 }
 
-.desktop-nav a:hover::after {
-  transform: scaleX(1);
-}
-
-.topbar-actions,
-.language-links {
-  display: flex;
-  align-items: center;
+.desktop-nav a.is-active {
+  box-shadow: inset 0 -2px var(--jj-wine);
 }
 
 .topbar-actions {
-  gap: 24px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--stone-500);
+}
+
+.lang-switch-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-sep {
+  opacity: 0.5;
+}
+
+.lang-switch a {
+  color: inherit;
+}
+
+.lang-switch a.is-current,
+.lang-switch a[aria-current="page"] {
+  color: var(--charcoal-900);
+  font-weight: 600;
+}
+
+.lang-globe {
+  flex-shrink: 0;
 }
 
 .language-links {
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -656,13 +714,20 @@ body::selection {
 }
 
 .nav-cta {
-  min-height: 34px;
-  padding: 0 16px;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: var(--jj-wine);
   color: #fff;
   font-family: var(--jj-font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
   transition: background 180ms ease, color 180ms ease;
 }
 
@@ -671,8 +736,33 @@ body::selection {
   color: #fff;
 }
 
+.nav-cta-arrow {
+  font-size: 14px;
+  line-height: 1;
+}
+
 .menu-button {
   display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--cream-50);
+  color: var(--charcoal-900);
+}
+
+.menu-button-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .mobile-menu {
@@ -1781,12 +1871,14 @@ footer > a:last-child {
   to { opacity: 1; }
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1180px) {
   .desktop-nav,
-  .language-links,
+  .lang-switch,
   .nav-cta { display: none; }
 
-  .menu-button { display: block; }
+  .menu-button { display: inline-flex; }
+
+  .topbar-inner { justify-content: space-between; }
 
   .topbar-actions { margin-left: auto; }
 
@@ -1809,8 +1901,6 @@ footer > a:last-child {
 }
 
 @media (max-width: 760px) {
-  .topbar { padding: 18px 20px; }
-
   .hero { min-height: 900px; }
 
   .hero-content { transform: none; }
@@ -1973,6 +2063,7 @@ footer > a:last-child {
 
 .locale-zh-cn .hero-kicker,
 .locale-zh-cn .desktop-nav a,
+.locale-zh-cn .lang-switch,
 .locale-zh-cn .language-links a,
 .locale-zh-cn .nav-cta,
 .locale-zh-cn .menu-button,

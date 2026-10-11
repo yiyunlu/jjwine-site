@@ -32,7 +32,7 @@ const locales = [
 ];
 
 // The four in-page destinations the mobile menu offers.
-const sectionTargets = ["#capabilities", "#process", "#quality", "#partnership"];
+const sectionTargets = ["#top", "#capabilities", "#process", "#quality", "#partnership", "#intro"];
 
 function extractMobileMenu(html) {
   const match = html.match(/<nav class="mobile-menu[^"]*" id="mobile-menu"[\s\S]*?<\/nav>/);
