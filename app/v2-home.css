@@ -82,11 +82,14 @@
   top: 12px;
   right: 12px;
   z-index: 2;
-  height: 22px;
+  height: auto;
+  max-width: calc(100% - 24px);
   border: 1px dashed rgba(111, 29, 42, 0.45);
   background: rgba(253, 250, 245, 0.92);
   color: var(--charcoal-700);
   font-size: 10.5px;
+  line-height: 1.35;
+  white-space: normal;
 }
 
 .home-v2 .card {
@@ -97,11 +100,18 @@
   box-shadow: 0 1px 2px rgba(31, 27, 28, 0.04), 0 6px 24px -12px rgba(31, 27, 28, 0.12);
 }
 
-/* Hero */
+/* Hero
+   globals.css still has the pre-V2 full-viewport .hero / .hero-copy rules
+   (padding, min(34vw) left margin, max-width). Those leak onto this block
+   and shove the copy into the panels. Reset them here. */
 .home-v2 .hero {
   display: grid;
-  grid-template-columns: 44fr 56fr;
+  grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+  align-items: stretch;
+  position: relative;
   min-height: clamp(340px, 25.5vw, 440px);
+  height: auto;
+  padding: 0;
   border-bottom: 1px solid var(--line);
   background: var(--cream-100);
 }
@@ -110,10 +120,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(24px, 2.6vw, 40px) clamp(20px, 2.4vw, 40px) 28px var(--jj-gutter);
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: clamp(24px, 2.6vw, 40px) clamp(16px, 2vw, 36px) clamp(20px, 2vw, 32px) var(--jj-gutter);
+  color: var(--charcoal-900);
+  font-size: inherit;
+  line-height: normal;
+  container-type: inline-size;
 }
 
 .home-v2 .hero h1 {
+  position: static;
+  max-width: none;
   margin: 14px 0 12px;
   color: var(--charcoal-900);
   font-family: var(--jj-font-sans);
@@ -125,7 +144,9 @@
 
 .home-v2 .hero h1 em {
   color: var(--burgundy-700);
+  font-family: inherit;
   font-style: normal;
+  font-weight: inherit;
 }
 
 .home-v2 .hero .lead {
@@ -146,8 +167,9 @@
 
 .home-v2 .pillars {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(3, minmax(0, max-content));
   justify-content: start;
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -155,9 +177,10 @@
 
 .home-v2 .pillars li {
   display: flex;
+  min-width: 0;
   gap: 10px;
   align-items: flex-start;
-  padding: 0 clamp(10px, 1.1vw, 18px);
+  padding: 0 clamp(8px, 1vw, 16px);
 }
 
 .home-v2 .pillars li:first-child {
@@ -176,19 +199,24 @@
 .home-v2 .pillars h3 {
   font-size: 13px;
   font-weight: 700;
+  overflow-wrap: break-word;
 }
 
 .home-v2 .pillars p {
   margin-top: 2px;
   color: var(--stone-500);
   font-size: 11px;
-  white-space: nowrap;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .home-v2 .hero-media {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: 3px;
+  min-width: 0;
+  min-height: 100%;
   background: var(--cream-100);
 }
 
@@ -688,6 +716,25 @@
 
   .home-v2 .sec-intro h2 {
     white-space: normal;
+  }
+}
+
+/* Around 1024 the copy column is too narrow for three nowrap pillars.
+   Stack them in the left column so titles stay intact and the panels
+   keep the right-hand 56% instead of being crushed. */
+@container (max-width: 420px) {
+  .home-v2 .pillars {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .home-v2 .pillars li,
+  .home-v2 .pillars li:first-child {
+    padding: 0;
+  }
+
+  .home-v2 .pillars li + li {
+    border-left: 0;
   }
 }
 
