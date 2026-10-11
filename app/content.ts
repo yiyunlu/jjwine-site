@@ -1,5 +1,19 @@
 export { locales, type Locale } from "./i18n";
 
+export type SiteHeroMotionCopy = {
+  source: string;
+  produce: string;
+  deliver: string;
+  metricSource: string;
+  metricProduce: string;
+  metricDeliver: string;
+  formatBottle: string;
+  formatCan: string;
+  formatBib: string;
+  pause: string;
+  play: string;
+};
+
 type SiteContent = {
   localeName: string;
   meta: { title: string; description: string };
@@ -7,6 +21,7 @@ type SiteContent = {
   nav: { capabilities: string; process: string; quality: string; partnership: string; start: string; menu: string; close: string };
   sectionRail: { top: string; capabilities: string; process: string; quality: string; partnership: string; contact: string };
   hero: { kicker: string; line1: string; emphasis: string; line2: string; copy: string; primary: string; secondary: string; rail: string[] };
+  heroMotion: SiteHeroMotionCopy;
   intro: { kicker: string; title: string; body: string; side: string };
   capabilities: { kicker: string; title: string; body: string; explore: string; items: Array<{ code: string; title: string; body: string; note: string; tagline: string; tags: string[] }> };
   process: { kicker: string; title: string; body: string; steps: Array<{ title: string; body: string }> };
@@ -32,6 +47,19 @@ export const content: Record<Locale, SiteContent> = {
       line1: "Your standards.", emphasis: "Made real", line2: "in China.",
       copy: "JJWine coordinates localization, manufacturing, quality and compliance for global wine and beverage brands.",
       primary: "Start a project", secondary: "Explore capabilities", rail: ["Localize", "Produce", "Assure"],
+    },
+    heroMotion: {
+      source: "Source",
+      produce: "Produce",
+      deliver: "Deliver",
+      metricSource: "Region · TBD",
+      metricProduce: "Capacity · TBD bph",
+      metricDeliver: "Lead time · TBD days",
+      formatBottle: "Bottle",
+      formatCan: "Can",
+      formatBib: "BIB",
+      pause: "Pause hero animation",
+      play: "Play hero animation",
     },
     intro: {
       kicker: "01 / Overview", title: "One brief. Full-chain execution.",
@@ -103,6 +131,19 @@ export const content: Record<Locale, SiteContent> = {
       copy: "JJWine 为全球酒饮品牌统筹产品本地化、生产组织、质量治理与合规协调。",
       primary: "启动项目", secondary: "查看生产能力", rail: ["本地化", "生产", "质量保证"],
     },
+    heroMotion: {
+      source: "源头",
+      produce: "生产",
+      deliver: "交付",
+      metricSource: "产区 · 待业务补",
+      metricProduce: "产能 · 待业务补 bph",
+      metricDeliver: "交期 · 待业务补 天",
+      formatBottle: "瓶",
+      formatCan: "罐",
+      formatBib: "BIB",
+      pause: "暂停首页动画",
+      play: "播放首页动画",
+    },
     intro: {
       kicker: "01 / 概览", title: "一个需求，全链路承接。",
       body: "您提供品牌标准，JJWine 设计并统筹中国生产路径——从产品与包装本地化，到合格工厂生产、批次放行与交付。",
@@ -172,6 +213,19 @@ export const content: Record<Locale, SiteContent> = {
       kicker: "00 / JJWine", line1: "Tus estándares.", emphasis: "Hechos realidad", line2: "en China.",
       copy: "JJWine coordina la localización, la producción, la calidad y el cumplimiento para marcas internacionales de vinos y bebidas.",
       primary: "Iniciar proyecto", secondary: "Ver capacidades", rail: ["Localizar", "Producir", "Asegurar"],
+    },
+    heroMotion: {
+      source: "Origen",
+      produce: "Producción",
+      deliver: "Entrega",
+      metricSource: "Región · pendiente",
+      metricProduce: "Capacidad · pendiente bph",
+      metricDeliver: "Plazo · pendiente días",
+      formatBottle: "Botella",
+      formatCan: "Lata",
+      formatBib: "BIB",
+      pause: "Pausar animación del hero",
+      play: "Reproducir animación del hero",
     },
     intro: {
       kicker: "01 / Resumen", title: "Un brief. Ejecución integral.",
@@ -245,6 +299,19 @@ export const content: Record<Locale, SiteContent> = {
       kicker: "00 / JJWine", line1: "Vos standards.", emphasis: "Concrétisés", line2: "en Chine.",
       copy: "JJWine coordonne la localisation, la production, la qualité et la conformité pour les marques internationales de vins et boissons.",
       primary: "Démarrer un projet", secondary: "Découvrir nos capacités", rail: ["Localiser", "Produire", "Garantir"],
+    },
+    heroMotion: {
+      source: "Source",
+      produce: "Production",
+      deliver: "Livraison",
+      metricSource: "Région · à compléter",
+      metricProduce: "Capacité · à compléter bph",
+      metricDeliver: "Délai · à compléter jours",
+      formatBottle: "Bouteille",
+      formatCan: "Canette",
+      formatBib: "BIB",
+      pause: "Mettre en pause l’animation du hero",
+      play: "Lire l’animation du hero",
     },
     intro: {
       kicker: "01 / Aperçu", title: "Un brief. Une exécution intégrale.",
