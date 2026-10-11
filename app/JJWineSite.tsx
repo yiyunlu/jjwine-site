@@ -23,6 +23,7 @@ const sectionIds: SectionId[] = ["top", "capabilities", "process", "quality", "p
 
 const formatPreviewPhotos: Partial<Record<string, string>> = {
   "01": "/media/formats/bottle.webp",
+  "02": "/media/formats/can.webp",
   "03": "/media/formats/bib.webp",
 };
 
@@ -405,7 +406,11 @@ export function JJWineSite({ locale }: Props) {
                 {...(previewPhoto ? {} : { "aria-hidden": true })}
               >
                 {previewPhoto ? (
-                  <img className="format-photo" src={previewPhoto} alt={item.title} />
+                  <img
+                    className={`format-photo${item.code === "02" ? " format-photo--contain" : ""}`}
+                    src={previewPhoto}
+                    alt={item.title}
+                  />
                 ) : (
                   <div className="format-orb" />
                 )}
