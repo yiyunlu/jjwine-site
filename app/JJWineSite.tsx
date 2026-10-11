@@ -3,6 +3,7 @@
 import type { CSSProperties, FormEvent, MouseEvent, PointerEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import { content, type Locale } from "./content";
+import { HeroMotionStage } from "./HeroMotionStage";
 import { localeLinks } from "./i18n";
 
 type Props = { locale: Locale };
@@ -329,12 +330,14 @@ export function JJWineSite({ locale }: Props) {
 
       <section className="hero grid-bg" id="main-content" tabIndex={-1}>
         <div className="pointer-glow" aria-hidden="true" />
-        <div className="motion-stage" aria-hidden="true">
-          <div className="motion-orbit motion-orbit-a" />
-          <div className="motion-orbit motion-orbit-b" />
-          <div className="liquid-core"><div className="liquid-shine" /></div>
-          <div className="grain" />
-        </div>
+        <HeroMotionStage
+          copy={copy.heroMotion}
+          formatLabels={[
+            copy.capabilities.items[0].title,
+            copy.capabilities.items[1].title,
+            copy.capabilities.items[2].title,
+          ]}
+        />
 
         <div className="hero-content">
           <div className="hero-kicker">
