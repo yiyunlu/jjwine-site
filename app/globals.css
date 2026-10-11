@@ -1033,29 +1033,12 @@ body::selection {
   transform: scale(1.04);
 }
 
+.format-photo--contain {
+  object-fit: contain;
+}
+
 .format-preview--photo .format-tagline {
   z-index: 1;
-}
-
-.format-orb {
-  width: 46%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--jj-wine-bright), var(--jj-wine) 50%, #360812 80%);
-  box-shadow: 0 24px 60px -12px var(--jj-wine-glow), inset -18px -15px 34px rgba(18, 2, 7, 0.55);
-  transition: transform 600ms var(--jj-ease);
-}
-
-.format-card:hover .format-orb {
-  transform: scale(1.08) translateY(-4px);
-}
-
-/* Can: cylinder shape */
-.format-card:nth-child(2) .format-orb {
-  width: 26%;
-  aspect-ratio: 1 / 1.75;
-  border-radius: 18% / 8%;
-  background: linear-gradient(90deg, #4a0c19 0%, var(--jj-accent-02) 35%, var(--jj-paper-muted) 48%, var(--jj-accent-02) 60%, #4a0c19 100%);
 }
 
 .format-tagline {
@@ -1766,8 +1749,6 @@ footer > a:last-child {
 
   /* Format cards: single column on phone */
   .format-grid { gap: 20px; }
-
-  .format-card:nth-child(2) .format-orb { width: 32%; }
 
   .process-section { gap: 70px; padding: 100px 20px; }
   .process-sticky { position: relative; top: auto; }
