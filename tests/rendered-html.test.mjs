@@ -29,7 +29,7 @@ const localeMeta = {
   "zh-CN": {
     title: "JJWine — 全球酒饮品牌的中国生产落地伙伴",
     ogLocale: "zh_CN",
-    skip: "跳转到主要内容",
+    skip: "跳到主要内容",
   },
   es: {
     title: "JJWine — Producción en China conforme a estándares globales",
@@ -44,11 +44,11 @@ const localeMeta = {
 };
 
 for (const [pathname, expected, lang, canonicalPath] of [
-  ["/", "Your standards.", "en", "/en"],
-  ["/en", "One brief. Full-chain execution.", "en", "/en"],
+  ["/", "Global brand standards.", "en", "/en"],
+  ["/en", "One request, managed end to end.", "en", "/en"],
   ["/zh-cn", "一个需求，全链路承接。", "zh-CN", "/zh-cn"],
-  ["/es", "Un brief. Ejecución integral.", "es", "/es"],
-  ["/fr", "Un brief. Une exécution intégrale.", "fr", "/fr"],
+  ["/es", "Una necesidad, gestión integral.", "es", "/es"],
+  ["/fr", "Un besoin, une prise en charge complète.", "fr", "/fr"],
 ]) {
   test(`renders ${pathname}`, async () => {
     const response = await render(pathname);
@@ -115,13 +115,14 @@ for (const [pathname, expected, lang, canonicalPath] of [
     const html = await (await render(pathname)).text();
     const meta = localeMeta[lang];
 
-    assert.match(html, new RegExp(`<a class="skip-link" href="#main-content">${escape(meta.skip)}</a>`));
-    assert.match(html, /<section class="hero" id="main-content" tabindex="-1">/);
-    assert.match(html, /<button class="menu-button"[^>]*aria-expanded="false"[^>]*aria-controls="mobile-menu"/);
-    assert.match(html, /<nav class="mobile-menu[^"]*" id="mobile-menu" aria-label="[^"]+"/);
-    assert.match(html, /<nav class="lang-switch" aria-label="[^"]+"/);
-    assert.match(html, /<nav class="desktop-nav" aria-label="[^"]+"/);
-    assert.match(html, /<a class="brand" href="#top"/);
+    assert.match(html, new RegExp(`<a class="skip-link" href="#main">${escape(meta.skip)}</a>`));
+    assert.match(html, /<main id="main" tabindex="-1">/);
+    assert.match(html, /<section class="hero"/);
+    assert.match(html, /<button class="menu-toggle"[^>]*aria-expanded="false"[^>]*aria-controls="site-menu"/);
+    assert.match(html, /<nav class="main-nav" aria-label="[^"]+"/);
+    assert.match(html, /class="lang-switch"[^>]*aria-label="[^"]+"/);
+    assert.match(html, /id="site-menu"/);
+    assert.match(html, /<a class="logo" href="#top"/);
     // Language switch links declare the language of their target and label.
     // (case-insensitive: the SSR serializer emits React's camelCase hrefLang,
     // which HTML parses identically to hreflang)
@@ -133,10 +134,10 @@ for (const [pathname, expected, lang, canonicalPath] of [
 }
 
 for (const [pathname, productionCopy, certificationCopy, obsoleteCopy] of [
-  ["/en", "Coordinated manufacturing at the confirmed production site.", "Current production partner certification", "qualified production partners"],
-  ["/zh-cn", "在经确认的生产场地组织量产。", "当前生产合作伙伴认证", "核心生产合作伙伴认证"],
-  ["/es", "Fabricación coordinada en la planta de producción confirmada.", "Certificación del socio de producción actual", "socios de producción cualificados"],
-  ["/fr", "Fabrication coordonnée sur le site de production confirmé.", "Certification du partenaire de production actuel", "partenaires de production qualifiés"],
+  ["/en", "Production planning and process control", "confirmed against each project", "qualified production partners"],
+  ["/zh-cn", "组织生产与过程管理", "经确认的生产场地核实", "核心生产合作伙伴认证"],
+  ["/es", "Organización y control del proceso", "se confirman para cada proyecto", "socios de producción cualificados"],
+  ["/fr", "Organisation et pilotage de la production", "confirmées pour chaque projet", "partenaires de production qualifiés"],
 ]) {
   test(`does not imply multiple current production partners on ${pathname}`, async () => {
     const html = await (await render(pathname)).text();
@@ -273,10 +274,10 @@ for (const [locale, privacyText, legalText] of [
   test(`home /${locale} mobile menu links to its privacy and legal pages`, async () => {
     const html = await (await render(`/${locale}`)).text();
 
-    const start = html.indexOf('id="mobile-menu"');
-    assert.notEqual(start, -1, "the mobile menu nav should be server-rendered");
-    const end = html.indexOf("</nav>", start);
-    assert.notEqual(end, -1, "the mobile menu nav should be closed");
+    const start = html.indexOf('id="site-menu"');
+    assert.notEqual(start, -1, "the site menu should be server-rendered");
+    const end = html.indexOf('id="main"', start);
+    assert.notEqual(end, -1, "the site menu should end before main");
     const menu = html.slice(start, end);
 
     assert.match(menu, new RegExp(`<a href="/${escape(locale)}/privacy"[^>]*>${escape(privacyText)}</a>`));
