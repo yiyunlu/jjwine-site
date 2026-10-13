@@ -1,0 +1,59 @@
+{
+  "hero": {
+    "generated_size": [
+      1930,
+      815
+    ],
+    "webp_size": [
+      1930,
+      815
+    ],
+    "prompt": "Photorealistic modern wine bottling production line, dark glass wine bottles with burgundy foil capsules on stainless steel conveyor, close bottles on right, darker negative space on left, softly blurred industrial background, warm neutral cinematic lighting. Wide 2.37:1 composition, target 2048x864. No text, logos, watermarks or UI."
+  },
+  "bottles": {
+    "generated_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      1254,
+      1254
+    ],
+    "prompt": "Square premium studio product photograph, three different wine glass bottle shapes, dark red wine center bottle taller with burgundy capsule, green and amber bottles on sides, blank ivory labels, subtle botanical ornament without lettering, pale beige background and tabletop, soft natural lighting, realistic glass. 1024x1024. No brands text watermark."
+  },
+  "cans": {
+    "generated_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      1254,
+      1254
+    ],
+    "prompt": "Square premium studio product photograph of three aluminum beverage cans of different heights, cream white and deep forest green packaging, restrained botanical fine line drawings, pale warm beige studio backdrop, soft light and delicate shadows. 1024x1024. No lettering brands watermarks."
+  },
+  "bib": {
+    "generated_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      1254,
+      1254
+    ],
+    "prompt": "Square premium product photograph, single ivory bag in box wine carton three quarter angle, burgundy gradient abstract layered mountain artwork across lower half, black dispensing tap at bottom right, pale beige studio backdrop, soft warm light. 1024x1024. No lettering logo watermark."
+  },
+  "vineyard": {
+    "generated_size": [
+      2172,
+      724
+    ],
+    "webp_size": [
+      2172,
+      724
+    ],
+    "prompt": "Photorealistic panoramic vineyard at sunrise, layered distant mountains, golden peach morning sky, misty valleys and green vineyard rows in foreground, serene muted natural colors, middle horizontal band rich in mountain layers. Wide 3:1 composition target 3840x1280. No text logo watermark."
+  },
+  "tool": "Built-in image_gen.imagegen",
+  "model": "Not exposed; gpt-image2.5 cannot be verified"
+}

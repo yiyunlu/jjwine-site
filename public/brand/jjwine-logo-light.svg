@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="280" viewBox="0 0 900 280" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="118" viewBox="150 72 550 118" role="img" aria-labelledby="title desc">
   <title id="title">JJWine — Bottle &amp; glass — light</title>
   <desc id="desc">An upright bottle and a stemmed glass communicate the wine sector with a professional, quiet silhouette. Bridging global brands to China.</desc>
-  <rect width="900" height="280" fill="#fbf8f5"/>
   <g transform="translate(170 68) scale(1.12)">
     <g fill="none" stroke="#6f1d2a" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
       <path d="M29 18H47V43C47 50 58 55 58 65V105H18V65C18 55 29 50 29 43Z"/>
