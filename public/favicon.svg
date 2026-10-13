@@ -1,14 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- JJWine mark: the hero's wine orb on the site's ink ground. -->
-  <defs>
-    <radialGradient id="orb" cx="0.38" cy="0.32" r="0.85">
-      <stop offset="0" stop-color="#e34260"/>
-      <stop offset="0.55" stop-color="#8f1831"/>
-      <stop offset="1" stop-color="#3a0a15"/>
-    </radialGradient>
-  </defs>
-  <rect width="64" height="64" rx="14" fill="#120c0d"/>
-  <circle cx="32" cy="32" r="24" fill="none" stroke="#d12e4f" stroke-opacity="0.45" stroke-width="1.5"/>
-  <circle cx="32" cy="32" r="16.5" fill="url(#orb)"/>
-  <circle cx="26" cy="26" r="4.5" fill="#ffbfc8" opacity="0.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">JJWine — Bottle &amp; glass — icon</title>
+  <desc id="desc">An upright bottle and a stemmed glass communicate the wine sector with a professional, quiet silhouette. Icon only.</desc>
+  <rect width="128" height="128" fill="#fbf8f5"/>
+  <g fill="none" stroke="#6f1d2a" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M29 18H47V43C47 50 58 55 58 65V105H18V65C18 55 29 50 29 43Z"/>
+      <path d="M29 32H47M20 77H56"/>
+      <path d="M77 38H110L107 64C105 83 82 83 80 64Z"/>
+      <path d="M94 79V105M80 105H108M81 59H107"/>
+    </g>
 </svg>

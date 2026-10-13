@@ -237,7 +237,7 @@ export function JJWineSite({ locale }: Props) {
       <header className="topbar">
         <div className="topbar-inner">
           <a className="brand" href="#top" aria-label={copy.a11y.home}>
-            <span className="brand-mark"><b>JJ</b>WINE</span>
+            <img className="brand-logo" src="/brand/jjwine-logo-light.svg" alt="JJWine" />
             <span className="brand-tag">
               {copy.nav.brandTagline.map((line) => (
                 <span key={line}>{line}</span>
@@ -510,7 +510,9 @@ export function JJWineSite({ locale }: Props) {
       </div>
 
       <footer>
-        <a className="wordmark footer-mark" href="#top">JJ<span>WINE</span></a>
+        <a className="wordmark footer-mark" href="#top">
+          <img className="brand-logo" src="/brand/jjwine-logo-light.svg" alt="JJWine" />
+        </a>
         <p>{copy.footer.line}</p>
         <small>{copy.footer.legal}</small>
         <nav className="footer-legal-links" aria-label={copy.footer.legalNav}>
