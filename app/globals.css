@@ -593,6 +593,12 @@ body::selection {
   line-height: 1;
 }
 
+.brand-logo {
+  display: block;
+  height: clamp(26px, 2.4vw, 35px);
+  width: auto;
+}
+
 .brand-mark b {
   color: var(--jj-wine);
   font-weight: 700;
