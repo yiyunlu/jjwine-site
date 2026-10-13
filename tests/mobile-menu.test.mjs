@@ -21,30 +21,31 @@ async function render(pathname) {
 
 const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-// The three home routes, the aria-label each localized mobile menu must carry
-// (source: app/content.ts -> a11y.mobileNav) and the language switch entry that
-// belongs to that locale (href === pathname, hreflang === lang).
+// Home routes, the primary-nav aria-label (trial i18n nav.label) and the
+// language switch entry for that locale (href === pathname, hreflang === lang).
 const locales = [
-  { pathname: "/en", lang: "en", label: "Menu" },
-  { pathname: "/zh-cn", lang: "zh-CN", label: "菜单" },
-  { pathname: "/es", lang: "es", label: "Menú" },
-  { pathname: "/fr", lang: "fr", label: "Menu" },
+  { pathname: "/en", lang: "en", label: "Main navigation" },
+  { pathname: "/zh-cn", lang: "zh-CN", label: "主导航" },
+  { pathname: "/es", lang: "es", label: "Navegación principal" },
+  { pathname: "/fr", lang: "fr", label: "Navigation principale" },
 ];
 
-// The four in-page destinations the mobile menu offers.
-const sectionTargets = ["#top", "#capabilities", "#process", "#quality", "#partnership", "#intro"];
+// In-page destinations that stay real links. Quality, partners and about open dialogs.
+const sectionTargets = ["#top", "#capability", "#process"];
 
 function extractMobileMenu(html) {
-  const match = html.match(/<nav class="mobile-menu[^"]*" id="mobile-menu"[\s\S]*?<\/nav>/);
-  return match?.[0] ?? null;
+  const start = html.indexOf('id="site-menu"');
+  const end = html.indexOf('id="main"');
+  if (start === -1 || end === -1 || end < start) return null;
+  return html.slice(start, end);
 }
 
 function extractMenuTag(menu) {
-  return menu.match(/^<nav[^>]*>/)?.[0] ?? null;
+  return menu.match(/<nav class="main-nav"[^>]*>/)?.[0] ?? null;
 }
 
 function extractMenuButton(html) {
-  const match = html.match(/<button[^>]*class="menu-button"[^>]*>/);
+  const match = html.match(/<button[^>]*class="menu-toggle"[^>]*>/);
   return match?.[0] ?? null;
 }
 
@@ -74,13 +75,13 @@ for (const { pathname, lang, label } of locales) {
     // Trigger button: it must announce the controlled container and start
     // collapsed, both in the server-rendered markup.
     const button = extractMenuButton(html);
-    assert.ok(button, `expected a .menu-button on ${pathname}`);
-    assert.match(button, /aria-controls="mobile-menu"/);
+    assert.ok(button, `expected a .menu-toggle on ${pathname}`);
+    assert.match(button, /aria-controls="site-menu"/);
     assert.match(button, /aria-expanded="false"/);
 
     // Menu container: localized accessible name, matching the locale.
     const menu = extractMobileMenu(html);
-    assert.ok(menu, `expected <nav id="mobile-menu"> on ${pathname}`);
+    assert.ok(menu, `expected #site-menu on ${pathname}`);
     assert.match(menu, new RegExp(`aria-label="${escape(label)}"`));
 
     // Navigation links must exist in the HTML itself (progressive enhancement),
@@ -119,12 +120,12 @@ test("mobile menu labels are read from the rendered HTML and match their locale'
   for (const { pathname, label } of locales) {
     const html = await (await render(pathname)).text();
     const menu = extractMobileMenu(html);
-    assert.ok(menu, `expected <nav id="mobile-menu"> on ${pathname}`);
+    assert.ok(menu, `expected #site-menu on ${pathname}`);
 
     const menuTag = extractMenuTag(menu);
     assert.ok(menuTag, `expected an opening <nav> tag on ${pathname}`);
     const renderedLabel = getAttr(menuTag, "aria-label");
-    assert.ok(renderedLabel, `expected nav#mobile-menu to carry an aria-label on ${pathname}`);
+    assert.ok(renderedLabel, `expected nav.main-nav to carry an aria-label on ${pathname}`);
 
     // The rendered value must match this locale's own expected copy.
     // Note: some words (like "Menu" in English and French) may be identical
@@ -136,7 +137,7 @@ test("mobile menu labels are read from the rendered HTML and match their locale'
 test("mobile menu links are server-rendered, not injected at runtime", async () => {
   const html = await (await render("/en")).text();
   const menu = extractMobileMenu(html);
-  assert.ok(menu, 'expected <nav id="mobile-menu"> in the server response');
+  assert.ok(menu, "expected #site-menu in the server response");
 
   // Anchor links and the locale switch live in the raw SSR string, so they are
   // usable before hydration and with JavaScript disabled.

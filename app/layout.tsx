@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { resolveLang } from "./i18n";
 import "./globals.css";
+import "./v2-home.css";
 
 const fontLinks = [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
