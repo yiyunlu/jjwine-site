@@ -75,7 +75,7 @@ export function legalPageMetadata(locale: LegalLocale, page: LegalPageKey): Meta
       siteName: "JJWine",
       type: "website",
       locale: openGraphLocales[locale],
-      alternateLocale: getOgAlternateLocales(locale),
+      alternateLocale: legalLocales.filter((other) => other !== locale).map((other) => openGraphLocales[other]),
       images: [ogImage],
     },
     twitter: { card: "summary_large_image", title, description, images: [ogImage.url] },

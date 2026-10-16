@@ -401,7 +401,7 @@ export const content: Record<Locale, SiteContent> = {
       download: "Descargar brief", privacy: "Este formulario no transmite ni almacena tu información.",
       fileHeading: "JJWINE — BRIEF DE PROYECTO", fileName: "jjwine-brief-proyecto.txt",
     },
-    footer: { line: "Estándares globales. Ejecución local.", legal: "Las capacidades y certificaciones se confirman para cada proyecto, producto y planta cualificada.", top: "Volver arriba", legalNav: "Información legal", privacyLink: "Política de privacidad", legalLink: "Aviso legal" },
+    footer: { line: "Estándares globales. Ejecución local.", legal: "Las capacidades y certificaciones se confirman para cada proyecto, producto y planta cualificada.", top: "Volver arriba", legalNav: "Información legal", privacyLink: "Política de privacidad (en inglés)", legalLink: "Aviso legal (en inglés)" },
   },
   fr: {
     localeName: "Français",
@@ -515,6 +515,6 @@ export const content: Record<Locale, SiteContent> = {
       download: "Télécharger le brief", privacy: "Ce formulaire ne transmet ni ne stocke vos informations.",
       fileHeading: "JJWINE — BRIEF DE PROJET", fileName: "jjwine-brief-projet.txt",
     },
-    footer: { line: "Standards globaux. Exécution locale.", legal: "Les capacités et certifications sont confirmées pour chaque projet, produit et site qualifié.", top: "Retour en haut", legalNav: "Informations légales", privacyLink: "Politique de confidentialité", legalLink: "Mentions légales" },
+    footer: { line: "Standards globaux. Exécution locale.", legal: "Les capacités et certifications sont confirmées pour chaque projet, produit et site qualifié.", top: "Retour en haut", legalNav: "Informations légales", privacyLink: "Politique de confidentialité (en anglais)", legalLink: "Mentions légales (en anglais)" },
   },
 };

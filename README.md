@@ -20,7 +20,7 @@ Run Claude Code and all development commands from this directory. Business contr
 - production formats, six-stage project process and quality/compliance sections
 - separate global-brand and retail/private-label entry points
 - local project-brief generator; form data never leaves the visitor's device
-- trilingual Privacy Policy and Legal Notice pages (`/{locale}/privacy`, `/{locale}/legal`) for the operator 上海捷嘉酒业有限公司, linked from every footer
+- English and Simplified Chinese Privacy Policy and Legal Notice pages (`/en/privacy`, `/en/legal`, `/zh-cn/privacy`, `/zh-cn/legal`) for the operator 上海捷嘉酒业有限公司, linked from every footer; retired es/fr legal URLs redirect to English
 - dynamic Open Graph metadata and project-specific social preview card, including page-specific canonical/hreflang for the legal pages
 - Cloudflare Worker-compatible server and static asset output
 

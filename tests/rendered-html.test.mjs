@@ -253,15 +253,18 @@ for (const [pathname, lang, title, marker] of legalRoutes) {
 }
 
 for (const [pathname, target] of retiredLegalRedirects) {
-  test(`permanently redirects ${pathname} to ${target}`, async () => {
-    const response = await render(pathname);
-    assert.ok(
-      response.status === 301 || response.status === 308,
-      `expected permanent redirect, got ${response.status}`,
-    );
-    const location = response.headers.get("location");
-    assert.ok(location?.endsWith(target), `expected Location ending with ${target}, got ${location}`);
-  });
+  for (const slash of ["", "/"]) {
+    for (const query of ["", "?source=footer&tag=a&tag=b&encoded=%2F%20&empty="]) {
+      const source = `${pathname}${slash}${query}`;
+      test(`permanently redirects ${source} directly to English preserving the query`, async () => {
+        const response = await render(source);
+        assert.equal(response.status, 308);
+        const destination = new URL(response.headers.get("location"), "https://jjwine.example");
+        assert.equal(destination.href, `https://jjwine.example${target}${query}`);
+        assert.equal((await render(`${destination.pathname}${destination.search}`)).status, 200);
+      });
+    }
+  }
 }
 
 for (const [locale, privacyPath, legalPath] of [
@@ -284,8 +287,8 @@ for (const [locale, privacyPath, legalPath] of [
 for (const [locale, privacyPath, legalPath, privacyText, legalText] of [
   ["en", "/en/privacy", "/en/legal", "Privacy Policy", "Legal Notice"],
   ["zh-cn", "/zh-cn/privacy", "/zh-cn/legal", "隐私政策", "法律声明"],
-  ["es", "/en/privacy", "/en/legal", "Política de privacidad", "Aviso legal"],
-  ["fr", "/en/privacy", "/en/legal", "Politique de confidentialité", "Mentions légales"],
+  ["es", "/en/privacy", "/en/legal", "Política de privacidad (en inglés)", "Aviso legal (en inglés)"],
+  ["fr", "/en/privacy", "/en/legal", "Politique de confidentialité (en anglais)", "Mentions légales (en anglais)"],
 ]) {
   test(`home /${locale} mobile menu links to its privacy and legal pages`, async () => {
     const html = await (await render(`/${locale}`)).text();
