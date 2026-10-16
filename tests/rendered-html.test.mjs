@@ -174,17 +174,18 @@ const legalRoutes = [
   ["/en/legal", "en", "Legal Notice", "confirmed for each individual project, product and market"],
   ["/zh-cn/privacy", "zh-CN", "隐私政策", "不使用任何分析统计或广告脚本"],
   ["/zh-cn/legal", "zh-CN", "法律声明", "依据当时的现行证据逐一确认"],
-  ["/es/privacy", "es", "Política de privacidad", "no utiliza scripts de analítica ni de publicidad"],
-  ["/es/legal", "es", "Aviso legal", "se confirman para cada proyecto, producto y mercado"],
-  ["/fr/privacy", "fr", "Politique de confidentialité", "ne dispose pas de comptes utilisateurs ni de connexion"],
-  ["/fr/legal", "fr", "Mentions légales", "sur la base des preuves en vigueur à ce moment"],
+];
+
+const retiredLegalRedirects = [
+  ["/es/privacy", "/en/privacy"],
+  ["/es/legal", "/en/legal"],
+  ["/fr/privacy", "/en/privacy"],
+  ["/fr/legal", "/en/legal"],
 ];
 
 const localBriefMarkers = {
   en: "processed entirely on your own device",
   "zh-CN": "完全在您自己的设备和浏览器中处理",
-  es: "se procesa íntegramente en su propio dispositivo",
-  fr: "traité entièrement sur votre propre appareil",
 };
 
 for (const [pathname, lang, title, marker] of legalRoutes) {
@@ -223,8 +224,6 @@ for (const [pathname, lang, title, marker] of legalRoutes) {
     for (const [hreflang, prefix] of [
       ["en", "/en"],
       ["zh-CN", "/zh-cn"],
-      ["es", "/es"],
-      ["fr", "/fr"],
       ["x-default", "/en"],
     ]) {
       assert.match(
@@ -245,19 +244,36 @@ for (const [pathname, lang, title, marker] of legalRoutes) {
     const sibling = isPrivacy ? "legal" : "privacy";
     assert.match(html, new RegExp(`<a href="/${escape(locale)}">`));
     assert.match(html, new RegExp(`href="/${escape(locale)}/${sibling}"`));
-    // Language switch links point at the same document in the other locales.
-    for (const other of ["en", "zh-cn", "es", "fr"]) {
+    // Language switch links point at the same document in the other legal locales.
+    for (const other of ["en", "zh-cn"]) {
       const page = pathname.split("/").pop();
       assert.match(html, new RegExp(`href="/${other}/${page}"`));
     }
   });
 }
 
-for (const locale of ["en", "zh-cn", "es", "fr"]) {
+for (const [pathname, target] of retiredLegalRedirects) {
+  test(`permanently redirects ${pathname} to ${target}`, async () => {
+    const response = await render(pathname);
+    assert.ok(
+      response.status === 301 || response.status === 308,
+      `expected permanent redirect, got ${response.status}`,
+    );
+    const location = response.headers.get("location");
+    assert.ok(location?.endsWith(target), `expected Location ending with ${target}, got ${location}`);
+  });
+}
+
+for (const [locale, privacyPath, legalPath] of [
+  ["en", "/en/privacy", "/en/legal"],
+  ["zh-cn", "/zh-cn/privacy", "/zh-cn/legal"],
+  ["es", "/en/privacy", "/en/legal"],
+  ["fr", "/en/privacy", "/en/legal"],
+]) {
   test(`home /${locale} footer links to its privacy and legal pages`, async () => {
     const html = await (await render(`/${locale}`)).text();
-    assert.match(html, new RegExp(`<a href="/${locale}/privacy">`));
-    assert.match(html, new RegExp(`<a href="/${locale}/legal">`));
+    assert.match(html, new RegExp(`<a href="${escape(privacyPath)}">`));
+    assert.match(html, new RegExp(`<a href="${escape(legalPath)}">`));
   });
 }
 
@@ -265,11 +281,11 @@ for (const locale of ["en", "zh-cn", "es", "fr"]) {
 // not only from the desktop footer. Scoping the assertions to the #mobile-menu
 // subtree means they fail if the links are missing there (not just elsewhere
 // on the page), so they are a real guard rather than a tautology.
-for (const [locale, privacyText, legalText] of [
-  ["en", "Privacy Policy", "Legal Notice"],
-  ["zh-cn", "隐私政策", "法律声明"],
-  ["es", "Política de privacidad", "Aviso legal"],
-  ["fr", "Politique de confidentialité", "Mentions légales"],
+for (const [locale, privacyPath, legalPath, privacyText, legalText] of [
+  ["en", "/en/privacy", "/en/legal", "Privacy Policy", "Legal Notice"],
+  ["zh-cn", "/zh-cn/privacy", "/zh-cn/legal", "隐私政策", "法律声明"],
+  ["es", "/en/privacy", "/en/legal", "Política de privacidad", "Aviso legal"],
+  ["fr", "/en/privacy", "/en/legal", "Politique de confidentialité", "Mentions légales"],
 ]) {
   test(`home /${locale} mobile menu links to its privacy and legal pages`, async () => {
     const html = await (await render(`/${locale}`)).text();
@@ -280,8 +296,8 @@ for (const [locale, privacyText, legalText] of [
     assert.notEqual(end, -1, "the site menu should end before main");
     const menu = html.slice(start, end);
 
-    assert.match(menu, new RegExp(`<a href="/${escape(locale)}/privacy"[^>]*>${escape(privacyText)}</a>`));
-    assert.match(menu, new RegExp(`<a href="/${escape(locale)}/legal"[^>]*>${escape(legalText)}</a>`));
+    assert.match(menu, new RegExp(`<a href="${escape(privacyPath)}"[^>]*>${escape(privacyText)}</a>`));
+    assert.match(menu, new RegExp(`<a href="${escape(legalPath)}"[^>]*>${escape(legalText)}</a>`));
   });
 }
 

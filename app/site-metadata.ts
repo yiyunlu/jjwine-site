@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
 import { content, type Locale } from "./content";
-import { localePaths, openGraphLocales, languageAlternates, LOCALE_CONFIG, DEFAULT_LOCALE, getOgAlternateLocales } from "./i18n";
+import {
+  localePaths,
+  openGraphLocales,
+  languageAlternates,
+  legalLocales,
+  localeConfigByPath,
+  DEFAULT_LOCALE,
+  getOgAlternateLocales,
+  type LegalLocale,
+} from "./i18n";
 import { legalContent, type LegalPageKey } from "./legal-content";
 
 function legalPageAlternates(page: LegalPageKey): Record<string, string> {
   const alternates: Record<string, string> = {};
-  for (const config of LOCALE_CONFIG) {
+  for (const locale of legalLocales) {
+    const config = localeConfigByPath[locale];
     alternates[config.hreflang] = `/${config.pathSegment}/${page}`;
   }
   alternates["x-default"] = `/${DEFAULT_LOCALE}/${page}`;
@@ -47,7 +57,7 @@ export function localeMetadata(locale: Locale): Metadata {
  * canonical, hreflang alternates, Open Graph and Twitter tags. Relative URLs
  * become absolute via the metadataBase in app/layout.tsx.
  */
-export function legalPageMetadata(locale: Locale, page: LegalPageKey): Metadata {
+export function legalPageMetadata(locale: LegalLocale, page: LegalPageKey): Metadata {
   const { metaTitle: title, metaDescription: description } = legalContent[locale][page];
   const path = `${localePaths[locale]}/${page}`;
 
