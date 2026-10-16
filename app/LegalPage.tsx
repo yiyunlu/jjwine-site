@@ -1,5 +1,4 @@
-import type { Locale } from "./content";
-import { localeLinks } from "./i18n";
+import { legalLocaleLinks, type LegalLocale } from "./i18n";
 import {
   CONTACT_EMAIL,
   legalContent,
@@ -7,7 +6,7 @@ import {
   type LegalPageKey,
 } from "./legal-content";
 
-type Props = { locale: Locale; page: LegalPageKey };
+type Props = { locale: LegalLocale; page: LegalPageKey };
 
 /** Shared server-rendered layout for the Privacy Policy and Legal Notice pages. */
 export function LegalPage({ locale, page }: Props) {
@@ -22,7 +21,7 @@ export function LegalPage({ locale, page }: Props) {
           <span className="brand-mark"><b>JJ</b>WINE</span>
         </a>
         <nav className="language-links" aria-label={ui.languageNav}>
-          {localeLinks.map((item) => (
+          {legalLocaleLinks.map((item) => (
             <a
               aria-current={item.locale === locale ? "page" : undefined}
               href={`/${item.locale}/${page}`}

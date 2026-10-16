@@ -1,8 +1,5 @@
-import { LegalPage } from "../../LegalPage";
-import { legalPageMetadata } from "../../site-metadata";
+import { permanentRedirectToEnglishLegal } from "../../legal-redirect";
 
-export const metadata = legalPageMetadata("es", "legal");
-
-export default function SpanishLegalPage() {
-  return <LegalPage locale="es" page="legal" />;
+export default function EsLegalRedirect() {
+  permanentRedirectToEnglishLegal("legal");
 }

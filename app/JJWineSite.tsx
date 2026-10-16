@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode, type RefObject } from "react";
 import { content, type Locale } from "./content";
-import { localeLinks } from "./i18n";
+import { localeLinks, publicLegalPagePath } from "./i18n";
 import { v2Copy, type V2Messages } from "./v2-copy";
 
 type Props = { locale: Locale };
@@ -542,8 +542,8 @@ export function JJWineSite({ locale }: Props) {
               <li><button type="button" aria-haspopup="dialog" onClick={(event) => openInfo("quality", event.currentTarget)}>{copy.nav.quality}</button></li>
               <li><button type="button" aria-haspopup="dialog" onClick={(event) => openInfo("partners", event.currentTarget)}>{copy.nav.partners}</button></li>
               <li><button type="button" aria-haspopup="dialog" onClick={(event) => openInfo("about", event.currentTarget)}>{copy.nav.about}</button></li>
-              <li className="menu-legal-item"><a href={`/${locale}/privacy`}>{site.footer.privacyLink}</a></li>
-              <li className="menu-legal-item"><a href={`/${locale}/legal`}>{site.footer.legalLink}</a></li>
+              <li className="menu-legal-item"><a href={publicLegalPagePath("privacy", locale)}>{site.footer.privacyLink}</a></li>
+              <li className="menu-legal-item"><a href={publicLegalPagePath("legal", locale)}>{site.footer.legalLink}</a></li>
             </ul>
           </nav>
           <div className="header-tools">
@@ -689,8 +689,8 @@ export function JJWineSite({ locale }: Props) {
         </a>
         <p>{site.footer.line}</p>
         <nav aria-label={site.footer.legalNav}>
-          <a href={`/${locale}/privacy`}>{site.footer.privacyLink}</a>
-          <a href={`/${locale}/legal`}>{site.footer.legalLink}</a>
+          <a href={publicLegalPagePath("privacy", locale)}>{site.footer.privacyLink}</a>
+          <a href={publicLegalPagePath("legal", locale)}>{site.footer.legalLink}</a>
         </nav>
         <small>{site.footer.legal}</small>
       </footer>

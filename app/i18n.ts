@@ -3,7 +3,7 @@
  *
  * Adding a new locale only requires:
  * 1. Add an entry to LOCALE_CONFIG below
- * 2. Create content translations in content.ts and legal-content.ts
+ * 2. Create content translations in content.ts (and legal-content.ts for en/zh-cn legal pages only)
  * 3. Create page routes under app/<locale>/
  */
 
@@ -35,6 +35,11 @@ export const LOCALE_CONFIG: readonly LocaleConfig[] = [
 export const locales = LOCALE_CONFIG.map((l) => l.pathSegment) as unknown as readonly ["en", "zh-cn", "es", "fr"];
 
 export type Locale = (typeof locales)[number];
+
+/** Locales that publish Privacy Policy and Legal Notice pages */
+export const legalLocales = ["en", "zh-cn"] as const satisfies readonly Locale[];
+
+export type LegalLocale = (typeof legalLocales)[number];
 
 /** Default locale used for x-default and root path */
 export const DEFAULT_LOCALE: Locale = "en";
@@ -72,6 +77,20 @@ export const localeLinks: Array<{ locale: Locale; short: string; lang: string }>
   short: config.switcherLabel,
   lang: config.htmlLang,
 }));
+
+/** Language switcher entries on legal pages (en and zh-cn only). */
+export const legalLocaleLinks: Array<{ locale: LegalLocale; short: string; lang: string }> = legalLocales.map(
+  (locale) => {
+    const config = localeConfigByPath[locale];
+    return { locale, short: config.switcherLabel, lang: config.htmlLang };
+  },
+);
+
+/** Public URL for a legal page from a site locale (es/fr link to English legal pages). */
+export function publicLegalPagePath(page: "privacy" | "legal", siteLocale: Locale): string {
+  if (siteLocale === "zh-cn") return `/zh-cn/${page}`;
+  return `/en/${page}`;
+}
 
 /**
  * Resolve the BCP 47 language tag from a pathname.
