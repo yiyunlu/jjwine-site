@@ -7,7 +7,7 @@ import { v2Copy, type V2Messages } from "./v2-copy";
 
 type Props = { locale: Locale };
 type NavKey = "home" | "capability" | "process";
-type ProductKey = "bottle" | "can" | "bib";
+type ProductKey = "bottle" | "can" | "bib" | "carton" | "mini" | "keg";
 type FieldName = "brand" | "contact" | "email" | "category" | "packaging" | "needs";
 type FieldError = "required" | "email" | "select";
 type BriefStatus = { key: "summary" | "downloaded" | "copied" | "copyFail"; kind: "error" | "ok" } | null;
@@ -24,7 +24,11 @@ const PRODUCT_IMAGES: Record<ProductKey, string> = {
   bottle: "/media/v2/bottles.webp",
   can: "/media/v2/cans.webp",
   bib: "/media/v2/bib.webp",
+  carton: "/media/v2/carton.webp",
+  mini: "/media/v2/mini.webp",
+  keg: "/media/v2/keg.webp",
 };
+const isProductKey = (value: string | undefined): value is ProductKey => !!value && Object.hasOwn(PRODUCT_IMAGES, value);
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const homeLocaleLinks = HOME_LOCALE_ORDER.map((id) => {
@@ -153,7 +157,7 @@ function useFocusTrap(active: boolean, containerRef: RefObject<HTMLElement | nul
 
 function InfoBody({ copy, infoKey }: { copy: V2Messages; infoKey: string }) {
   const [kind, arg] = infoKey.split(":");
-  if ((kind === "product") && (arg === "bottle" || arg === "can" || arg === "bib")) {
+  if (kind === "product" && isProductKey(arg)) {
     const product = copy.products[arg];
     return (
       <>
@@ -512,7 +516,7 @@ export function JJWineSite({ locale }: Props) {
     { icon: "i-gear", title: copy.hero.f2t, body: copy.hero.f2d },
     { icon: "i-shield", title: copy.hero.f3t, body: copy.hero.f3d },
   ];
-  const products: Array<{ key: ProductKey }> = [{ key: "bottle" }, { key: "can" }, { key: "bib" }];
+  const products: Array<{ key: ProductKey }> = [{ key: "bottle" }, { key: "can" }, { key: "bib" }, { key: "carton" }, { key: "mini" }, { key: "keg" }];
 
   return (
     <>
