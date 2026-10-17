@@ -86,6 +86,9 @@ export type V2Messages = {
     bottle: V2Product;
     can: V2Product;
     bib: V2Product;
+    carton: V2Product;
+    mini: V2Product;
+    keg: V2Product;
   };
   process: {
     eyebrow: string;
@@ -236,6 +239,48 @@ export const v2Copy: Record<Locale, V2Messages> = {
           "Carton structure and print design",
           "Filling hygiene and seal integrity validation",
           "Shelf life after opening and storage guidance"
+        ]
+      },
+      "carton": {
+        "title": "Cartons",
+        "d1": "Light and easy to store,",
+        "d2": "for everyday retail channels.",
+        "alt": "Three ivory gable-top beverage cartons with burgundy and green leaf line art on a light beige background",
+        "intro": "Multilayer cartons are light, easy to stack and suited to shelf-stable everyday products in retail and e-commerce channels.",
+        "listTitle": "To be confirmed together for each project:",
+        "list": [
+          "Carton format, volume and closure or straw option",
+          "Barrier layers and compatibility with the product",
+          "Filling, sterilisation and seal integrity requirements",
+          "Print design and Chinese label content on the pack"
+        ]
+      },
+      "mini": {
+        "title": "Mini bottles 187\u00a0ml",
+        "d1": "A single serve,",
+        "d2": "for tasting, gifting and travel.",
+        "alt": "Three small wine bottles in pale yellow, deep burgundy and rosé with blank ivory labels on a light beige background",
+        "intro": "187 ml mini bottles suit single servings, tastings, gift sets, airlines and hospitality, and help consumers discover a product.",
+        "listTitle": "To be confirmed together for each project:",
+        "list": [
+          "Bottle shape, glass colour and closure",
+          "Filling accuracy and quality checks for small volumes",
+          "Label layout for the smaller label area",
+          "Multipack, gift box or case-packing format"
+        ]
+      },
+      "keg": {
+        "title": "Kegs 20\u00a0L",
+        "d1": "Large format for bars,",
+        "d2": "restaurants and hotels (HoReCa).",
+        "alt": "Stainless-steel keg with a grey valve and an ivory band with burgundy and green leaf line art on a light beige background",
+        "intro": "20 L kegs suit wine and drinks served on draught in bars, restaurants and hotels (HoReCa), reducing packaging per serve.",
+        "listTitle": "To be confirmed together for each project:",
+        "list": [
+          "Keg type, valve fitting and dispense system compatibility",
+          "Keg cleaning, filling and seal integrity validation",
+          "Keg return, deposit and logistics arrangements",
+          "Shelf life after tapping and storage conditions"
         ]
       },
       "note": "Production sites, specifications, capacity and approval rules are confirmed per project after assessment."
@@ -537,6 +582,48 @@ export const v2Copy: Record<Locale, V2Messages> = {
           "开启后的饮用期限与储存建议"
         ]
       },
+      "carton": {
+        "title": "利乐包/纸盒装",
+        "d1": "轻便、易储运，",
+        "d2": "适合日常零售渠道。",
+        "alt": "三只象牙白屋顶型饮料纸盒，酒红与绿色叶片线稿图案，浅米色背景",
+        "intro": "多层复合纸盒重量轻、便于堆码，适合零售与电商渠道中常温储存的日常消费产品。",
+        "listTitle": "项目中需要共同确认：",
+        "list": [
+          "纸盒规格、容量与开口或吸管方案",
+          "阻隔层结构与产品兼容性",
+          "灌装、杀菌与密封性要求",
+          "盒身印刷设计与中文标签信息"
+        ]
+      },
+      "mini": {
+        "title": "小瓶装 187ml",
+        "d1": "单杯分量，",
+        "d2": "适合品鉴、礼品与旅行。",
+        "alt": "三只浅黄、深酒红与桃粉色小酒瓶，象牙色空白标签，浅米色背景",
+        "intro": "187ml 小瓶适合单人饮用、品鉴、礼盒、航空与酒店等场景，便于消费者初次尝试。",
+        "listTitle": "项目中需要共同确认：",
+        "list": [
+          "瓶型、瓶色与封口方式",
+          "小容量灌装精度与质量检查",
+          "小标签面积下的中文标签版式",
+          "多支装、礼盒或装箱形式"
+        ]
+      },
+      "keg": {
+        "title": "20L 酒桶 KEG",
+        "d1": "大容量餐饮之选，",
+        "d2": "适合酒店餐饮与现打。",
+        "alt": "不锈钢酒桶，灰色阀门，象牙色腰带饰有酒红与绿色叶片线稿，浅米色背景",
+        "intro": "20L 酒桶适合酒吧、餐厅与酒店（HoReCa）现打供应的葡萄酒与酒饮，降低单杯包装用量。",
+        "listTitle": "项目中需要共同确认：",
+        "list": [
+          "酒桶类型、阀门接口与出酒系统兼容性",
+          "酒桶清洗、灌装与密封性验证",
+          "酒桶回收、押金与物流安排",
+          "开桶后的饮用期限与储存条件"
+        ]
+      },
       "note": "具体生产场地、规格、产能与审批规则将根据项目评估后确认。"
     },
     "process": {
@@ -836,6 +923,48 @@ export const v2Copy: Record<Locale, V2Messages> = {
           "Vida útil tras la apertura y recomendaciones de conservación"
         ]
       },
+      "carton": {
+        "title": "Envase de cartón",
+        "d1": "Ligero y estable,",
+        "d2": "para el canal minorista diario.",
+        "alt": "Tres envases de cartón marfil con tapa a dos aguas e ilustraciones de hojas burdeos y verdes sobre fondo beige claro",
+        "intro": "El envase de cartón multicapa es ligero, fácil de apilar y adecuado para productos de consumo diario a temperatura ambiente en los canales minorista y online.",
+        "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
+        "list": [
+          "Formato, capacidad y tipo de tapón o pajita",
+          "Capas barrera y compatibilidad con el producto",
+          "Requisitos de llenado, esterilización y sellado",
+          "Diseño de impresión e información en chino en el envase"
+        ]
+      },
+      "mini": {
+        "title": "Botellín 187\u00a0ml",
+        "d1": "Una sola copa,",
+        "d2": "para catas, regalo y viajes.",
+        "alt": "Tres botellas pequeñas de vino en amarillo pálido, burdeos oscuro y rosado con etiquetas marfil sin marca sobre fondo beige claro",
+        "intro": "El botellín de 187 ml es adecuado para consumo individual, catas, estuches de regalo, aerolíneas y hostelería, y facilita que el consumidor descubra el producto.",
+        "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
+        "list": [
+          "Forma, color del vidrio y tipo de cierre",
+          "Precisión de llenado y controles de calidad en formato pequeño",
+          "Diseño de etiqueta para una superficie reducida",
+          "Formato multipack, estuche o encajado"
+        ]
+      },
+      "keg": {
+        "title": "Barril 20\u00a0L",
+        "d1": "Gran formato para hostelería,",
+        "d2": "ideal para HoReCa y grifo.",
+        "alt": "Barril de acero inoxidable con válvula gris y banda marfil con ilustraciones de hojas burdeos y verdes sobre fondo beige claro",
+        "intro": "El barril de 20 L es adecuado para vinos y bebidas servidos de grifo en bares, restaurantes y hoteles (HoReCa), con menos envase por copa.",
+        "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
+        "list": [
+          "Tipo de barril, conector de válvula y compatibilidad con el sistema de dispensado",
+          "Validación de limpieza, llenado y sellado del barril",
+          "Retorno, depósito y logística de los barriles",
+          "Vida útil tras la apertura y condiciones de almacenamiento"
+        ]
+      },
       "note": "Las plantas de producción, especificaciones, capacidad y normas de aprobación se confirman en cada proyecto tras su evaluación."
     },
     "process": {
@@ -1133,6 +1262,48 @@ export const v2Copy: Record<Locale, V2Messages> = {
           "Structure et impression du carton",
           "Validation de l’hygiène de remplissage et de l’étanchéité",
           "Durée de conservation après ouverture et conseils de stockage"
+        ]
+      },
+      "carton": {
+        "title": "Brique carton",
+        "d1": "Légère et stable,",
+        "d2": "pour la distribution au quotidien.",
+        "alt": "Trois briques carton ivoire à toit pointu, motifs de feuilles bordeaux et vertes, sur fond beige clair",
+        "intro": "La brique carton multicouche est légère, facile à empiler et adaptée aux produits du quotidien conservés à température ambiante, en grande distribution comme en ligne.",
+        "listTitle": "Points à valider ensemble pour chaque projet :",
+        "list": [
+          "Format, contenance et type de bouchon ou de paille",
+          "Couches barrières et compatibilité avec le produit",
+          "Exigences de remplissage, de stérilisation et d’étanchéité",
+          "Impression et mentions en chinois sur l’emballage"
+        ]
+      },
+      "mini": {
+        "title": "Mignonnette 187\u00a0ml",
+        "d1": "Une portion individuelle,",
+        "d2": "pour la dégustation et le cadeau.",
+        "alt": "Trois petites bouteilles de vin jaune pâle, bordeaux profond et rosé, étiquettes ivoire vierges, sur fond beige clair",
+        "intro": "La mignonnette de 187 ml convient à la consommation individuelle, aux dégustations, aux coffrets cadeaux, aux compagnies aériennes et à l’hôtellerie ; elle facilite la découverte du produit.",
+        "listTitle": "Points à valider ensemble pour chaque projet :",
+        "list": [
+          "Forme, teinte du verre et type de bouchage",
+          "Précision de remplissage et contrôles qualité en petit format",
+          "Mise en page de l’étiquette sur une surface réduite",
+          "Format multipack, coffret ou mise en carton"
+        ]
+      },
+      "keg": {
+        "title": "Fût 20\u00a0L",
+        "d1": "Grand format pour le CHR,",
+        "d2": "adapté au service à la pression.",
+        "alt": "Fût en acier inoxydable avec valve grise et bandeau ivoire à motifs de feuilles bordeaux et vertes, sur fond beige clair",
+        "intro": "Le fût de 20 L convient aux vins et boissons servis à la pression dans les bars, restaurants et hôtels (CHR / HoReCa), avec moins d’emballage par verre.",
+        "listTitle": "Points à valider ensemble pour chaque projet :",
+        "list": [
+          "Type de fût, raccord de valve et compatibilité avec le système de tirage",
+          "Validation du nettoyage, du remplissage et de l’étanchéité des fûts",
+          "Retour, consigne et logistique des fûts",
+          "Durée de conservation après mise en perce et conditions de stockage"
         ]
       },
       "note": "Les sites de production, spécifications, capacités et règles d’approbation sont confirmés pour chaque projet après évaluation."
