@@ -1,19 +1,9 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { resolveLang } from "./i18n";
+import "./fonts.css";
 import "./globals.css";
 import "./v2-home.css";
-
-const fontLinks = [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" as const },
-  {
-    rel: "stylesheet",
-    href:
-      "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&family=Montserrat:ital,wght@0,400..800;1,400..800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap",
-  },
-  { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.1.0/index.css" },
-];
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -44,11 +34,6 @@ export default async function RootLayout({
   const pathname = requestHeaders.get("x-jjwine-pathname") ?? "/";
   return (
     <html lang={resolveLang(pathname)}>
-      <head>
-        {fontLinks.map((link, i) => (
-          <link key={i} {...link} />
-        ))}
-      </head>
       <body>{children}</body>
     </html>
   );
