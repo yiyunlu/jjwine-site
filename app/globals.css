@@ -176,6 +176,14 @@ body:has(.legal-shell) {
   line-height: 1.3;
 }
 
+/* zh-CN legal headings use the self-hosted CJK sans instead of the system serif. */
+html[lang="zh-CN"] .legal-article-head h1,
+html[lang="zh-CN"] .legal-section h2,
+.locale-zh-cn .legal-article-head h1,
+.locale-zh-cn .legal-section h2 {
+  font-family: var(--font-cjk);
+}
+
 .legal-section p,
 .legal-section li {
   margin: 0 0 12px;

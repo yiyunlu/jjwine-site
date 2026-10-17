@@ -34,7 +34,7 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
-html[lang="zh-CN"] body { font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif; }
+html[lang="zh-CN"] body { font-family: "Inter", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif; }
 img { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 p, h1, h2, h3, ul, ol { margin: 0; }
