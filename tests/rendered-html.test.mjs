@@ -188,6 +188,13 @@ const localBriefMarkers = {
   "zh-CN": "完全在您自己的设备和浏览器中处理",
 };
 
+// Online enquiry disclosure (ECO-133): heading, endpoint, Turnstile, email provider,
+// and that the old "no server-side form" claim is gone.
+const onlineEnquiryMarkers = {
+  en: { heading: "4. Online enquiry form", stale: /no server-side (inquiry )?forms?/ },
+  "zh-CN": { heading: "四、在线询盘表单", stale: /没有服务器端询盘表单|无服务器端表单/ },
+};
+
 for (const [pathname, lang, title, marker] of legalRoutes) {
   const isPrivacy = pathname.endsWith("/privacy");
 
@@ -210,6 +217,13 @@ for (const [pathname, lang, title, marker] of legalRoutes) {
       assert.match(html, /Cloudflare Workers/);
       assert.match(html, /PIPL/);
       assert.match(html, /GDPR|RGPD/);
+
+      const enquiry = onlineEnquiryMarkers[lang];
+      assert.match(html, new RegExp(`<h2[^>]*>${escape(enquiry.heading)}</h2>`));
+      assert.match(html, /\/api\/enquiry/);
+      assert.match(html, /Cloudflare Turnstile/);
+      assert.match(html, /Resend/);
+      assert.doesNotMatch(html, enquiry.stale);
     }
   });
 
