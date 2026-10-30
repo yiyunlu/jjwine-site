@@ -10,7 +10,7 @@ type NavKey = "home" | "capability" | "process";
 type ProductKey = "bottle" | "can" | "bib" | "carton" | "mini" | "keg";
 type FieldName = "brand" | "contact" | "email" | "category" | "packaging" | "needs";
 type FieldError = "required" | "email" | "select";
-type EnquiryStatusKey = "sending" | "sent" | "failed" | "rateLimit" | "network" | "captcha";
+type EnquiryStatusKey = "sending" | "sent" | "failed" | "rateLimit" | "network" | "captcha" | "not_configured";
 type BriefStatus = { key: "summary" | "downloaded" | "copied" | "copyFail" | EnquiryStatusKey; kind: "error" | "ok" } | null;
 
 type TurnstileApi = {
@@ -339,7 +339,11 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
 
   const submitEnquiry = async (form: HTMLFormElement) => {
     if (!enquiry) return;
-    if (TURNSTILE_SITE_KEY && !turnstileTokenRef.current) {
+    if (!TURNSTILE_SITE_KEY) {
+      setStatus({ key: "not_configured", kind: "error" });
+      return;
+    }
+    if (!turnstileTokenRef.current) {
       setStatus({ key: "captcha", kind: "error" });
       return;
     }
@@ -361,7 +365,7 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
     setStatus({ key: "sending", kind: "ok" });
     try {
       const response = await fetch("/api/enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      const result = (await response.json().catch(() => null)) as { ok?: boolean } | null;
+      const result = (await response.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
       if (response.ok && result?.ok === true) {
         setStatus({ key: "sent", kind: "ok" });
         form.reset();
@@ -369,7 +373,15 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
         setErrors({});
         setPreview(null);
       } else {
-        setStatus({ key: response.status === 429 ? "rateLimit" : "failed", kind: "error" });
+        const key: EnquiryStatusKey =
+          result?.error === "not_configured" || response.status === 503
+            ? "not_configured"
+            : result?.error === "turnstile_failed"
+              ? "captcha"
+              : response.status === 429
+                ? "rateLimit"
+                : "failed";
+        setStatus({ key, kind: "error" });
       }
     } catch {
       setStatus({ key: "network", kind: "error" });
