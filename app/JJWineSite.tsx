@@ -10,7 +10,41 @@ type NavKey = "home" | "capability" | "process";
 type ProductKey = "bottle" | "can" | "bib" | "carton" | "mini" | "keg";
 type FieldName = "brand" | "contact" | "email" | "category" | "packaging" | "needs";
 type FieldError = "required" | "email" | "select";
-type BriefStatus = { key: "summary" | "downloaded" | "copied" | "copyFail"; kind: "error" | "ok" } | null;
+type EnquiryStatusKey = "sending" | "sent" | "failed" | "rateLimit" | "network" | "captcha";
+type BriefStatus = { key: "summary" | "downloaded" | "copied" | "copyFail" | EnquiryStatusKey; kind: "error" | "ok" } | null;
+
+type TurnstileApi = {
+  render: (container: HTMLElement, options: Record<string, unknown>) => string;
+  reset: (widgetId?: string) => void;
+  remove: (widgetId?: string) => void;
+};
+
+// Public Turnstile site key, injected at build time as VITE_TURNSTILE_SITE_KEY (a public value, not a secret).
+// TODO(ECO-132): the Worker verifies tokens with the matching secret; set both from the Cloudflare dashboard,
+// never commit either. Without a site key the widget is skipped and the Worker decides whether to accept an empty token.
+const TURNSTILE_SITE_KEY: string = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_TURNSTILE_SITE_KEY ?? "";
+const TURNSTILE_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+
+function loadTurnstile(): Promise<TurnstileApi> {
+  const existing = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
+  if (existing) return Promise.resolve(existing);
+  return new Promise((resolve, reject) => {
+    let script = document.querySelector<HTMLScriptElement>("script[data-turnstile]");
+    if (!script) {
+      script = document.createElement("script");
+      script.src = TURNSTILE_SCRIPT;
+      script.async = true;
+      script.defer = true;
+      script.dataset.turnstile = "1";
+      document.head.appendChild(script);
+    }
+    script.addEventListener("load", () => {
+      const api = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
+      if (api) resolve(api); else reject(new Error("turnstile"));
+    });
+    script.addEventListener("error", () => reject(new Error("turnstile")));
+  });
+}
 
 const HOME_LOCALE_ORDER: Locale[] = ["zh-cn", "en", "es", "fr"];
 const LANG_NAME: Record<Locale, string> = {
@@ -268,7 +302,86 @@ function ModalFrame({
   );
 }
 
-function BriefDialog({ copy, separator, onDismiss }: { copy: V2Messages; separator: string; onDismiss: () => void }) {
+function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages; locale: Locale; separator: string; onDismiss: () => void }) {
+  // Online submit is offered on en / zh-cn only; es / fr keep local download + copy.
+  const enquiry = locale === "en" || locale === "zh-cn" ? copy.form.enquiry : undefined;
+  const apiLocale = locale === "zh-cn" ? "zh-cn" : "en";
+  const [sending, setSending] = useState(false);
+  const turnstileBoxRef = useRef<HTMLDivElement>(null);
+  const turnstileIdRef = useRef<string | undefined>(undefined);
+  const turnstileTokenRef = useRef("");
+
+  useEffect(() => {
+    if (!enquiry || !TURNSTILE_SITE_KEY) return;
+    let cancelled = false;
+    loadTurnstile().then(
+      (api) => {
+        const box = turnstileBoxRef.current;
+        if (cancelled || !box) return;
+        turnstileIdRef.current = api.render(box, {
+          sitekey: TURNSTILE_SITE_KEY,
+          language: locale === "zh-cn" ? "zh-cn" : "en",
+          callback: (token: string) => { turnstileTokenRef.current = token; },
+          "expired-callback": () => { turnstileTokenRef.current = ""; },
+          "error-callback": () => { turnstileTokenRef.current = ""; },
+        });
+      },
+      () => undefined,
+    );
+    return () => {
+      cancelled = true;
+      const id = turnstileIdRef.current;
+      turnstileIdRef.current = undefined;
+      turnstileTokenRef.current = "";
+      if (id) (window as unknown as { turnstile?: TurnstileApi }).turnstile?.remove(id);
+    };
+  }, [enquiry, locale]);
+
+  const submitEnquiry = async (form: HTMLFormElement) => {
+    if (!enquiry) return;
+    if (TURNSTILE_SITE_KEY && !turnstileTokenRef.current) {
+      setStatus({ key: "captcha", kind: "error" });
+      return;
+    }
+    const categoryIndex = fieldValue(form, "category");
+    const packagingIndex = fieldValue(form, "packaging");
+    const payload = {
+      locale: apiLocale,
+      brand: fieldValue(form, "brand").trim(),
+      contact: fieldValue(form, "contact").trim(),
+      email: fieldValue(form, "email").trim(),
+      category: copy.form.categories[Number(categoryIndex)] ?? "",
+      packaging: copy.form.packagings[Number(packagingIndex)] ?? "",
+      quantity: fieldValue(form, "quantity").trim(),
+      launch: fieldValue(form, "launch").trim(),
+      needs: fieldValue(form, "needs").trim(),
+      turnstileToken: turnstileTokenRef.current,
+    };
+    setSending(true);
+    setStatus({ key: "sending", kind: "ok" });
+    try {
+      const response = await fetch("/api/enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const result = (await response.json().catch(() => null)) as { ok?: boolean } | null;
+      if (response.ok && result?.ok === true) {
+        setStatus({ key: "sent", kind: "ok" });
+        form.reset();
+        setAttempted(false);
+        setErrors({});
+        setPreview(null);
+      } else {
+        setStatus({ key: response.status === 429 ? "rateLimit" : "failed", kind: "error" });
+      }
+    } catch {
+      setStatus({ key: "network", kind: "error" });
+    } finally {
+      setSending(false);
+      // Turnstile tokens are single-use.
+      turnstileTokenRef.current = "";
+      const id = turnstileIdRef.current;
+      if (id) (window as unknown as { turnstile?: TurnstileApi }).turnstile?.reset(id);
+    }
+  };
+
   const [errors, setErrors] = useState<Partial<Record<FieldName, FieldError>>>({});
   const [attempted, setAttempted] = useState(false);
   const [status, setStatus] = useState<BriefStatus>(null);
@@ -289,7 +402,9 @@ function BriefDialog({ copy, separator, onDismiss }: { copy: V2Messages; separat
     const next = validateForm(event.currentTarget);
     setErrors(next);
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
-    const action = submitter instanceof HTMLButtonElement && submitter.value === "copy" ? "copy" : "download";
+    const submitValue = submitter instanceof HTMLButtonElement ? submitter.value : "";
+    const action = submitValue === "copy" ? "copy" : submitValue === "enquiry" && enquiry ? "enquiry" : "download";
+    if (sending) return;
     if (Object.keys(next).length > 0) {
       setStatus({ key: "summary", kind: "error" });
       const first = (["brand", "contact", "email", "category", "packaging", "needs"] as const).find((name) => next[name]);
@@ -297,6 +412,10 @@ function BriefDialog({ copy, separator, onDismiss }: { copy: V2Messages; separat
         const element = event.currentTarget.elements.namedItem(first);
         if (element instanceof HTMLElement) element.focus();
       }
+      return;
+    }
+    if (action === "enquiry") {
+      void submitEnquiry(event.currentTarget);
       return;
     }
     const text = buildBrief(event.currentTarget, copy, separator);
@@ -316,7 +435,13 @@ function BriefDialog({ copy, separator, onDismiss }: { copy: V2Messages; separat
     );
   };
 
-  const statusText = !status ? "" : status.key === "summary" ? copy.form.err.summary : copy.form.status[status.key];
+  const statusText = !status
+    ? ""
+    : status.key === "summary"
+      ? copy.form.err.summary
+      : status.key === "downloaded" || status.key === "copied" || status.key === "copyFail"
+        ? copy.form.status[status.key]
+        : enquiry?.[status.key] ?? "";
   const fields: Array<{ name: FieldName; label: string; required: boolean; wide?: boolean; control: "input" | "email" | "select" | "textarea" }> = [
     { name: "brand", label: copy.form.brand, required: true, control: "input" },
     { name: "contact", label: copy.form.contact, required: true, control: "input" },
@@ -333,7 +458,7 @@ function BriefDialog({ copy, separator, onDismiss }: { copy: V2Messages; separat
       <p className="eyebrow">{copy.form.subtitle}</p>
       <h2 id="brief-title" className="modal-title">{copy.form.title}</h2>
       <p className="modal-text">{copy.form.intro}</p>
-      <p className="notice">{copy.form.notice}</p>
+      <p className="notice">{enquiry ? enquiry.notice : copy.form.notice}</p>
       <form noValidate onSubmit={onSubmit} onInput={(event) => refresh(event.currentTarget)} onChange={(event) => refresh(event.currentTarget)}>
         <p className="form-legend">{copy.form.legend}</p>
         <div className="form-grid">
@@ -376,8 +501,17 @@ function BriefDialog({ copy, separator, onDismiss }: { copy: V2Messages; separat
           })}
         </div>
         <p className={status ? `form-status is-${status.kind}` : "form-status"} role="status" aria-live="polite">{statusText}</p>
+        {enquiry ? (
+          <>
+            {TURNSTILE_SITE_KEY ? <div className="turnstile-box" ref={turnstileBoxRef} aria-label={enquiry.turnstileLabel} /> : null}
+            <p className="form-privacy">
+              {enquiry.privacyLead} <a href={publicLegalPagePath("privacy", locale)} target="_blank" rel="noopener noreferrer">{enquiry.privacyLink}</a>.
+            </p>
+          </>
+        ) : null}
         <div className="modal-actions">
-          <button className="btn-primary" type="submit" value="download">{copy.form.download}</button>
+          {enquiry ? <button className="btn-primary" type="submit" value="enquiry" disabled={sending} aria-busy={sending || undefined}>{sending ? enquiry.sending : enquiry.submit}</button> : null}
+          <button className={enquiry ? "btn-secondary" : "btn-primary"} type="submit" value="download">{copy.form.download}</button>
           <button className="btn-secondary" type="submit" value="copy">{copy.form.copy}</button>
           <button className="btn-text" type="button" onClick={onDismiss}>{copy.form.cancel}</button>
         </div>
@@ -711,7 +845,7 @@ export function JJWineSite({ locale }: Props) {
           </div>
         </ModalFrame>
       ) : null}
-      {briefOpen ? <BriefDialog copy={copy} separator={separator} onDismiss={dismissOverlay} /> : null}
+      {briefOpen ? <BriefDialog copy={copy} locale={locale} separator={separator} onDismiss={dismissOverlay} /> : null}
     </>
   );
 }
