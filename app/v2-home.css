@@ -610,6 +610,7 @@ html:not([lang="zh-CN"]) .step-title { overflow-wrap: break-word; hyphens: auto;
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .site-footer a { text-decoration: underline; text-underline-offset: 3px; }
 .site-footer a:hover { color: var(--wine); }
+.site-footer .footer-contact span { color: var(--muted); }
 .site-footer .footer-mark { flex: none; line-height: 0; text-decoration: none; }
 .site-footer .footer-mark:hover { color: inherit; }
 .site-footer .brand-logo { display: block; height: 36px; width: auto; }
