@@ -333,3 +333,12 @@ test("legal pages retain responsive language links and readable footer links", a
   assert.match(css, /\.legal-topbar \.language-links\s*\{\s*display:\s*flex;/);
   assert.match(css, /\.legal-footer > a:last-child\s*\{[^}]*font-size:\s*13px;/s);
 });
+
+for (const [locale, label] of [["en", "Contact"], ["zh-cn", "联系我们"], ["es", "Contacto"], ["fr", "Contact"]]) {
+  test(`home /${locale} footer shows a visible mailto Contact`, async () => {
+    const html = await (await render(`/${locale}`)).text();
+    const footer = html.slice(html.indexOf('<footer class="site-footer"'));
+    assert.match(footer, new RegExp(`<span>${escape(label)}</span>`));
+    assert.match(footer, /<a href="mailto:eddielu@winekee\.com">eddielu@winekee\.com<\/a>/);
+  });
+}

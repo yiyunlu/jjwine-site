@@ -63,7 +63,7 @@ type SiteContent = {
   partnership: { kicker: string; title: string; brandTitle: string; brandBody: string; brandLink: string; retailTitle: string; retailBody: string; retailLink: string };
   contact: { kicker: string; title: string; body: string; button: string; note: string };
   brief: { title: string; intro: string; company: string; companyPlaceholder: string; market: string; marketPlaceholder: string; product: string; productPlaceholder: string; format: string; formatPlaceholder: string; volume: string; volumePlaceholder: string; timing: string; timingPlaceholder: string; details: string; detailsPlaceholder: string; download: string; privacy: string; fileHeading: string; fileName: string };
-  footer: { line: string; legal: string; top: string; legalNav: string; privacyLink: string; legalLink: string };
+  footer: { line: string; legal: string; top: string; legalNav: string; privacyLink: string; legalLink: string; contactLabel: string };
 };
 
 export const content: Record<Locale, SiteContent> = {
@@ -179,7 +179,7 @@ export const content: Record<Locale, SiteContent> = {
       download: "Download brief", privacy: "This form does not transmit or store your information.",
       fileHeading: "JJWINE — PROJECT BRIEF", fileName: "jjwine-project-brief.txt",
     },
-    footer: { line: "Global standards. Local execution.", legal: "Capabilities and certifications are confirmed against each project, product and qualified production site.", top: "Back to top", legalNav: "Legal", privacyLink: "Privacy Policy", legalLink: "Legal Notice" },
+    footer: { line: "Global standards. Local execution.", legal: "Capabilities and certifications are confirmed against each project, product and qualified production site.", top: "Back to top", legalNav: "Legal", privacyLink: "Privacy Policy", legalLink: "Legal Notice", contactLabel: "Contact" },
   },
   "zh-cn": {
     localeName: "简体中文",
@@ -290,7 +290,7 @@ export const content: Record<Locale, SiteContent> = {
       download: "下载需求简报", privacy: "本表单不会传输或储存您的信息。",
       fileHeading: "JJWINE — 项目需求简报", fileName: "jjwine-项目需求简报.txt",
     },
-    footer: { line: "全球标准，本地执行。", legal: "所有能力与认证均需结合具体项目、产品和经确认的生产场地核实。", top: "返回顶部", legalNav: "法律信息", privacyLink: "隐私政策", legalLink: "法律声明" },
+    footer: { line: "全球标准，本地执行。", legal: "所有能力与认证均需结合具体项目、产品和经确认的生产场地核实。", top: "返回顶部", legalNav: "法律信息", privacyLink: "隐私政策", legalLink: "法律声明", contactLabel: "联系我们" },
   },
   es: {
     localeName: "Español",
@@ -401,7 +401,7 @@ export const content: Record<Locale, SiteContent> = {
       download: "Descargar brief", privacy: "Este formulario no transmite ni almacena tu información.",
       fileHeading: "JJWINE — BRIEF DE PROYECTO", fileName: "jjwine-brief-proyecto.txt",
     },
-    footer: { line: "Estándares globales. Ejecución local.", legal: "Las capacidades y certificaciones se confirman para cada proyecto, producto y planta cualificada.", top: "Volver arriba", legalNav: "Información legal", privacyLink: "Política de privacidad (en inglés)", legalLink: "Aviso legal (en inglés)" },
+    footer: { line: "Estándares globales. Ejecución local.", legal: "Las capacidades y certificaciones se confirman para cada proyecto, producto y planta cualificada.", top: "Volver arriba", legalNav: "Información legal", privacyLink: "Política de privacidad (en inglés)", legalLink: "Aviso legal (en inglés)", contactLabel: "Contacto" },
   },
   fr: {
     localeName: "Français",
@@ -515,6 +515,6 @@ export const content: Record<Locale, SiteContent> = {
       download: "Télécharger le brief", privacy: "Ce formulaire ne transmet ni ne stocke vos informations.",
       fileHeading: "JJWINE — BRIEF DE PROJET", fileName: "jjwine-brief-projet.txt",
     },
-    footer: { line: "Standards globaux. Exécution locale.", legal: "Les capacités et certifications sont confirmées pour chaque projet, produit et site qualifié.", top: "Retour en haut", legalNav: "Informations légales", privacyLink: "Politique de confidentialité (en anglais)", legalLink: "Mentions légales (en anglais)" },
+    footer: { line: "Standards globaux. Exécution locale.", legal: "Les capacités et certifications sont confirmées pour chaque projet, produit et site qualifié.", top: "Retour en haut", legalNav: "Informations légales", privacyLink: "Politique de confidentialité (en anglais)", legalLink: "Mentions légales (en anglais)", contactLabel: "Contact" },
   },
 };

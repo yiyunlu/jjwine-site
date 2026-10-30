@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode, type RefObject } from "react";
 import { content, type Locale } from "./content";
+import { CONTACT_EMAIL } from "./legal-content";
 import { localeLinks, publicLegalPagePath } from "./i18n";
 import { v2Copy, type V2Messages } from "./v2-copy";
 
@@ -842,6 +843,10 @@ export function JJWineSite({ locale }: Props) {
           <a href={publicLegalPagePath("privacy", locale)}>{site.footer.privacyLink}</a>
           <a href={publicLegalPagePath("legal", locale)}>{site.footer.legalLink}</a>
         </nav>
+        <p className="footer-contact">
+          <span>{site.footer.contactLabel}</span>{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        </p>
         <small>{site.footer.legal}</small>
       </footer>
 
