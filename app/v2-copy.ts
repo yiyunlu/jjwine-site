@@ -132,6 +132,20 @@ export type V2Messages = {
     err: { required: string; select: string; email: string; summary: string };
     status: { downloaded: string; copied: string; copyFail: string };
     brief: { heading: string; generated: string; empty: string; footer: string; filename: string };
+    /** Online enquiry submit copy. Present on en / zh-cn only; absent locales stay download/copy only. */
+    enquiry?: {
+      notice: string;
+      submit: string;
+      sending: string;
+      sent: string;
+      failed: string;
+      rateLimit: string;
+      network: string;
+      captcha: string;
+      turnstileLabel: string;
+      privacyLead: string;
+      privacyLink: string;
+    };
   };
 };
 
@@ -473,7 +487,19 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "generated": "Generated",
         "empty": "(not provided)",
         "footer": "Generated locally on the JJWine website. Not sent automatically.",
-        "filename": "JJWine-project-brief"
+        "filename": "JJWine-project-brief"},
+      "enquiry": {
+        "notice": "You can submit this enquiry online, or download / copy the brief and send it yourself. Download and copy stay entirely in your browser.",
+        "submit": "Submit enquiry",
+        "sending": "Sending…",
+        "sent": "Thank you — your enquiry has been sent to JJWine. We will reply to the email address you provided.",
+        "failed": "Sorry, your enquiry could not be sent. Please try again later or download the brief instead.",
+        "rateLimit": "Too many submissions. Please wait a while and try again.",
+        "network": "Network error. Please check your connection and try again, or download the brief instead.",
+        "captcha": "Please complete the security check before submitting.",
+        "turnstileLabel": "Security check",
+        "privacyLead": "By submitting, you agree that JJWine may use these details to reply to your enquiry. See our",
+        "privacyLink": "Privacy Policy"
       }
     }
   },
@@ -814,7 +840,19 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "generated": "生成时间",
         "empty": "（未填写）",
         "footer": "本简报由 JJWine 网站在本地生成，未自动发送。",
-        "filename": "JJWine-项目需求简报"
+        "filename": "JJWine-项目需求简报"},
+      "enquiry": {
+        "notice": "您可以在线提交询盘，也可以下载或复制简报后自行发送。下载与复制仅在您的浏览器中处理。",
+        "submit": "提交询盘",
+        "sending": "正在发送…",
+        "sent": "感谢您的留言，询盘已发送给 JJWine。我们将通过您填写的邮箱回复。",
+        "failed": "抱歉，询盘发送失败。请稍后重试，或改为下载需求简报。",
+        "rateLimit": "提交过于频繁，请稍后再试。",
+        "network": "网络异常，请检查网络后重试，或改为下载需求简报。",
+        "captcha": "请先完成安全验证再提交。",
+        "turnstileLabel": "安全验证",
+        "privacyLead": "提交即表示您同意 JJWine 使用这些信息回复您的询盘。详见",
+        "privacyLink": "隐私政策"
       }
     }
   },
