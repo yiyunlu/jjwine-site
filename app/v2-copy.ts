@@ -256,11 +256,11 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "mini": {
-        "title": "Mini bottles 187\u00a0ml",
+        "title": "Small format",
         "d1": "A single serve,",
         "d2": "for tasting, gifting and travel.",
         "alt": "Three small wine bottles in pale yellow, deep burgundy and rosé with blank ivory labels on a light beige background",
-        "intro": "187 ml mini bottles suit single servings, tastings, gift sets, airlines and hospitality, and help consumers discover a product.",
+        "intro": "Small-format bottles suit single servings, tastings, gift sets, airlines and hospitality, and help consumers discover a product.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
           "Bottle shape, glass colour and closure",
@@ -597,11 +597,11 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "mini": {
-        "title": "小瓶装 187ml",
+        "title": "小格装",
         "d1": "单杯分量，",
         "d2": "适合品鉴、礼品与旅行。",
         "alt": "三只浅黄、深酒红与桃粉色小酒瓶，象牙色空白标签，浅米色背景",
-        "intro": "187ml 小瓶适合单人饮用、品鉴、礼盒、航空与酒店等场景，便于消费者初次尝试。",
+        "intro": "小格装适合单人饮用、品鉴、礼盒、航空与酒店等场景，便于消费者初次尝试。",
         "listTitle": "项目中需要共同确认：",
         "list": [
           "瓶型、瓶色与封口方式",
@@ -938,11 +938,11 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "mini": {
-        "title": "Botellín 187\u00a0ml",
+        "title": "Formato pequeño",
         "d1": "Una sola copa,",
         "d2": "para catas, regalo y viajes.",
         "alt": "Tres botellas pequeñas de vino en amarillo pálido, burdeos oscuro y rosado con etiquetas marfil sin marca sobre fondo beige claro",
-        "intro": "El botellín de 187 ml es adecuado para consumo individual, catas, estuches de regalo, aerolíneas y hostelería, y facilita que el consumidor descubra el producto.",
+        "intro": "El formato pequeño es adecuado para consumo individual, catas, estuches de regalo, aerolíneas y hostelería, y facilita que el consumidor descubra el producto.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
           "Forma, color del vidrio y tipo de cierre",
@@ -1279,11 +1279,11 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "mini": {
-        "title": "Mignonnette 187\u00a0ml",
+        "title": "Petit format",
         "d1": "Une portion individuelle,",
         "d2": "pour la dégustation et le cadeau.",
         "alt": "Trois petites bouteilles de vin jaune pâle, bordeaux profond et rosé, étiquettes ivoire vierges, sur fond beige clair",
-        "intro": "La mignonnette de 187 ml convient à la consommation individuelle, aux dégustations, aux coffrets cadeaux, aux compagnies aériennes et à l’hôtellerie ; elle facilite la découverte du produit.",
+        "intro": "Le petit format convient à la consommation individuelle, aux dégustations, aux coffrets cadeaux, aux compagnies aériennes et à l’hôtellerie ; il facilite la découverte du produit.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
           "Forme, teinte du verre et type de bouchage",
