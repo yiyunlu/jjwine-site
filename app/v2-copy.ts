@@ -142,6 +142,7 @@ export type V2Messages = {
       rateLimit: string;
       network: string;
       captcha: string;
+      not_configured: string;
       turnstileLabel: string;
       privacyLead: string;
       privacyLink: string;
@@ -497,6 +498,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "rateLimit": "Too many submissions. Please wait a while and try again.",
         "network": "Network error. Please check your connection and try again, or download the brief instead.",
         "captcha": "Please complete the security check before submitting.",
+        "not_configured": "Online enquiry is temporarily unavailable. Please download or copy the brief and send it to JJWine.",
         "turnstileLabel": "Security check",
         "privacyLead": "By submitting, you agree that JJWine may use these details to reply to your enquiry. See our",
         "privacyLink": "Privacy Policy"
@@ -850,6 +852,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "rateLimit": "提交过于频繁，请稍后再试。",
         "network": "网络异常，请检查网络后重试，或改为下载需求简报。",
         "captcha": "请先完成安全验证再提交。",
+        "not_configured": "在线询盘暂时不可用。请下载或复制需求简报，并发送给 JJWine。",
         "turnstileLabel": "安全验证",
         "privacyLead": "提交即表示您同意 JJWine 使用这些信息回复您的询盘。详见",
         "privacyLink": "隐私政策"
