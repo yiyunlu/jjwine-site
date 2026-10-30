@@ -3,17 +3,22 @@ import type { LegalLocale } from "./i18n";
 /**
  * Content for the Privacy Policy and Legal Notice pages.
  *
- * Approved facts (2026-08-20): the site operator is 上海捷嘉酒业有限公司
- * (referred to as "JJWine" / the operator; no English legal name is stated here).
- * Contact is eddielu@winekee.com. The site has no analytics, ads,
- * non-essential cookies, accounts or server-side forms; the project brief is
- * generated and downloaded locally; Cloudflare Workers may process IP
+ * Approved facts (2026-08-20, updated 2026-10-30 for ECO-133): the site operator
+ * is 上海捷嘉酒业有限公司 (referred to as "JJWine" / the operator; no English legal
+ * name is stated here). Contact is eddielu@winekee.com. The site has no
+ * analytics, ads, non-essential cookies or accounts. On /en and /zh-cn only, an
+ * online enquiry form POSTs brand, contact, email, category, packaging, optional
+ * quantity/launch, needs, locale and a Cloudflare Turnstile token to
+ * /api/enquiry; the Worker verifies Turnstile with Cloudflare, applies an
+ * in-memory per-IP rate limit, and emails the enquiry to the operator inbox via
+ * Resend. It does not store submissions in a database. The project brief
+ * download/copy remains local-only. Cloudflare Workers may process IP
  * addresses, request headers, timestamps and security logs.
  */
 
 export const OPERATOR_LEGAL_NAME = "上海捷嘉酒业有限公司";
 export const CONTACT_EMAIL = "eddielu@winekee.com";
-export const EFFECTIVE_DATE_ISO = "2026-08-20";
+export const EFFECTIVE_DATE_ISO = "2026-10-30";
 
 export type LegalPageKey = "privacy" | "legal";
 
@@ -68,9 +73,9 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
     privacy: {
       metaTitle: "Privacy Policy — JJWine",
       metaDescription:
-        "How the JJWine website handles personal information: minimal processing, no analytics, no tracking, no accounts and no server-side forms.",
+        "How the JJWine website handles personal information: minimal processing, no analytics, no tracking, no accounts, and an online enquiry form that is emailed to the operator.",
       title: "Privacy Policy",
-      effectiveDate: "Effective date: 20 August 2026",
+      effectiveDate: "Effective date: 30 October 2026",
       disclaimer:
         "This page is the website privacy policy published by the operator. It describes how this website works; it is general information about this website and not legal advice for your own situation.",
       sections: [
@@ -78,72 +83,80 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
           heading: "1. Operator and scope",
           paragraphs: [
             "This website is operated by 上海捷嘉酒业有限公司, referred to on this site as “JJWine” or “the operator”. The Chinese registered name above is the authoritative operator name used on this website; this policy does not state a separate English legal name.",
-            "This policy covers this public website (the English, Simplified Chinese, Spanish and French pages served under /en, /zh-cn, /es and /fr) and email correspondence used to respond to an inquiry or manage a potential business relationship, unless a more specific notice or agreement supplements it. Contractual relationships may be governed by additional notices and terms.",
+            "This policy covers this public website (the English, Simplified Chinese, Spanish and French pages served under /en, /zh-cn, /es and /fr) the online enquiry form on the English and Simplified Chinese pages, and email correspondence used to respond to an inquiry or manage a potential business relationship, unless a more specific notice or agreement supplements it. Contractual relationships may be governed by additional notices and terms.",
           ],
         },
         {
           heading: "2. What this website actually processes",
           paragraphs: [
-            "This website is a static informational site. It has no user accounts, no login, no analytics or advertising scripts, no third-party tracking, and no server-side inquiry form. We do not sell personal information.",
-            "In normal use, the website itself collects no personal information from you beyond the technical data described in section 5 (hosting).",
+            "This website is an informational site. It has no user accounts, no login, no analytics or advertising scripts, and no third-party tracking. We do not sell personal information.",
+            "When you browse, the website itself collects no personal information from you beyond the technical data described in section 6 (hosting). The website collects personal information only if you choose to submit the online enquiry form described in section 4.",
           ],
         },
         {
           heading: "3. The project brief tool",
           paragraphs: [
-            "The “project brief” form on this site is processed entirely on your own device, in your browser. Nothing you type into it is transmitted to or stored on an operator-controlled server. The resulting text file is generated and downloaded locally to your device until you choose to share it.",
+            "Downloading or copying the “project brief” is processed entirely on your own device, in your browser. Using those options does not transmit what you type to an operator-controlled server; the text file or copied text stays on your device until you choose to share it. Your details are sent to the operator only if you choose to submit the online enquiry (section 4).",
           ],
         },
         {
-          heading: "4. Email contact",
+          heading: "4. Online enquiry form",
+          paragraphs: [
+            "The English (/en) and Simplified Chinese (/zh-cn) pages offer an online enquiry form. The Spanish and French pages do not offer online submission. When you choose to submit the form, your browser sends the following to the operator's Cloudflare Worker at /api/enquiry: brand or company name, contact name, email address, product category, packaging preference, optional estimated quantity and launch timing, the needs you describe, the page language, and a Cloudflare Turnstile verification token. As with any request, the Worker also receives technical data such as your IP address and request headers (section 6).",
+            "To protect the form against spam and abuse, the page loads Cloudflare Turnstile, a security check provided by Cloudflare. The Worker sends the Turnstile token and your IP address to Cloudflare to verify the check, and uses your IP address to apply short-term rate limits held temporarily in the Worker's memory. Cloudflare processes Turnstile data under its own terms and privacy documentation.",
+            "If the submission passes these checks, the Worker sends its contents to the operator's business inbox through an email delivery service provider (currently Resend), with your email address set as the reply address. The Worker does not store submissions in a database. We use the information only to reply to your enquiry and manage a potential business relationship. Please do not include sensitive personal information in the form.",
+          ],
+        },
+        {
+          heading: "5. Email contact",
           paragraphs: [
             "Email links on this site (mailto links) open your own email client. If you choose to email us, we receive whatever you send — typically your name, email address, company and message — and we use it only to respond to your inquiry and manage a potential business relationship. Please do not email sensitive personal information.",
           ],
         },
         {
-          heading: "5. Hosting on Cloudflare",
+          heading: "6. Hosting on Cloudflare",
           paragraphs: [
             "This website is served through Cloudflare Workers and Cloudflare's global network. The operator's Worker necessarily receives limited technical request data, such as IP address, request headers, timestamps, and security or error information, to deliver, secure and troubleshoot the site. The operator does not use the technical data it controls to build visitor profiles.",
             "Cloudflare separately processes technical data under its own terms and privacy documentation for network delivery, security and related services. Cloudflare operates data centers worldwide, and its purposes, locations and retention practices are governed by its own documentation and the services configured for this site.",
           ],
         },
         {
-          heading: "6. Cookies and tracking",
+          heading: "7. Cookies and tracking",
           paragraphs: [
-            "This website sets no analytics, advertising or other non-essential cookies, and uses no fingerprinting or cross-site tracking. Cloudflare may set strictly necessary technical cookies or use equivalent mechanisms solely for security and traffic integrity where required to serve the site.",
+            "This website sets no analytics, advertising or other non-essential cookies, and uses no fingerprinting or cross-site tracking. Cloudflare may set strictly necessary technical cookies or use equivalent mechanisms solely for security and traffic integrity where required to serve the site. On pages with the online enquiry form, Cloudflare Turnstile may process browser and device signals to tell people from automated traffic; this is used for security only, not for advertising or tracking.",
           ],
         },
         {
-          heading: "7. Purposes and legal bases",
+          heading: "8. Purposes and legal bases",
           paragraphs: [
-            "We process the limited technical data described above to operate, secure and troubleshoot this website, and we process the content of emails you send us to respond to you.",
+            "We process the limited technical data described above to operate, secure and troubleshoot this website, and we process the content of enquiries submitted through the online form and emails you send us to respond to you and manage a potential business relationship.",
             "Where China's Personal Information Protection Law (PIPL) applies, we process personal information only under a condition permitted by PIPL and obtain consent where it is required; information you provide when asking about a project may be handled as necessary to respond and take steps you request. Where the relevant processing falls within the territorial scope of the EU/EEA General Data Protection Regulation (GDPR), we rely on legitimate interests (Art. 6(1)(f) GDPR) in operating and securing this website, and, where appropriate, on pre-contractual steps taken at your request (Art. 6(1)(b) GDPR) when you contact us about a project.",
           ],
         },
         {
-          heading: "8. Your rights",
+          heading: "9. Your rights",
           paragraphs: [
             "If PIPL applies to you, you may — subject to its conditions — request access to, copies of, correction, deletion or an explanation of the handling of your personal information, and you may withdraw consent where processing is based on consent.",
             "If GDPR applies to you, you may — subject to its conditions — request access, rectification, erasure, restriction of processing, data portability, and object to processing based on legitimate interests, and you may lodge a complaint with your local supervisory authority.",
-            "To exercise any of these rights, use the contact address below. Because this website stores almost no personal information, most requests will concern email correspondence.",
+            "To exercise any of these rights, use the contact address below. Because this website stores almost no personal information, most requests will concern enquiries received by email and email correspondence.",
           ],
         },
         {
-          heading: "9. International transfers, retention and security",
+          heading: "10. International transfers, retention and security",
           paragraphs: [
-            "Because the site is delivered through Cloudflare's global network and email may be handled by service providers, technical data and correspondence may be transferred across borders. For transfers controlled by the operator, we limit them to what is needed to run this website and communicate with you, do not use them for marketing or profiling, and apply any notice, consent, contractual, assessment or other safeguard required by applicable law. Cloudflare describes its own transfer arrangements in its privacy documentation.",
-            "The operator keeps any technical or security logs it controls only as long as reasonably needed for operations, security and applicable legal obligations. Cloudflare's retention is governed by its own terms, policies and configured services. Email correspondence is retained while relevant to an inquiry or business relationship and then deleted or archived in line with applicable obligations.",
+            "Because the site is delivered through Cloudflare's global network and online enquiries and email are handled by service providers (including Cloudflare for Turnstile and an email delivery provider, currently Resend), technical data, enquiry content and correspondence may be transferred across borders. For transfers controlled by the operator, we limit them to what is needed to run this website and communicate with you, do not use them for marketing or profiling, and apply any notice, consent, contractual, assessment or other safeguard required by applicable law. Cloudflare describes its own transfer arrangements in its privacy documentation.",
+            "The operator keeps any technical or security logs it controls only as long as reasonably needed for operations, security and applicable legal obligations. Cloudflare's retention is governed by its own terms, policies and configured services. Online enquiries received by email and email correspondence are retained while relevant to an inquiry or business relationship and then deleted or archived in line with applicable obligations. The Worker's rate-limit data is kept only temporarily in memory.",
             "We apply reasonable technical and organizational measures appropriate to a small informational website, including serving the site over HTTPS.",
           ],
         },
         {
-          heading: "10. Minors and business audience",
+          heading: "11. Minors and business audience",
           paragraphs: [
             "This is a business-to-business website about alcoholic beverage production and is directed at professional audiences. It is not directed at minors, and we do not knowingly collect personal information from minors.",
           ],
         },
         {
-          heading: "11. Changes to this policy",
+          heading: "12. Changes to this policy",
           paragraphs: [
             "We may update this policy when the website or applicable law changes. The effective date above shows the current version. Material changes will be published on this page.",
           ],
@@ -215,81 +228,89 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
   "zh-cn": {
     privacy: {
       metaTitle: "隐私政策 — JJWine",
-      metaDescription: "JJWine 官网如何处理个人信息：最小化处理，无分析统计、无跟踪、无账户、无服务器端表单。",
+      metaDescription: "JJWine 官网如何处理个人信息：最小化处理，无分析统计、无跟踪、无账户；在线询盘表单内容以邮件发送给运营者。",
       title: "隐私政策",
-      effectiveDate: "生效日期：2026年8月20日",
+      effectiveDate: "生效日期：2026年10月30日",
       disclaimer: "本页为网站运营者发布的网站隐私政策，说明本网站的实际运行方式；其内容为关于本网站的一般性说明，不构成针对您个人情况的法律意见。",
       sections: [
         {
           heading: "一、运营者与适用范围",
           paragraphs: [
             "本网站由上海捷嘉酒业有限公司运营（在本网站中称为“JJWine”或“运营者”）。本网站以该中文注册名称作为运营者名称，不另行列示英文法定名称。",
-            "本政策适用于本公开网站（/en、/zh-cn、/es、/fr 下的英文、简体中文、西班牙语和法语页面），以及为回复咨询或管理潜在业务关系而进行的邮件往来；如有更具体的告知或协议，则由其补充本政策。合同关系还可能适用其他告知与条款。",
+            "本政策适用于本公开网站（/en、/zh-cn、/es、/fr 下的英文、简体中文、西班牙语和法语页面），英文和简体中文页面上的在线询盘表单，以及为回复咨询或管理潜在业务关系而进行的邮件往来；如有更具体的告知或协议，则由其补充本政策。合同关系还可能适用其他告知与条款。",
           ],
         },
         {
           heading: "二、本网站实际处理的信息",
           paragraphs: [
-            "本网站为静态信息展示网站，不设用户账户和登录功能，不使用任何分析统计或广告脚本，不进行第三方跟踪，也没有服务器端询盘表单。我们不出售个人信息。",
-            "正常浏览时，除第五条所述托管服务产生的技术数据外，本网站本身不收集您的任何个人信息。",
+            "本网站为信息展示网站，不设用户账户和登录功能，不使用任何分析统计或广告脚本，也不进行第三方跟踪。我们不出售个人信息。",
+            "浏览时，除第六条所述托管服务产生的技术数据外，本网站本身不收集您的任何个人信息。仅当您主动提交第四条所述在线询盘表单时，本网站才会收集个人信息。",
           ],
         },
         {
           heading: "三、项目需求简报工具",
           paragraphs: [
-            "本网站的“项目需求简报”表单完全在您自己的设备和浏览器中处理。您填写的内容不会传输至运营者控制的服务器，也不会由运营者在服务器端储存。生成的文本文件在本地下载至您的设备，除非您自行选择分享。",
+            "“项目需求简报”的下载和复制功能完全在您自己的设备和浏览器中处理。使用这些功能时，您填写的内容不会传输至运营者控制的服务器；生成的文本文件或复制的文本保留在您的设备上，除非您自行选择分享。仅当您主动提交在线询盘（第四条）时，相关信息才会发送给运营者。",
           ],
         },
         {
-          heading: "四、邮件联系",
+          heading: "四、在线询盘表单",
+          paragraphs: [
+            "本网站英文（/en）和简体中文（/zh-cn）页面提供在线询盘表单；西班牙语和法语页面不提供在线提交功能。当您主动提交表单时，您的浏览器会将以下信息发送至运营者的 Cloudflare Worker（/api/enquiry）：品牌或公司名称、联系人姓名、电子邮箱、产品品类、包装偏好、可选填写的预计数量和上市时间、您描述的需求、页面语言，以及 Cloudflare Turnstile 验证令牌。与任何请求相同，Worker 也会接收您的 IP 地址和请求头等技术数据（第六条）。",
+            "为防止垃圾信息和滥用，表单页面会加载由 Cloudflare 提供的安全验证服务 Cloudflare Turnstile。Worker 会将 Turnstile 令牌和您的 IP 地址发送给 Cloudflare 进行验证，并利用您的 IP 地址实施短时频率限制，相关数据仅临时保存在 Worker 内存中。Cloudflare 按照其自身条款和隐私文档处理 Turnstile 相关数据。",
+            "提交通过上述校验后，Worker 会通过邮件发送服务商（目前为 Resend）将询盘内容发送至运营者的业务邮箱，并将您的邮箱设为回复地址。Worker 不会将提交内容存入数据库。我们仅将这些信息用于回复您的询盘和推进潜在业务合作。请勿在表单中填写敏感个人信息。",
+          ],
+        },
+        {
+          heading: "五、邮件联系",
           paragraphs: [
             "本网站的邮件链接（mailto 链接）会打开您自己的邮件客户端。如您选择发送邮件，我们将收到您主动提供的信息（通常包括姓名、邮箱、公司和留言内容），并仅用于回复您的咨询和推进潜在业务合作。请勿通过邮件发送敏感个人信息。",
           ],
         },
         {
-          heading: "五、Cloudflare 托管",
+          heading: "六、Cloudflare 托管",
           paragraphs: [
             "本网站通过 Cloudflare Workers 及 Cloudflare 全球网络提供服务。运营者的 Worker 为交付、保护和排查网站故障，必然接收有限的技术请求数据，例如 IP 地址、请求头、时间戳以及安全或错误信息。运营者不会使用其控制的技术数据构建访问者画像。",
             "Cloudflare 为网络交付、安全及相关服务，按照其自身条款和隐私文档另行处理技术数据。Cloudflare 在全球运营数据中心，其处理目的、地点和保存做法以 Cloudflare 自身文档及本网站启用的服务配置为准。",
           ],
         },
         {
-          heading: "六、Cookie 与跟踪",
+          heading: "七、Cookie 与跟踪",
           paragraphs: [
-            "本网站不设置任何分析、广告或其他非必要 Cookie，不使用浏览器指纹或跨站跟踪。Cloudflare 仅在为提供网站服务所必需时，可能设置严格必要的技术性 Cookie 或使用等效机制，用途限于安全与流量完整性保障。",
+            "本网站不设置任何分析、广告或其他非必要 Cookie，不使用浏览器指纹或跨站跟踪。Cloudflare 仅在为提供网站服务所必需时，可能设置严格必要的技术性 Cookie 或使用等效机制，用途限于安全与流量完整性保障。在设有在线询盘表单的页面上，Cloudflare Turnstile 可能处理浏览器和设备信号，以区分真人访问与自动化流量；该处理仅用于安全目的，不用于广告或跟踪。",
           ],
         },
         {
-          heading: "七、处理目的与法律依据",
+          heading: "八、处理目的与法律依据",
           paragraphs: [
-            "我们处理上述有限技术数据的目的，是运营、保护和排查本网站故障；处理您来信内容的目的，是回复您的咨询。",
+            "我们处理上述有限技术数据的目的，是运营、保护和排查本网站故障；处理您通过在线表单提交的询盘内容和来信内容的目的，是回复您的咨询和推进潜在业务合作。",
             "在《中华人民共和国个人信息保护法》（PIPL）适用的范围内，我们仅在 PIPL 允许的处理条件下处理个人信息，并在依法需要时取得同意；您就项目主动提供的信息，可在回复咨询和采取您所请求措施所必需的范围内处理。在相关处理符合《通用数据保护条例》（GDPR）的地域适用规则时，我们对网站运营和安全依据正当利益（GDPR 第6条第1款f项），并在适当情况下对项目咨询依据应您请求采取的缔约前措施（GDPR 第6条第1款b项）。",
           ],
         },
         {
-          heading: "八、您的权利",
+          heading: "九、您的权利",
           paragraphs: [
             "在 PIPL 适用于您的情况下，您可依法请求查阅、复制、更正、删除您的个人信息，要求对处理规则作出解释说明，并在处理基于同意时撤回同意。",
             "在 GDPR 适用于您的情况下，您可依其规定请求访问、更正、删除、限制处理和数据可携带，对基于正当利益的处理提出反对，并向您所在地的监管机构投诉。",
-            "行使上述权利，请通过下方联系方式与我们联系。由于本网站几乎不存储个人信息，绝大多数请求将涉及邮件往来内容。",
+            "行使上述权利，请通过下方联系方式与我们联系。由于本网站几乎不存储个人信息，绝大多数请求将涉及以邮件形式收到的询盘和邮件往来内容。",
           ],
         },
         {
-          heading: "九、跨境传输、保存期限与安全",
+          heading: "十、跨境传输、保存期限与安全",
           paragraphs: [
-            "由于本网站通过 Cloudflare 全球网络提供，邮件也可能经由服务商处理，技术数据和通信内容可能发生跨境传输。对于运营者控制的传输，我们将其限制在运营本网站和与您沟通所必需的范围内，不用于营销或画像，并依法采取所需的告知、同意、合同、评估或其他保障措施。Cloudflare 自身的跨境安排以其隐私文档为准。",
-            "运营者控制的技术与安全日志仅在运营、安全和适用法律义务合理所需期间保存。Cloudflare 的保存期限以其条款、政策及本网站启用的服务配置为准。邮件往来在与咨询或业务关系相关的期间内保留，之后依适用义务删除或归档。",
+            "由于本网站通过 Cloudflare 全球网络提供，在线询盘和邮件也经由服务商处理（包括提供 Turnstile 的 Cloudflare 及邮件发送服务商，目前为 Resend），技术数据、询盘内容和通信内容可能发生跨境传输。对于运营者控制的传输，我们将其限制在运营本网站和与您沟通所必需的范围内，不用于营销或画像，并依法采取所需的告知、同意、合同、评估或其他保障措施。Cloudflare 自身的跨境安排以其隐私文档为准。",
+            "运营者控制的技术与安全日志仅在运营、安全和适用法律义务合理所需期间保存。Cloudflare 的保存期限以其条款、政策及本网站启用的服务配置为准。以邮件形式收到的在线询盘及邮件往来在与咨询或业务关系相关的期间内保留，之后依适用义务删除或归档。Worker 的频率限制数据仅临时保存在内存中。",
             "我们采取与小型信息展示网站相适应的合理技术和管理措施，包括全站 HTTPS 加密传输。",
           ],
         },
         {
-          heading: "十、未成年人与目标受众",
+          heading: "十一、未成年人与目标受众",
           paragraphs: [
             "本网站是面向专业人士的酒类生产 B2B 网站，不面向未成年人，我们也不会有意收集未成年人的个人信息。",
           ],
         },
         {
-          heading: "十一、政策变更",
+          heading: "十二、政策变更",
           paragraphs: [
             "当网站或适用法律发生变化时，我们可能更新本政策。页首生效日期标示当前版本；重大变更将在本页发布。",
           ],
