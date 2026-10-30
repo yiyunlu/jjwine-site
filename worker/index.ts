@@ -1,7 +1,8 @@
 /** Cloudflare Worker entry point for the JJWine site. */
 import handler from "vinext/server/app-router-entry";
+import { handleEnquiry, type EnquiryEnv } from "./enquiry";
 
-interface Env {
+interface Env extends EnquiryEnv {
   ASSETS: Fetcher;
 }
 
@@ -32,6 +33,8 @@ const worker = {
         { headers: { "Content-Type": "text/plain; charset=utf-8" } },
       ));
     }
+
+    if (url.pathname === "/api/enquiry") return wrapResponse(await handleEnquiry(request, env));
 
     // Redirect retired legal routes before the router normalizes trailing slashes.
     const retiredLegal = /^\/(?:es|fr)\/(privacy|legal)\/?$/.exec(url.pathname);
