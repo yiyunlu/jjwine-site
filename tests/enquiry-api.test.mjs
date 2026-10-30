@@ -56,6 +56,49 @@ test("validates locale and required fields", async () => {
   assert.equal((await post("[]")).status, 400);
 });
 
+test("optional quantity and launch may be empty, whitespace or missing", async () => {
+  const withoutOptional = { ...good };
+  delete withoutOptional.quantity;
+  delete withoutOptional.launch;
+  const cases = [
+    { ...good, quantity: "" },
+    { ...good, launch: "" },
+    { ...good, quantity: "", launch: "" },
+    { ...good, quantity: "  ", launch: "\t" },
+    withoutOptional,
+  ];
+  for (const body of cases) {
+    const res = await post(body, { e: { ASSETS: {} } });
+    assert.equal(res.status, 503);
+    assert.deepEqual(await res.json(), { ok: false, error: "not_configured" });
+  }
+  const m = mockFetch();
+  try {
+    const res = await post({ ...good, quantity: " ", launch: "" });
+    assert.equal(res.status, 200);
+    const text = JSON.parse(m.calls.find((c) => c.url.includes("resend")).init.body).text;
+    assert.match(text, /^quantity: $/m);
+    assert.match(text, /^launch: $/m);
+    const dry = await post({ ...good, quantity: "", launch: "" }, { e: { TURNSTILE_SECRET_KEY: "s", ENQUIRY_DRY_RUN: "1", ASSETS: {} } });
+    assert.equal(dry.status, 200);
+    assert.equal((await dry.json()).dryRun, true);
+  } finally { m.restore(); }
+});
+
+test("required fields still reject blanks and optional fields still reject bad types", async () => {
+  for (const name of ["brand", "contact", "email", "category", "packaging", "needs"]) {
+    const res = await post({ ...good, [name]: "  " });
+    assert.equal(res.status, 400);
+    assert.deepEqual(await res.json(), { ok: false, error: "invalid_field", field: name });
+  }
+  for (const name of ["quantity", "launch"]) {
+    const res = await post({ ...good, [name]: 5 });
+    assert.equal(res.status, 400);
+    assert.deepEqual(await res.json(), { ok: false, error: "invalid_field", field: name });
+    assert.equal((await post({ ...good, [name]: "x".repeat(4001) })).status, 400);
+  }
+});
+
 test("accepts en and zh-cn and sends email to the default recipient", async () => {
   const m = mockFetch();
   try {

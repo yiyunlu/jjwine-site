@@ -10,6 +10,7 @@ export interface EnquiryEnv {
 
 const LOCALES = ["en", "zh-cn"];
 const TEXT_FIELDS = ["brand", "contact", "email", "category", "packaging", "quantity", "launch", "needs"] as const;
+const OPTIONAL_FIELDS: ReadonlySet<string> = new Set(["quantity", "launch"]);
 const MAX_FIELD = 4000;
 const MAX_BODY = 32 * 1024;
 const DEFAULT_TO = "eddielu@winekee.com";
@@ -95,7 +96,12 @@ export async function handleEnquiry(request: Request, env: EnquiryEnv): Promise<
   const fields: Record<string, string> = {};
   for (const name of TEXT_FIELDS) {
     const value = data[name];
-    if (typeof value !== "string" || !value.trim() || value.length > MAX_FIELD) {
+    // Optional fields may be omitted or blank; they are stored as "".
+    if (OPTIONAL_FIELDS.has(name) && (value === undefined || value === null)) {
+      fields[name] = "";
+      continue;
+    }
+    if (typeof value !== "string" || (!value.trim() && !OPTIONAL_FIELDS.has(name)) || value.length > MAX_FIELD) {
       return json(400, { ok: false, error: "invalid_field", field: name });
     }
     fields[name] = value.trim();
