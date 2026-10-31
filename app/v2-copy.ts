@@ -285,17 +285,17 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "keg": {
-        "title": "Kegs 20\u00a0L",
-        "d1": "Large format for bars,",
-        "d2": "restaurants and hotels (HoReCa).",
-        "alt": "Stainless-steel keg with a grey valve and an ivory band with burgundy and green leaf line art on a light beige background",
-        "intro": "20 L kegs suit wine and drinks served on draught in bars, restaurants and hotels (HoReCa), reducing packaging per serve.",
+        "title": "Spirits",
+        "d1": "Distilled spirits in bottle,",
+        "d2": "for tasting, gifting and retail.",
+        "alt": "Tall amber spirits bottle with an ivory botanical label and burgundy capsule beside an olive branch on a light beige background",
+        "intro": "Spirit bottling for brands that need China-ready localization, filling and quality control for distilled products.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
-          "Keg type, valve fitting and dispense system compatibility",
-          "Keg cleaning, filling and seal integrity validation",
-          "Keg return, deposit and logistics arrangements",
-          "Shelf life after tapping and storage conditions"
+          "Bottle shape, glass colour and closure",
+          "Filling accuracy and alcohol-by-volume checks",
+          "Label layout and regulatory claims for spirits",
+          "Case-packing, gift box or multipack format"
         ]
       },
       "note": "Production sites, specifications, capacity and approval rules are confirmed per project after assessment."
@@ -639,17 +639,17 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "keg": {
-        "title": "20L 酒桶 KEG",
-        "d1": "大容量餐饮之选，",
-        "d2": "适合酒店餐饮与现打。",
-        "alt": "不锈钢酒桶，灰色阀门，象牙色腰带饰有酒红与绿色叶片线稿，浅米色背景",
-        "intro": "20L 酒桶适合酒吧、餐厅与酒店（HoReCa）现打供应的葡萄酒与酒饮，降低单杯包装用量。",
+        "title": "烈酒",
+        "d1": "蒸馏烈酒瓶装，",
+        "d2": "适合品鉴、礼赠与零售。",
+        "alt": "琥珀色烈酒方形瓶，象牙色植物线稿标签与酒红色封帽，旁有橄榄枝，浅米色背景",
+        "intro": "为烈酒品牌提供面向中国的本地化、灌装与质量控制，确保蒸馏酒产品符合落地要求。",
         "listTitle": "项目中需要共同确认：",
         "list": [
-          "酒桶类型、阀门接口与出酒系统兼容性",
-          "酒桶清洗、灌装与密封性验证",
-          "酒桶回收、押金与物流安排",
-          "开桶后的饮用期限与储存条件"
+          "瓶型、瓶色与封口方式",
+          "灌装精度与酒精度（ABV）检查",
+          "烈酒标签版式与法规宣称",
+          "装箱、礼盒或多支装形式"
         ]
       },
       "note": "具体生产场地、规格、产能与审批规则将根据项目评估后确认。"
@@ -993,17 +993,17 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "keg": {
-        "title": "Barril 20\u00a0L",
-        "d1": "Gran formato para hostelería,",
-        "d2": "ideal para HoReCa y grifo.",
-        "alt": "Barril de acero inoxidable con válvula gris y banda marfil con ilustraciones de hojas burdeos y verdes sobre fondo beige claro",
-        "intro": "El barril de 20 L es adecuado para vinos y bebidas servidos de grifo en bares, restaurantes y hoteles (HoReCa), con menos envase por copa.",
+        "title": "Destilados",
+        "d1": "Destilados embotellados,",
+        "d2": "para cata, regalo y venta minorista.",
+        "alt": "Botella alta de destilado ámbar con etiqueta marfil de motivos botánicos y cápsula burdeos junto a una rama de olivo sobre fondo beige claro",
+        "intro": "Embotellado de destilados para marcas que necesitan adaptación a China, llenado y control de calidad de productos destilados.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
-          "Tipo de barril, conector de válvula y compatibilidad con el sistema de dispensado",
-          "Validación de limpieza, llenado y sellado del barril",
-          "Retorno, depósito y logística de los barriles",
-          "Vida útil tras la apertura y condiciones de almacenamiento"
+          "Forma de botella, color del vidrio y cierre",
+          "Precisión de llenado y control del grado alcohólico",
+          "Diseño de etiqueta y declaraciones regulatorias para destilados",
+          "Formato de caja, estuche de regalo o multipack"
         ]
       },
       "note": "Las plantas de producción, especificaciones, capacidad y normas de aprobación se confirman en cada proyecto tras su evaluación."
@@ -1334,17 +1334,17 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "keg": {
-        "title": "Fût 20\u00a0L",
-        "d1": "Grand format pour le CHR,",
-        "d2": "adapté au service à la pression.",
-        "alt": "Fût en acier inoxydable avec valve grise et bandeau ivoire à motifs de feuilles bordeaux et vertes, sur fond beige clair",
-        "intro": "Le fût de 20 L convient aux vins et boissons servis à la pression dans les bars, restaurants et hôtels (CHR / HoReCa), avec moins d’emballage par verre.",
+        "title": "Spiritueux",
+        "d1": "Spiritueux en bouteille,",
+        "d2": "pour dégustation, cadeau et vente au détail.",
+        "alt": "Grande bouteille de spiritueux ambrée avec étiquette ivoire à motifs botaniques et capsule bordeaux, près d’une branche d’olivier sur fond beige clair",
+        "intro": "Mise en bouteille de spiritueux pour les marques qui ont besoin d’une adaptation à la Chine, du remplissage et du contrôle qualité de produits distillés.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
-          "Type de fût, raccord de valve et compatibilité avec le système de tirage",
-          "Validation du nettoyage, du remplissage et de l’étanchéité des fûts",
-          "Retour, consigne et logistique des fûts",
-          "Durée de conservation après mise en perce et conditions de stockage"
+          "Forme de bouteille, couleur du verre et bouchage",
+          "Précision du remplissage et contrôle du titre alcoométrique",
+          "Mise en page de l’étiquette et allégations réglementaires pour les spiritueux",
+          "Format de caisse, coffret cadeau ou multipack"
         ]
       },
       "note": "Les sites de production, spécifications, capacités et règles d’approbation sont confirmés pour chaque projet après évaluation."
