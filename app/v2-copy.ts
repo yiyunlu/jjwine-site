@@ -233,7 +233,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "Multiple can sizes —",
         "d2": "330mL slim, 200mL and 500mL.",
         "alt": "Three aluminium cans of different heights in cream white and deep green with botanical line art",
-        "intro": "Aluminium cans in several capacities, including the traditional 330mL slim can plus 200mL and 500mL, for retail, ready-to-drink and outdoor occasions.",
+        "intro": "Aluminium cans in several capacities, including the traditional 330mL slim can plus 200mL, 500mL and more, for retail, ready-to-drink and outdoor occasions.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
           "Can size and capacity (330mL slim, 200mL, 500mL) and internal lining compatibility",
@@ -276,7 +276,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "Classic 375ml and 187ml",
         "d2": "for tasting, gifting and travel.",
         "alt": "Three small wine bottles in pale yellow, deep burgundy and rosé with blank ivory labels on a light beige background",
-        "intro": "Traditional small-format bottles in 375ml and 187ml for tastings, gift sets, airlines and hospitality.",
+        "intro": "Traditional small-format bottles in 375ml, 187ml and more for tastings, gift sets, airlines and hospitality.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
           "Volume (375ml or 187ml)",
@@ -590,7 +590,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "多种罐型，",
         "d2": "330mL 传统细罐、200mL 与 500mL。",
         "alt": "三只高低错落的铝罐，奶油白与墨绿色植物线稿包装",
-        "intro": "铝罐提供多种容量，包括传统 330mL 细罐，以及 200mL 和 500mL，适合零售、即饮与户外场景。",
+        "intro": "铝罐提供多种容量，包括传统 330mL 细罐、200mL 和 500mL 等，适合零售、即饮与户外场景。",
         "listTitle": "项目中需要共同确认：",
         "list": [
           "罐型与容量（330mL 细罐、200mL、500mL）及内涂层兼容性",
@@ -633,7 +633,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "经典 375ml 与 187ml，",
         "d2": "适合品鉴、礼赠与旅行。",
         "alt": "三只浅黄、深酒红与桃粉色小酒瓶，象牙色空白标签，浅米色背景",
-        "intro": "传统小瓶装提供 375ml 与 187ml，适合品鉴、礼盒、航空与酒店餐饮场景。",
+        "intro": "传统小瓶装提供 375ml 与 187ml 等，适合品鉴、礼盒、航空与酒店餐饮场景。",
         "listTitle": "项目中需要共同确认：",
         "list": [
           "容量（375ml 或 187ml）",
@@ -947,7 +947,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "Varios tamaños de lata:",
         "d2": "330 mL slim, 200 mL y 500 mL.",
         "alt": "Tres latas de aluminio de distintas alturas en blanco crema y verde oscuro con ilustraciones botánicas",
-        "intro": "Latas de aluminio en varias capacidades, incluida la tradicional lata slim de 330 mL, además de 200 mL y 500 mL, para retail, bebidas listas para beber y ocasiones al aire libre.",
+        "intro": "Latas de aluminio en varias capacidades, incluida la tradicional lata slim de 330 mL, además de 200 mL, 500 mL y más, para retail, bebidas listas para beber y ocasiones al aire libre.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
           "Tamaño y capacidad de la lata (slim 330 mL, 200 mL, 500 mL) y compatibilidad del revestimiento interior",
@@ -990,7 +990,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "Los clásicos 375 ml y 187 ml",
         "d2": "para cata, regalo y viaje.",
         "alt": "Tres botellas pequeñas de vino en amarillo pálido, burdeos oscuro y rosado con etiquetas marfil sin marca sobre fondo beige claro",
-        "intro": "Botellas tradicionales de formato pequeño de 375 ml y 187 ml para catas, sets de regalo, aerolíneas y hostelería.",
+        "intro": "Botellas tradicionales de formato pequeño de 375 ml, 187 ml y más para catas, sets de regalo, aerolíneas y hostelería.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
           "Volumen (375 ml o 187 ml)",
@@ -1291,7 +1291,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "Plusieurs formats de canette :",
         "d2": "330 mL slim, 200 mL et 500 mL.",
         "alt": "Trois canettes en aluminium de hauteurs différentes, blanc crème et vert profond, illustrations botaniques",
-        "intro": "Canettes en aluminium en plusieurs contenances, dont la canette slim traditionnelle de 330 mL, ainsi que 200 mL et 500 mL, pour la distribution, le prêt-à-boire et les moments en plein air.",
+        "intro": "Canettes en aluminium en plusieurs contenances, dont la canette slim traditionnelle de 330 mL, ainsi que 200 mL, 500 mL et d’autres, pour la distribution, le prêt-à-boire et les moments en plein air.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
           "Format et contenance de la canette (slim 330 mL, 200 mL, 500 mL) et compatibilité du vernis intérieur",
@@ -1334,7 +1334,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "d1": "Les classiques 375 ml et 187 ml",
         "d2": "pour la dégustation, le cadeau et le voyage.",
         "alt": "Trois petites bouteilles de vin jaune pâle, bordeaux profond et rosé, étiquettes ivoire vierges, sur fond beige clair",
-        "intro": "Bouteilles traditionnelles de petit format en 375 ml et 187 ml pour dégustations, coffrets cadeaux, compagnies aériennes et hôtellerie.",
+        "intro": "Bouteilles traditionnelles de petit format en 375 ml, 187 ml et d’autres pour dégustations, coffrets cadeaux, compagnies aériennes et hôtellerie.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
           "Volume (375 ml ou 187 ml)",
