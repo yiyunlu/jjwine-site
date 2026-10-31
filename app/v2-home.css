@@ -167,6 +167,7 @@ main:focus { outline: none; }
   display: grid;
   grid-template-columns: 673fr 913fr;
   min-height: calc(385 * var(--k));
+  align-items: stretch; /* 行高由 16:9 视频格（913k × 513.3k）与文案取较高者决定 */
 }
 .hero-copy {
   background: linear-gradient(180deg, #F7F4EF 0%, #F5F1EB 100%);
@@ -209,7 +210,7 @@ html[lang="zh-CN"] .hero-features strong, html[lang="zh-CN"] .hero-features span
 .hero-features span { display: block; font-size: max(11px, calc(11.5 * var(--k))); color: var(--muted-strong); line-height: 1.45; margin-top: calc(3 * var(--k)); }
 
 /* 视频模块 */
-.video-module { position: relative; overflow: hidden; background: #141011; color: #fff; min-height: calc(385 * var(--k)); isolation: isolate; }
+.video-module { position: relative; overflow: hidden; background: #141011; color: #fff; aspect-ratio: 16 / 9; width: 100%; height: auto; min-height: 0; isolation: isolate; }
 .video-cover, .video-player { position: absolute; inset: 0; }
 .video-poster { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
 /* 遮罩：保证叠加文字与控件达到 WCAG AA（测算见 README） */
@@ -220,7 +221,7 @@ html[lang="zh-CN"] .hero-features strong, html[lang="zh-CN"] .hero-features span
     linear-gradient(90deg, rgba(12, 8, 9, .66) 0%, rgba(12, 8, 9, .48) 30%, rgba(12, 8, 9, .12) 52%, rgba(12, 8, 9, 0) 66%),
     linear-gradient(0deg, rgba(10, 7, 8, .74) 0%, rgba(10, 7, 8, .38) 17%, rgba(10, 7, 8, 0) 32%);
 }
-.video-text { position: absolute; left: calc(40 * var(--k)); top: calc(140 * var(--k)); max-width: 46%; }
+.video-text { position: absolute; left: calc(40 * var(--k)); top: calc(140 * 100% / 385); max-width: 46%; }
 .video-headline { font-size: calc(26 * var(--k)); line-height: 1.32; font-weight: 700; letter-spacing: 0.03em; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
 html:not([lang="zh-CN"]) .video-headline { font-size: calc(23 * var(--k)); letter-spacing: 0; line-height: 1.25; }
 .video-sub { margin-top: calc(14 * var(--k)); font-size: max(10.5px, calc(13 * var(--k))); letter-spacing: 0.16em; line-height: 1.62; font-weight: 500; color: #F2EFEC; }
@@ -478,7 +479,7 @@ html:not([lang="zh-CN"]) .step-title { overflow-wrap: break-word; hyphens: auto;
   .hero-features .ico { width: 30px; height: 30px; }
   .hero-features strong { font-size: 14px; }
   .hero-features span { font-size: 13px; }
-  .video-module { aspect-ratio: 913 / 385; min-height: 300px; }
+  .video-module { aspect-ratio: 16 / 9; min-height: 0; }
   .video-text { left: 28px; top: auto; bottom: 92px; max-width: 70%; }
   .video-headline, html:not([lang="zh-CN"]) .video-headline { font-size: clamp(19px, 3.6vw, 28px); }
   .video-sub { font-size: 11.5px; margin-top: 10px; }
@@ -529,7 +530,7 @@ html:not([lang="zh-CN"]) .step-title { overflow-wrap: break-word; hyphens: auto;
   .hero-features li, .hero-features li:first-child { padding: 12px 0; border-left: 0; border-top: 1px solid var(--line); }
   .hero-features li:first-child { border-top: 0; padding-top: 0; }
   .hero-features li:last-child { padding-bottom: 0; }
-  .video-module { aspect-ratio: auto; height: clamp(300px, 92vw, 380px); }
+  .video-module { aspect-ratio: 16 / 9; height: auto; }
   .video-poster { object-position: 72% 50%; }
   .video-shade {
     background:
@@ -538,7 +539,13 @@ html:not([lang="zh-CN"]) .step-title { overflow-wrap: break-word; hyphens: auto;
   .video-text { left: 20px; right: 20px; bottom: 70px; max-width: none; }
   .video-script { right: 18px; top: 18px; font-size: 13px; transform: rotate(-5deg); }
   html:not([lang="zh-CN"]) .video-script { font-size: 12px; max-width: 70%; }
-  .video-bigplay { left: 50%; top: 36%; width: 64px; height: 64px; min-width: 0; min-height: 0; }
+  /* 16:9 盒子在手机上仅约 180–220px 高：装饰手写字隐藏，播放钮缩小并移到右侧，避免与标题叠压 */
+  .video-script { display: none; }
+  .video-text { bottom: 62px; right: 84px; }
+  .video-headline, html:not([lang="zh-CN"]) .video-headline { font-size: clamp(16px, 5vw, 19px); }
+  .video-sub { font-size: 10.5px; margin-top: 6px; letter-spacing: 0.1em; }
+  .video-bigplay { left: auto; right: 20px; top: 38%; transform: translateY(-50%); width: 52px; height: 52px; min-width: 0; min-height: 0; }
+  .video-bigplay:hover { transform: translateY(-50%) scale(1.05); }
   .video-bar { height: 56px; padding: 0 12px 2px 14px; gap: 6px; }
   .vb-progress { margin: 0 6px; }
   .vb-btn { width: 36px; height: 36px; }
