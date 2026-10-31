@@ -230,13 +230,13 @@ export const v2Copy: Record<Locale, V2Messages> = {
       },
       "can": {
         "title": "Cans",
-        "d1": "Light and convenient,",
-        "d2": "for new consumption occasions.",
+        "d1": "Multiple can sizes —",
+        "d2": "330mL slim, 200mL and 500mL.",
         "alt": "Three aluminium cans of different heights in cream white and deep green with botanical line art",
-        "intro": "Aluminium cans suit lightweight, ready-to-drink and outdoor occasions, and are easy to ship and merchandise.",
+        "intro": "Aluminium cans in several capacities, including the traditional 330mL slim can plus 200mL and 500mL, for retail, ready-to-drink and outdoor occasions.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
-          "Can format and internal lining compatibility",
+          "Can size and capacity (330mL slim, 200mL, 500mL) and internal lining compatibility",
           "Filling and carbonation requirements of the formula",
           "Printed cans or sleeve options",
           "Shelf-life validation and storage conditions"
@@ -257,28 +257,30 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "carton": {
-        "title": "Cartons",
-        "d1": "Light and easy to store,",
-        "d2": "for everyday retail channels.",
-        "alt": "Three ivory gable-top beverage cartons with burgundy and green leaf line art on a light beige background",
-        "intro": "Multilayer cartons are light, easy to stack and suited to shelf-stable everyday products in retail and e-commerce channels.",
+        "title": "Sparkling",
+        "d1": "High and low sparkle,",
+        "d2": "with multiple closure options.",
+        "alt": "Three ivory gable-top packs with burgundy and green leaf line art on a light beige background",
+        "intro": "Sparkling wine and sparkling drinks, from high to low sparkle, with cork, crown or other closures suited to China bottling and localization.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
-          "Carton format, volume and closure or straw option",
-          "Barrier layers and compatibility with the product",
-          "Filling, sterilisation and seal integrity requirements",
-          "Print design and Chinese label content on the pack"
+          "Sparkle level (high or low) and style",
+          "Closure type (cork, crown or other)",
+          "Bottle or pack format",
+          "Filling and pressure requirements",
+          "Chinese label content and regulatory requirements"
         ]
       },
       "mini": {
         "title": "Small format",
-        "d1": "A single serve,",
+        "d1": "Classic 375ml and 187ml",
         "d2": "for tasting, gifting and travel.",
         "alt": "Three small wine bottles in pale yellow, deep burgundy and rosé with blank ivory labels on a light beige background",
-        "intro": "Small-format bottles suit single servings, tastings, gift sets, airlines and hospitality, and help consumers discover a product.",
+        "intro": "Traditional small-format bottles in 375ml and 187ml for tastings, gift sets, airlines and hospitality.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
-          "Bottle shape, glass colour and closure",
+          "Volume (375ml or 187ml)",
+          "Bottle shape and closure",
           "Filling accuracy and quality checks for small volumes",
           "Label layout for the smaller label area",
           "Multipack, gift box or case-packing format"
@@ -286,14 +288,15 @@ export const v2Copy: Record<Locale, V2Messages> = {
       },
       "keg": {
         "title": "Spirits",
-        "d1": "Distilled spirits in bottle,",
-        "d2": "for tasting, gifting and retail.",
+        "d1": "Whiskey, vodka, brandy —",
+        "d2": "including special bottle shapes.",
         "alt": "Tall amber spirits bottle with an ivory botanical label and burgundy capsule beside an olive branch on a light beige background",
-        "intro": "Spirit bottling for brands that need China-ready localization, filling and quality control for distilled products.",
+        "intro": "Spirit bottling for whiskey, vodka, brandy and other distilled categories, including special bottle shapes, with China-ready localization, filling and quality control.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
-          "Bottle shape, glass colour and closure",
-          "Filling accuracy and alcohol-by-volume checks",
+          "Spirit category and bottle shape",
+          "Glass and closure",
+          "Alcohol-by-volume and filling accuracy checks",
           "Label layout and regulatory claims for spirits",
           "Case-packing, gift box or multipack format"
         ]
@@ -584,16 +587,16 @@ export const v2Copy: Record<Locale, V2Messages> = {
       },
       "can": {
         "title": "罐装",
-        "d1": "轻量、便捷，",
-        "d2": "面向新消费场景。",
+        "d1": "多种罐型，",
+        "d2": "330mL 传统细罐、200mL 与 500mL。",
         "alt": "三只高低错落的铝罐，奶油白与墨绿色植物线稿包装",
-        "intro": "铝罐适合轻量化、即饮与户外等新消费场景，便于运输和陈列。",
+        "intro": "铝罐提供多种容量，包括传统 330mL 细罐，以及 200mL 和 500mL，适合零售、即饮与户外场景。",
         "listTitle": "项目中需要共同确认：",
         "list": [
-          "罐型规格与内涂层兼容性",
-          "产品配方对灌装与充气的要求",
-          "罐身印刷或套标方案",
-          "保质期验证与储运条件"
+          "罐型与容量（330mL 细罐、200mL、500mL）及内涂层兼容性",
+          "配方的灌装与充气要求",
+          "印刷罐或套标方案",
+          "保质期验证与储存条件"
         ]
       },
       "bib": {
@@ -611,45 +614,48 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "carton": {
-        "title": "利乐包/纸盒装",
-        "d1": "轻便、易储运，",
-        "d2": "适合日常零售渠道。",
-        "alt": "三只象牙白屋顶型饮料纸盒，酒红与绿色叶片线稿图案，浅米色背景",
-        "intro": "多层复合纸盒重量轻、便于堆码，适合零售与电商渠道中常温储存的日常消费产品。",
+        "title": "起泡酒",
+        "d1": "高气泡与低气泡，",
+        "d2": "多种封口方式可选。",
+        "alt": "三只象牙白屋顶型包装，酒红与绿色叶片线稿图案，浅米色背景",
+        "intro": "起泡葡萄酒与起泡饮品，涵盖高气泡与低气泡，可选软木塞、皇冠盖等多种封口，适配中国灌装与本地化需求。",
         "listTitle": "项目中需要共同确认：",
         "list": [
-          "纸盒规格、容量与开口或吸管方案",
-          "阻隔层结构与产品兼容性",
-          "灌装、杀菌与密封性要求",
-          "盒身印刷设计与中文标签信息"
+          "气泡强度（高气泡或低气泡）与风格",
+          "封口类型（软木塞、皇冠盖或其他）",
+          "瓶型或包装形式",
+          "灌装与压力要求",
+          "中文标签内容与合规要求"
         ]
       },
       "mini": {
-        "title": "小格装",
-        "d1": "单杯分量，",
-        "d2": "适合品鉴、礼品与旅行。",
+        "title": "小瓶装",
+        "d1": "经典 375ml 与 187ml，",
+        "d2": "适合品鉴、礼赠与旅行。",
         "alt": "三只浅黄、深酒红与桃粉色小酒瓶，象牙色空白标签，浅米色背景",
-        "intro": "小格装适合单人饮用、品鉴、礼盒、航空与酒店等场景，便于消费者初次尝试。",
+        "intro": "传统小瓶装提供 375ml 与 187ml，适合品鉴、礼盒、航空与酒店餐饮场景。",
         "listTitle": "项目中需要共同确认：",
         "list": [
-          "瓶型、瓶色与封口方式",
+          "容量（375ml 或 187ml）",
+          "瓶型与封口",
           "小容量灌装精度与质量检查",
-          "小标签面积下的中文标签版式",
-          "多支装、礼盒或装箱形式"
+          "小标签区域的版面设计",
+          "多支组合、礼盒或装箱形式"
         ]
       },
       "keg": {
         "title": "烈酒",
-        "d1": "蒸馏烈酒瓶装，",
-        "d2": "适合品鉴、礼赠与零售。",
+        "d1": "威士忌、伏特加、白兰地，",
+        "d2": "亦可适配特殊瓶型。",
         "alt": "琥珀色烈酒方形瓶，象牙色植物线稿标签与酒红色封帽，旁有橄榄枝，浅米色背景",
-        "intro": "为烈酒品牌提供面向中国的本地化、灌装与质量控制，确保蒸馏酒产品符合落地要求。",
+        "intro": "烈酒灌装涵盖威士忌、伏特加、白兰地及其他蒸馏酒品类，包括特殊瓶型，提供面向中国的本地化、灌装与质量控制。",
         "listTitle": "项目中需要共同确认：",
         "list": [
-          "瓶型、瓶色与封口方式",
-          "灌装精度与酒精度（ABV）检查",
-          "烈酒标签版式与法规宣称",
-          "装箱、礼盒或多支装形式"
+          "烈酒品类与瓶型",
+          "玻璃瓶与封口",
+          "酒精度与灌装精度检查",
+          "烈酒标签版面与合规声明",
+          "装箱、礼盒或组合装形式"
         ]
       },
       "note": "具体生产场地、规格、产能与审批规则将根据项目评估后确认。"
@@ -937,16 +943,16 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "can": {
-        "title": "Lata",
-        "d1": "Ligera y práctica,",
-        "d2": "para nuevos momentos de consumo.",
+        "title": "Latas",
+        "d1": "Varios tamaños de lata:",
+        "d2": "330 mL slim, 200 mL y 500 mL.",
         "alt": "Tres latas de aluminio de distintas alturas en blanco crema y verde oscuro con ilustraciones botánicas",
-        "intro": "La lata de aluminio se adapta a ocasiones ligeras, listas para beber y al aire libre, y facilita el transporte y la exposición.",
+        "intro": "Latas de aluminio en varias capacidades, incluida la tradicional lata slim de 330 mL, además de 200 mL y 500 mL, para retail, bebidas listas para beber y ocasiones al aire libre.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
-          "Formato de lata y compatibilidad del barniz interior",
+          "Tamaño y capacidad de la lata (slim 330 mL, 200 mL, 500 mL) y compatibilidad del revestimiento interior",
           "Requisitos de llenado y carbonatación de la fórmula",
-          "Lata impresa o manga termorretráctil",
+          "Latas impresas o fundas (sleeve)",
           "Validación de la vida útil y condiciones de almacenamiento"
         ]
       },
@@ -965,45 +971,48 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "carton": {
-        "title": "Envase de cartón",
-        "d1": "Ligero y estable,",
-        "d2": "para el canal minorista diario.",
-        "alt": "Tres envases de cartón marfil con tapa a dos aguas e ilustraciones de hojas burdeos y verdes sobre fondo beige claro",
-        "intro": "El envase de cartón multicapa es ligero, fácil de apilar y adecuado para productos de consumo diario a temperatura ambiente en los canales minorista y online.",
+        "title": "Espumosos",
+        "d1": "Burbuja intensa o suave,",
+        "d2": "con distintas opciones de cierre.",
+        "alt": "Tres envases marfil con tapa a dos aguas e ilustraciones de hojas burdeos y verdes sobre fondo beige claro",
+        "intro": "Vino espumoso y bebidas espumosas, de burbuja intensa a suave, con corcho, chapa u otros cierres adecuados para el embotellado y la localización en China.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
-          "Formato, capacidad y tipo de tapón o pajita",
-          "Capas barrera y compatibilidad con el producto",
-          "Requisitos de llenado, esterilización y sellado",
-          "Diseño de impresión e información en chino en el envase"
+          "Nivel de burbuja (intenso o suave) y estilo",
+          "Tipo de cierre (corcho, chapa u otro)",
+          "Formato de botella o envase",
+          "Requisitos de llenado y presión",
+          "Contenido de etiqueta en chino y requisitos regulatorios"
         ]
       },
       "mini": {
         "title": "Formato pequeño",
-        "d1": "Una sola copa,",
-        "d2": "para catas, regalo y viajes.",
+        "d1": "Los clásicos 375 ml y 187 ml",
+        "d2": "para cata, regalo y viaje.",
         "alt": "Tres botellas pequeñas de vino en amarillo pálido, burdeos oscuro y rosado con etiquetas marfil sin marca sobre fondo beige claro",
-        "intro": "El formato pequeño es adecuado para consumo individual, catas, estuches de regalo, aerolíneas y hostelería, y facilita que el consumidor descubra el producto.",
+        "intro": "Botellas tradicionales de formato pequeño de 375 ml y 187 ml para catas, sets de regalo, aerolíneas y hostelería.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
-          "Forma, color del vidrio y tipo de cierre",
-          "Precisión de llenado y controles de calidad en formato pequeño",
-          "Diseño de etiqueta para una superficie reducida",
-          "Formato multipack, estuche o encajado"
+          "Volumen (375 ml o 187 ml)",
+          "Forma de la botella y cierre",
+          "Precisión de llenado y controles de calidad en volúmenes pequeños",
+          "Diseño de etiqueta para el área reducida",
+          "Multipack, caja regalo o formato de embalaje"
         ]
       },
       "keg": {
         "title": "Destilados",
-        "d1": "Destilados embotellados,",
-        "d2": "para cata, regalo y venta minorista.",
+        "d1": "Whisky, vodka, brandy,",
+        "d2": "incluidas botellas de formas especiales.",
         "alt": "Botella alta de destilado ámbar con etiqueta marfil de motivos botánicos y cápsula burdeos junto a una rama de olivo sobre fondo beige claro",
-        "intro": "Embotellado de destilados para marcas que necesitan adaptación a China, llenado y control de calidad de productos destilados.",
+        "intro": "Embotellado de destilados para whisky, vodka, brandy y otras categorías destiladas, incluidas botellas de formas especiales, con localización para China, llenado y control de calidad.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
-          "Forma de botella, color del vidrio y cierre",
-          "Precisión de llenado y control del grado alcohólico",
+          "Categoría de destilado y forma de la botella",
+          "Vidrio y cierre",
+          "Control de graduación alcohólica y precisión de llenado",
           "Diseño de etiqueta y declaraciones regulatorias para destilados",
-          "Formato de caja, estuche de regalo o multipack"
+          "Embalaje en cajas, caja regalo o multipack"
         ]
       },
       "note": "Las plantas de producción, especificaciones, capacidad y normas de aprobación se confirman en cada proyecto tras su evaluación."
@@ -1278,16 +1287,16 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "can": {
-        "title": "Canette",
-        "d1": "Légère et pratique,",
-        "d2": "pour de nouveaux moments de consommation.",
+        "title": "Canettes",
+        "d1": "Plusieurs formats de canette :",
+        "d2": "330 mL slim, 200 mL et 500 mL.",
         "alt": "Trois canettes en aluminium de hauteurs différentes, blanc crème et vert profond, illustrations botaniques",
-        "intro": "La canette en aluminium convient aux moments de consommation légers, prêts à boire et en extérieur ; elle se transporte et se présente facilement.",
+        "intro": "Canettes en aluminium en plusieurs contenances, dont la canette slim traditionnelle de 330 mL, ainsi que 200 mL et 500 mL, pour la distribution, le prêt-à-boire et les moments en plein air.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
-          "Format de canette et compatibilité du vernis intérieur",
-          "Exigences de remplissage et de gazéification de la recette",
-          "Canette imprimée ou manchon",
+          "Format et contenance de la canette (slim 330 mL, 200 mL, 500 mL) et compatibilité du vernis intérieur",
+          "Exigences de remplissage et de gazéification de la formule",
+          "Canettes imprimées ou options de sleeve",
           "Validation de la durée de conservation et conditions de stockage"
         ]
       },
@@ -1306,45 +1315,48 @@ export const v2Copy: Record<Locale, V2Messages> = {
         ]
       },
       "carton": {
-        "title": "Brique carton",
-        "d1": "Légère et stable,",
-        "d2": "pour la distribution au quotidien.",
-        "alt": "Trois briques carton ivoire à toit pointu, motifs de feuilles bordeaux et vertes, sur fond beige clair",
-        "intro": "La brique carton multicouche est légère, facile à empiler et adaptée aux produits du quotidien conservés à température ambiante, en grande distribution comme en ligne.",
+        "title": "Effervescents",
+        "d1": "Effervescence forte ou légère,",
+        "d2": "avec plusieurs types de fermeture.",
+        "alt": "Trois emballages ivoire à toit pointu, motifs de feuilles bordeaux et vertes, sur fond beige clair",
+        "intro": "Vin effervescent et boissons pétillantes, d’effervescence forte à légère, avec bouchon liège, capsule couronne ou autres fermetures adaptées à l’embouteillage et à la localisation en Chine.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
-          "Format, contenance et type de bouchon ou de paille",
-          "Couches barrières et compatibilité avec le produit",
-          "Exigences de remplissage, de stérilisation et d’étanchéité",
-          "Impression et mentions en chinois sur l’emballage"
+          "Niveau d’effervescence (fort ou léger) et style",
+          "Type de fermeture (liège, capsule couronne ou autre)",
+          "Format de bouteille ou d’emballage",
+          "Exigences de remplissage et de pression",
+          "Contenu de l’étiquette en chinois et exigences réglementaires"
         ]
       },
       "mini": {
         "title": "Petit format",
-        "d1": "Une portion individuelle,",
-        "d2": "pour la dégustation et le cadeau.",
+        "d1": "Les classiques 375 ml et 187 ml",
+        "d2": "pour la dégustation, le cadeau et le voyage.",
         "alt": "Trois petites bouteilles de vin jaune pâle, bordeaux profond et rosé, étiquettes ivoire vierges, sur fond beige clair",
-        "intro": "Le petit format convient à la consommation individuelle, aux dégustations, aux coffrets cadeaux, aux compagnies aériennes et à l’hôtellerie ; il facilite la découverte du produit.",
+        "intro": "Bouteilles traditionnelles de petit format en 375 ml et 187 ml pour dégustations, coffrets cadeaux, compagnies aériennes et hôtellerie.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
-          "Forme, teinte du verre et type de bouchage",
-          "Précision de remplissage et contrôles qualité en petit format",
-          "Mise en page de l’étiquette sur une surface réduite",
-          "Format multipack, coffret ou mise en carton"
+          "Volume (375 ml ou 187 ml)",
+          "Forme de bouteille et fermeture",
+          "Précision de remplissage et contrôles qualité sur petits volumes",
+          "Mise en page de l’étiquette pour la surface réduite",
+          "Multipack, coffret cadeau ou conditionnement en caisse"
         ]
       },
       "keg": {
         "title": "Spiritueux",
-        "d1": "Spiritueux en bouteille,",
-        "d2": "pour dégustation, cadeau et vente au détail.",
+        "d1": "Whisky, vodka, brandy,",
+        "d2": "y compris des formes de bouteille spéciales.",
         "alt": "Grande bouteille de spiritueux ambrée avec étiquette ivoire à motifs botaniques et capsule bordeaux, près d’une branche d’olivier sur fond beige clair",
-        "intro": "Mise en bouteille de spiritueux pour les marques qui ont besoin d’une adaptation à la Chine, du remplissage et du contrôle qualité de produits distillés.",
+        "intro": "Embouteillage de spiritueux pour whisky, vodka, brandy et autres catégories distillées, y compris des formes de bouteille spéciales, avec localisation pour la Chine, remplissage et contrôle qualité.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
-          "Forme de bouteille, couleur du verre et bouchage",
-          "Précision du remplissage et contrôle du titre alcoométrique",
-          "Mise en page de l’étiquette et allégations réglementaires pour les spiritueux",
-          "Format de caisse, coffret cadeau ou multipack"
+          "Catégorie de spiritueux et forme de bouteille",
+          "Verre et fermeture",
+          "Contrôle du titre alcoométrique et précision du remplissage",
+          "Mise en page de l’étiquette et allégations réglementaires pour spiritueux",
+          "Conditionnement en caisse, coffret cadeau ou multipack"
         ]
       },
       "note": "Les sites de production, spécifications, capacités et règles d’approbation sont confirmés pour chaque projet après évaluation."
