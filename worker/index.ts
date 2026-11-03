@@ -43,11 +43,12 @@ const worker = {
       return wrapResponse(Response.redirect(url.href, 308));
     }
 
-    // The app router does not expose the pathname to the root layout, which
-    // needs it to emit the locale-specific <html lang>. Forward it as a
-    // trusted header (overwriting any client-supplied value).
+    // The app router does not expose the pathname or origin to the root layout,
+    // which needs them for <html lang> and metadataBase. Forward both as trusted
+    // headers (overwriting any client-supplied value).
     const headers = new Headers(request.headers);
     headers.set("x-jjwine-pathname", url.pathname);
+    headers.set("x-jjwine-origin", url.origin);
     return wrapResponse(await handler.fetch(new Request(request, { headers }), env, ctx));
   },
 };
