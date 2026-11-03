@@ -9,17 +9,19 @@ This directory is the dedicated workspace for all JJWine website code and develo
 - `CLAUDE.md` — project rules automatically loaded by Claude Code
 - `docs/事实与来源边界.md` — evidence requirements and limits for public claims
 - `docs/开发路线图.md` — prioritized development and launch plan
+- `docs/enquiry-worker-env.md` — environment variables for the online enquiry
 - `app/`, `public/`, `tests/`, `worker/` — application source, assets, tests and Worker entry
 
 Run Claude Code and all development commands from this directory. Business contracts, quotations, customer files and internal project notes remain outside this website workspace.
 
 ## Included
 
-- English, Simplified Chinese and Spanish routes
+- English, Simplified Chinese, Spanish and French routes
 - responsive motion with reduced-motion support
 - production formats, six-stage project process and quality/compliance sections
 - separate global-brand and retail/private-label entry points
-- local project-brief generator; form data never leaves the visitor's device
+- project-brief dialog: every locale can download or copy the brief locally, and that text stays on the visitor's device
+- online enquiry on `/en` and `/zh-cn` only: the brief dialog loads Cloudflare Turnstile, and `POST /api/enquiry` verifies the Turnstile token with Cloudflare, then emails the enquiry to the operator through Resend; the Worker stores no submissions. `/es` and `/fr` offer download and copy only
 - English and Simplified Chinese Privacy Policy and Legal Notice pages (`/en/privacy`, `/en/legal`, `/zh-cn/privacy`, `/zh-cn/legal`) for the operator 上海捷嘉酒业有限公司, linked from every footer; retired es/fr legal URLs redirect to English
 - dynamic Open Graph metadata and project-specific social preview card, including page-specific canonical/hreflang for the legal pages
 - Cloudflare Worker-compatible server and static asset output
@@ -33,7 +35,9 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. The language routes are `/en`, `/zh-cn` and `/es`.
+Open `http://localhost:3000`. The language routes are `/en`, `/zh-cn`, `/es` and `/fr`; `/` renders the English page.
+
+The online enquiry needs a build-time `VITE_TURNSTILE_SITE_KEY` and Worker secrets. See `docs/enquiry-worker-env.md` for the names and defaults. Without them, the dialog says that online enquiry is unavailable, and download and copy still work.
 
 ## Validate
 
@@ -61,7 +65,7 @@ npm run deploy
 
 The current configuration deploys directly to the custom domain declared in `wrangler.jsonc`; `workers.dev` and per-deployment preview URLs are disabled.
 
-The deployment configuration is in `wrangler.jsonc`. Version 1.0 uses no D1, R2, KV or paid third-party runtime service.
+The deployment configuration is in `wrangler.jsonc`. The Worker uses no D1, R2 or KV binding. For the online enquiry, it calls two external services at runtime: Cloudflare Turnstile verification and the Resend email API.
 
 ### Automatic test deploys (GitHub Actions)
 
@@ -79,7 +83,7 @@ Required repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 ## Before public launch
 
 - confirm the final domain and business contact route
-- replace the local brief download with an approved enquiry destination if required
+- set the production enquiry secrets per `docs/enquiry-worker-env.md` and confirm the recipient inbox
 - revalidate every public certification, capability and authorization claim
-- have the published privacy and legal pages (effective 2026-08-20, operator 上海捷嘉酒业有限公司) reviewed by qualified counsel for the actual target markets; they are website policies, not legal advice
+- have the published privacy and legal pages (Privacy Policy effective 2026-10-30, Legal Notice effective 2026-08-20, operator 上海捷嘉酒业有限公司) reviewed by qualified counsel for the actual target markets; they are website policies, not legal advice
 - confirm China hosting/ICP requirements if the site will use a mainland-China origin
