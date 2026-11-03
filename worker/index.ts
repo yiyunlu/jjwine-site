@@ -11,6 +11,15 @@ interface ExecutionContext {
   passThroughOnException(): void;
 }
 
+// Keep in sync with the /* block in public/_headers, which covers static assets.
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Frame-Options": "DENY",
+  "Content-Security-Policy": "frame-ancestors 'none'",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+};
+
 const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
@@ -18,10 +27,11 @@ const worker = {
     const isTestHost = hostname === "ecomm101.cc" ||
       hostname.endsWith(".ecomm101.cc") || hostname.endsWith(".workers.dev");
     const wrapResponse = (response: Response): Response => {
-      if (!isTestHost) return response;
       // Copy even redirects, whose original headers may be immutable.
       const wrapped = new Response(response.body, response);
-      wrapped.headers.set("X-Robots-Tag", "noindex, nofollow");
+      for (const [name, value] of Object.entries(SECURITY_HEADERS)) wrapped.headers.set(name, value);
+      if (url.protocol === "https:") wrapped.headers.set("Strict-Transport-Security", "max-age=31536000");
+      if (isTestHost) wrapped.headers.set("X-Robots-Tag", "noindex, nofollow");
       return wrapped;
     };
 
