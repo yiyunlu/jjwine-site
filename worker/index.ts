@@ -2,8 +2,12 @@
 import handler from "vinext/server/app-router-entry";
 import { handleEnquiry, type EnquiryEnv } from "./enquiry";
 
+interface AssetsBinding {
+  fetch(request: Request): Promise<Response>;
+}
+
 interface Env extends EnquiryEnv {
-  ASSETS: Fetcher;
+  ASSETS: AssetsBinding;
 }
 
 interface ExecutionContext {

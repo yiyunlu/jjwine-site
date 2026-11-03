@@ -1,3 +1,5 @@
+import type { Locale } from "./i18n";
+
 export { locales, type Locale } from "./i18n";
 
 export type SiteHeroMotionCopy = {
