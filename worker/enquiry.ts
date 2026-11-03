@@ -1,4 +1,6 @@
-/** POST /api/enquiry: validate, Turnstile-verify, rate-limit, then email the enquiry. */
+/** POST /api/enquiry: validate, rate-limit, Turnstile-verify, then email the enquiry. */
+
+import { CONTACT_EMAIL } from "../app/legal-content";
 
 export interface EnquiryEnv {
   TURNSTILE_SECRET_KEY?: string;
@@ -13,7 +15,6 @@ const TEXT_FIELDS = ["brand", "contact", "email", "category", "packaging", "quan
 const OPTIONAL_FIELDS: ReadonlySet<string> = new Set(["quantity", "launch"]);
 const MAX_FIELD = 4000;
 const MAX_BODY = 32 * 1024;
-const DEFAULT_TO = "eddielu@winekee.com";
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 
@@ -46,7 +47,7 @@ function rateLimited(ip: string, now: number): boolean {
   return false;
 }
 
-async function verifyTurnstile(token: string, secret: string, ip: string): Promise<boolean> {
+async function verifyTurnstile(token: string, secret: string, ip: string, hostname: string): Promise<boolean> {
   const form = new FormData();
   form.set("secret", secret);
   form.set("response", token);
@@ -54,7 +55,8 @@ async function verifyTurnstile(token: string, secret: string, ip: string): Promi
   try {
     const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: form });
     if (!res.ok) return false;
-    return ((await res.json()) as { success?: boolean }).success === true;
+    const result = (await res.json()) as { success?: boolean; hostname?: string };
+    return result.success === true && result.hostname === hostname;
   } catch {
     return false;
   }
@@ -77,10 +79,11 @@ export async function handleEnquiry(request: Request, env: EnquiryEnv): Promise<
   }
 
   const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
-  if (rateLimited(ip, Date.now())) return json(429, { ok: false, error: "rate_limited" }, { "Retry-After": String(RATE_WINDOW_MS / 1000) });
 
+  const declared = Number(request.headers.get("Content-Length"));
+  if (declared > MAX_BODY) return json(413, { ok: false, error: "payload_too_large" });
   const raw = await request.text();
-  if (raw.length > MAX_BODY) return json(413, { ok: false, error: "payload_too_large" });
+  if (new TextEncoder().encode(raw).length > MAX_BODY) return json(413, { ok: false, error: "payload_too_large" });
   let data: Record<string, unknown>;
   try {
     const parsed: unknown = JSON.parse(raw);
@@ -117,7 +120,8 @@ export async function handleEnquiry(request: Request, env: EnquiryEnv): Promise<
   if (!env.TURNSTILE_SECRET_KEY || (!dryRun && (!env.EMAIL_API_KEY || !env.EMAIL_FROM))) {
     return json(503, { ok: false, error: "not_configured" });
   }
-  if (!(await verifyTurnstile(data.turnstileToken, env.TURNSTILE_SECRET_KEY, ip))) {
+  if (rateLimited(ip, Date.now())) return json(429, { ok: false, error: "rate_limited" }, { "Retry-After": String(RATE_WINDOW_MS / 1000) });
+  if (!(await verifyTurnstile(data.turnstileToken, env.TURNSTILE_SECRET_KEY, ip, new URL(request.url).hostname))) {
     return json(403, { ok: false, error: "turnstile_failed" });
   }
 
@@ -137,7 +141,7 @@ export async function handleEnquiry(request: Request, env: EnquiryEnv): Promise<
       headers: { Authorization: `Bearer ${env.EMAIL_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: env.EMAIL_FROM,
-        to: [env.ENQUIRY_TO || DEFAULT_TO],
+        to: [env.ENQUIRY_TO || CONTACT_EMAIL],
         reply_to: fields.email,
         subject: `JJWine enquiry: ${fields.brand.slice(0, 80).replace(/[\r\n]+/g, " ")}`,
         text,
