@@ -13,7 +13,7 @@
 - Cloudflare Workers + Static Assets
 - 路由：`/en`、`/zh-cn`、`/es`、`/fr`；`/` 渲染英文页，canonical 指向 `/en`
 - 无数据库、KV 或 R2
-- 在线询盘只在 `/en`、`/zh-cn` 提供：页面加载 Cloudflare Turnstile，Worker 的 `POST /api/enquiry`（`worker/enquiry.ts`）向 Cloudflare 校验 Turnstile，再通过 Resend 把询盘发到运营方邮箱，不存储提交内容。环境变量见 `docs/enquiry-worker-env.md`
+- 在线询盘只在 `/en`、`/zh-cn` 提供：需求简报弹窗加载 Cloudflare Turnstile，Worker 的 `POST /api/enquiry`（`worker/enquiry.ts`）向 Cloudflare 校验 Turnstile，再通过 Resend 把询盘发到运营方邮箱，不存储提交内容。环境变量见 `docs/enquiry-worker-env.md`
 
 ## 常用命令
 

@@ -21,7 +21,7 @@ Run Claude Code and all development commands from this directory. Business contr
 - production formats, six-stage project process and quality/compliance sections
 - separate global-brand and retail/private-label entry points
 - project-brief dialog: every locale can download or copy the brief locally, and that text stays on the visitor's device
-- online enquiry on `/en` and `/zh-cn` only: the page loads Cloudflare Turnstile, and `POST /api/enquiry` verifies the Turnstile token with Cloudflare, then emails the enquiry to the operator through Resend; the Worker stores no submissions. `/es` and `/fr` offer download and copy only
+- online enquiry on `/en` and `/zh-cn` only: the brief dialog loads Cloudflare Turnstile, and `POST /api/enquiry` verifies the Turnstile token with Cloudflare, then emails the enquiry to the operator through Resend; the Worker stores no submissions. `/es` and `/fr` offer download and copy only
 - English and Simplified Chinese Privacy Policy and Legal Notice pages (`/en/privacy`, `/en/legal`, `/zh-cn/privacy`, `/zh-cn/legal`) for the operator 上海捷嘉酒业有限公司, linked from every footer; retired es/fr legal URLs redirect to English
 - dynamic Open Graph metadata and project-specific social preview card, including page-specific canonical/hreflang for the legal pages
 - Cloudflare Worker-compatible server and static asset output
@@ -85,5 +85,5 @@ Required repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 - confirm the final domain and business contact route
 - set the production enquiry secrets per `docs/enquiry-worker-env.md` and confirm the recipient inbox
 - revalidate every public certification, capability and authorization claim
-- have the published privacy and legal pages (effective 2026-08-20, operator 上海捷嘉酒业有限公司) reviewed by qualified counsel for the actual target markets; they are website policies, not legal advice
+- have the published privacy and legal pages (Privacy Policy effective 2026-10-30, Legal Notice effective 2026-08-20, operator 上海捷嘉酒业有限公司) reviewed by qualified counsel for the actual target markets; they are website policies, not legal advice
 - confirm China hosting/ICP requirements if the site will use a mainland-China origin
