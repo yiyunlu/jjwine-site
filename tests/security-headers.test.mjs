@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function fetchWorker(origin, pathname, options = {}) {
@@ -55,4 +56,15 @@ test("test hosts keep X-Robots-Tag and other hosts do not gain it", async () => 
   assert.equal(testHost.headers.get("x-robots-tag"), "noindex, nofollow");
   const production = await fetchWorker("https://www.jiawine.com", "/es/privacy");
   assert.equal(production.headers.get("x-robots-tag"), null);
+});
+
+test("static assets get the same security headers from public/_headers", async () => {
+  const lines = (await readFile(new URL("../public/_headers", import.meta.url), "utf8")).split("\n");
+  const block = {};
+  for (const line of lines.slice(lines.indexOf("/*") + 1)) {
+    if (!/^\s+\S/.test(line)) break;
+    const [name, ...value] = line.trim().split(":");
+    block[name.toLowerCase()] = value.join(":").trim();
+  }
+  assert.deepEqual(block, { ...sharedHeaders, "strict-transport-security": "max-age=31536000" });
 });

@@ -354,6 +354,7 @@ test("forged forwarded and host headers cannot change canonical, hreflang or og 
         host: "evil.example",
         "x-forwarded-host": "evil.example",
         "x-forwarded-proto": "http",
+        "x-jjwine-origin": "https://evil.example",
       },
     }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },

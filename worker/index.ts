@@ -11,7 +11,6 @@ interface ExecutionContext {
   passThroughOnException(): void;
 }
 
-// Keep in sync with the /* block in public/_headers, which covers static assets.
 const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
