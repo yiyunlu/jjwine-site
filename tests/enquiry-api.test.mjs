@@ -24,12 +24,12 @@ function post(body, { headers = {}, e = env, ip } = {}) {
   }), e, ctx);
 }
 
-function mockFetch({ turnstile = true, emailOk = true } = {}) {
+function mockFetch({ turnstile = true, emailOk = true, hostname = "jjwine.ecomm101.cc" } = {}) {
   const calls = [];
   const orig = globalThis.fetch;
   globalThis.fetch = async (url, init) => {
     calls.push({ url: String(url), init });
-    if (String(url).includes("turnstile")) return Response.json({ success: turnstile });
+    if (String(url).includes("turnstile")) return Response.json({ success: turnstile, hostname });
     return new Response("{}", { status: emailOk ? 200 : 500 });
   };
   return { calls, restore: () => { globalThis.fetch = orig; } };
@@ -157,4 +157,40 @@ test("rate limits per IP with 429", async () => {
     assert.ok(res.headers.get("retry-after"));
     assert.equal((await post(good, { ip: "203.0.113.10" })).status, 200);
   } finally { m.restore(); }
+});
+
+test("invalid requests do not consume the rate limit", async () => {
+  const m = mockFetch();
+  try {
+    const ip = "203.0.113.20";
+    for (let i = 0; i < 5; i++) assert.equal((await post("{bad", { ip })).status, 400);
+    assert.equal((await post({ ...good, brand: " " }, { ip })).status, 400);
+    assert.equal((await post(good, { ip })).status, 200);
+  } finally { m.restore(); }
+});
+
+test("body over 32768 UTF-8 bytes returns 413 even when under 32768 UTF-16 units", async () => {
+  const body = JSON.stringify({ ...good, needs: "酒".repeat(11000) });
+  assert.ok(body.length < 32768 && new TextEncoder().encode(body).length > 32768);
+  const res = await post(body);
+  assert.equal(res.status, 413);
+  assert.deepEqual(await res.json(), { ok: false, error: "payload_too_large" });
+});
+
+test("declared Content-Length over the limit returns 413 before the body is read", async () => {
+  const res = await post(good, { headers: { "content-length": "999999" } });
+  assert.equal(res.status, 413);
+  assert.equal((await post(good, { headers: { "content-length": "100" }, e: { ASSETS: {} } })).status, 503);
+});
+
+test("Turnstile hostname must match the request host", async () => {
+  const ok = mockFetch({ hostname: "jjwine.ecomm101.cc" });
+  try { assert.equal((await post(good)).status, 200); } finally { ok.restore(); }
+  const bad = mockFetch({ hostname: "example.com" });
+  try {
+    const res = await post(good);
+    assert.equal(res.status, 403);
+    assert.deepEqual(await res.json(), { ok: false, error: "turnstile_failed" });
+    assert.equal(bad.calls.filter((c) => c.url.includes("resend")).length, 0);
+  } finally { bad.restore(); }
 });
