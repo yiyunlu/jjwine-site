@@ -4,6 +4,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type FormEve
 import { content, type Locale } from "./content";
 import { CONTACT_EMAIL } from "./legal-content";
 import { localeLinks, publicLegalPagePath } from "./i18n";
+import { loadTurnstile, type TurnstileApi } from "./turnstile";
 import { v2Copy, type V2Messages } from "./v2-copy";
 
 type Props = { locale: Locale };
@@ -14,38 +15,10 @@ type FieldError = "required" | "email" | "select";
 type EnquiryStatusKey = "sending" | "sent" | "failed" | "rateLimit" | "network" | "captcha" | "not_configured";
 type BriefStatus = { key: "summary" | "downloaded" | "copied" | "copyFail" | EnquiryStatusKey; kind: "error" | "ok" } | null;
 
-type TurnstileApi = {
-  render: (container: HTMLElement, options: Record<string, unknown>) => string;
-  reset: (widgetId?: string) => void;
-  remove: (widgetId?: string) => void;
-};
-
 // Public Turnstile site key, injected at build time as VITE_TURNSTILE_SITE_KEY (a public value, not a secret).
 // TODO(ECO-132): the Worker verifies tokens with the matching secret; set both from the Cloudflare dashboard,
 // never commit either. Without a site key the widget is skipped and the Worker decides whether to accept an empty token.
 const TURNSTILE_SITE_KEY: string = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_TURNSTILE_SITE_KEY ?? "";
-const TURNSTILE_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-
-function loadTurnstile(): Promise<TurnstileApi> {
-  const existing = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
-  if (existing) return Promise.resolve(existing);
-  return new Promise((resolve, reject) => {
-    let script = document.querySelector<HTMLScriptElement>("script[data-turnstile]");
-    if (!script) {
-      script = document.createElement("script");
-      script.src = TURNSTILE_SCRIPT;
-      script.async = true;
-      script.defer = true;
-      script.dataset.turnstile = "1";
-      document.head.appendChild(script);
-    }
-    script.addEventListener("load", () => {
-      const api = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
-      if (api) resolve(api); else reject(new Error("turnstile"));
-    });
-    script.addEventListener("error", () => reject(new Error("turnstile")));
-  });
-}
 
 const HOME_LOCALE_ORDER: Locale[] = ["zh-cn", "en", "es", "fr"];
 const LANG_NAME: Record<Locale, string> = {
@@ -317,13 +290,20 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
   const enquiry = locale === "en" || locale === "zh-cn" ? copy.form.enquiry : undefined;
   const apiLocale = locale === "zh-cn" ? "zh-cn" : "en";
   const [sending, setSending] = useState(false);
+  const [status, setStatus] = useState<BriefStatus>(null);
   const turnstileBoxRef = useRef<HTMLDivElement>(null);
   const turnstileIdRef = useRef<string | undefined>(undefined);
   const turnstileTokenRef = useRef("");
+  const turnstileUnavailableRef = useRef(false);
 
   useEffect(() => {
     if (!enquiry || !TURNSTILE_SITE_KEY) return;
     let cancelled = false;
+    const markTurnstileUnavailable = () => {
+      turnstileTokenRef.current = "";
+      turnstileUnavailableRef.current = true;
+      setStatus({ key: "not_configured", kind: "error" });
+    };
     loadTurnstile().then(
       (api) => {
         const box = turnstileBoxRef.current;
@@ -331,18 +311,22 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
         turnstileIdRef.current = api.render(box, {
           sitekey: TURNSTILE_SITE_KEY,
           language: locale === "zh-cn" ? "zh-cn" : "en",
-          callback: (token: string) => { turnstileTokenRef.current = token; },
+          callback: (token: string) => {
+            turnstileTokenRef.current = token;
+            turnstileUnavailableRef.current = false;
+          },
           "expired-callback": () => { turnstileTokenRef.current = ""; },
-          "error-callback": () => { turnstileTokenRef.current = ""; },
+          "error-callback": markTurnstileUnavailable,
         });
       },
-      () => undefined,
+      () => { if (!cancelled) markTurnstileUnavailable(); },
     );
     return () => {
       cancelled = true;
       const id = turnstileIdRef.current;
       turnstileIdRef.current = undefined;
       turnstileTokenRef.current = "";
+      turnstileUnavailableRef.current = false;
       if (id) (window as unknown as { turnstile?: TurnstileApi }).turnstile?.remove(id);
     };
   }, [enquiry, locale]);
@@ -354,7 +338,7 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
       return;
     }
     if (!turnstileTokenRef.current) {
-      setStatus({ key: "captcha", kind: "error" });
+      setStatus({ key: turnstileUnavailableRef.current ? "not_configured" : "captcha", kind: "error" });
       return;
     }
     const categoryIndex = fieldValue(form, "category");
@@ -406,7 +390,6 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
 
   const [errors, setErrors] = useState<Partial<Record<FieldName, FieldError>>>({});
   const [attempted, setAttempted] = useState(false);
-  const [status, setStatus] = useState<BriefStatus>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const previewRef = useRef<HTMLTextAreaElement>(null);
 
