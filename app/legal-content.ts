@@ -39,6 +39,7 @@ export type LegalDocument = {
 };
 
 export type LegalUiStrings = {
+  skip: string;
   backToHome: string;
   languageNav: string;
   otherDocument: Record<LegalPageKey, string>;
@@ -53,6 +54,7 @@ export const legalPaths: Record<LegalPageKey, string> = {
 
 export const legalUi: Record<LegalLocale, LegalUiStrings> = {
   en: {
+    skip: "Skip to main content",
     backToHome: "Back to JJWine home",
     languageNav: "Language",
     otherDocument: { privacy: "Privacy Policy", legal: "Legal Notice" },
@@ -60,6 +62,7 @@ export const legalUi: Record<LegalLocale, LegalUiStrings> = {
     contactLine: "Privacy and legal questions can be sent to 上海捷嘉酒业有限公司 at",
   },
   "zh-cn": {
+    skip: "跳到主要内容",
     backToHome: "返回 JJWine 首页",
     languageNav: "语言选择",
     otherDocument: { privacy: "隐私政策", legal: "法律声明" },
