@@ -17,7 +17,6 @@ on:
       - "**/*.md"
       - "docs/**"
       - "CLAUDE.md"
-      - ".openai/**"
   workflow_dispatch:
 
 permissions:
@@ -25,7 +24,7 @@ permissions:
 
 concurrency:
   group: deploy-test-jjwine-site
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -79,6 +78,8 @@ jobs:
 
       - run: npm run lint
 
+      - run: npm run typecheck
+
       # `npm test` runs `npm run build` first, so dist/ is ready for deploy.
       - run: npm test
 
@@ -92,11 +93,16 @@ jobs:
       - name: Smoke check
         run: |
           set -euo pipefail
+          base=https://jjwine.ecomm101.cc
+          code=000
           for i in 1 2 3 4 5 6; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' https://jjwine.ecomm101.cc/ || true)
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$base/" || true)
             echo "attempt $i: HTTP $code"
-            [ "$code" = "200" ] && exit 0
+            [ "$code" = "200" ] && break
             sleep 10
           done
-          echo "::error::https://jjwine.ecomm101.cc/ did not return 200"
-          exit 1
+          [ "$code" = "200" ] || { echo "::error::$base/ did not return 200"; exit 1; }
+          code=$(curl -s -o /dev/null -w '%{http_code}' "$base/zh-cn")
+          [ "$code" = "200" ] || { echo "::error::$base/zh-cn returned HTTP $code, expected 200"; exit 1; }
+          code=$(curl -s -o /dev/null -w '%{http_code}' "$base/api/enquiry")
+          [ "$code" = "405" ] || { echo "::error::GET $base/api/enquiry returned HTTP $code, expected 405"; exit 1; }

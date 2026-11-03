@@ -9,7 +9,7 @@ import { v2Copy, type V2Messages } from "./v2-copy";
 type Props = { locale: Locale };
 type NavKey = "home" | "capability" | "process";
 type ProductKey = "bottle" | "can" | "bib" | "carton" | "mini" | "keg";
-type FieldName = "brand" | "contact" | "email" | "category" | "packaging" | "needs";
+type FieldName = "brand" | "contact" | "email" | "category" | "packaging" | "quantity" | "launch" | "needs";
 type FieldError = "required" | "email" | "select";
 type EnquiryStatusKey = "sending" | "sent" | "failed" | "rateLimit" | "network" | "captcha" | "not_configured";
 type BriefStatus = { key: "summary" | "downloaded" | "copied" | "copyFail" | EnquiryStatusKey; kind: "error" | "ok" } | null;
