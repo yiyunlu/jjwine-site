@@ -281,13 +281,20 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
   const enquiry = locale === "en" || locale === "zh-cn" ? copy.form.enquiry : undefined;
   const apiLocale = locale === "zh-cn" ? "zh-cn" : "en";
   const [sending, setSending] = useState(false);
+  const [status, setStatus] = useState<BriefStatus>(null);
   const turnstileBoxRef = useRef<HTMLDivElement>(null);
   const turnstileIdRef = useRef<string | undefined>(undefined);
   const turnstileTokenRef = useRef("");
+  const turnstileUnavailableRef = useRef(false);
 
   useEffect(() => {
     if (!enquiry || !TURNSTILE_SITE_KEY) return;
     let cancelled = false;
+    const markTurnstileUnavailable = () => {
+      turnstileTokenRef.current = "";
+      turnstileUnavailableRef.current = true;
+      setStatus({ key: "not_configured", kind: "error" });
+    };
     loadTurnstile().then(
       (api) => {
         const box = turnstileBoxRef.current;
@@ -295,18 +302,22 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
         turnstileIdRef.current = api.render(box, {
           sitekey: TURNSTILE_SITE_KEY,
           language: locale === "zh-cn" ? "zh-cn" : "en",
-          callback: (token: string) => { turnstileTokenRef.current = token; },
+          callback: (token: string) => {
+            turnstileTokenRef.current = token;
+            turnstileUnavailableRef.current = false;
+          },
           "expired-callback": () => { turnstileTokenRef.current = ""; },
-          "error-callback": () => { turnstileTokenRef.current = ""; },
+          "error-callback": markTurnstileUnavailable,
         });
       },
-      () => undefined,
+      () => { if (!cancelled) markTurnstileUnavailable(); },
     );
     return () => {
       cancelled = true;
       const id = turnstileIdRef.current;
       turnstileIdRef.current = undefined;
       turnstileTokenRef.current = "";
+      turnstileUnavailableRef.current = false;
       if (id) (window as unknown as { turnstile?: TurnstileApi }).turnstile?.remove(id);
     };
   }, [enquiry, locale]);
@@ -318,7 +329,7 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
       return;
     }
     if (!turnstileTokenRef.current) {
-      setStatus({ key: "captcha", kind: "error" });
+      setStatus({ key: turnstileUnavailableRef.current ? "not_configured" : "captcha", kind: "error" });
       return;
     }
     const categoryIndex = fieldValue(form, "category");
@@ -370,7 +381,6 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
 
   const [errors, setErrors] = useState<Partial<Record<FieldName, FieldError>>>({});
   const [attempted, setAttempted] = useState(false);
-  const [status, setStatus] = useState<BriefStatus>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const previewRef = useRef<HTMLTextAreaElement>(null);
 

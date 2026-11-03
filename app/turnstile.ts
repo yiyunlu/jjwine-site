@@ -6,23 +6,28 @@ export type TurnstileApi = {
 
 export const TURNSTILE_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
+let pending: Promise<TurnstileApi> | undefined;
+
 export function loadTurnstile(): Promise<TurnstileApi> {
   const existing = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
   if (existing) return Promise.resolve(existing);
-  return new Promise((resolve, reject) => {
-    let script = document.querySelector<HTMLScriptElement>("script[data-turnstile]");
-    if (!script) {
-      script = document.createElement("script");
-      script.src = TURNSTILE_SCRIPT;
-      script.async = true;
-      script.defer = true;
-      script.dataset.turnstile = "1";
-      document.head.appendChild(script);
-    }
+  pending ??= new Promise<TurnstileApi>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = TURNSTILE_SCRIPT;
+    script.async = true;
+    script.defer = true;
+    script.dataset.turnstile = "1";
+    const fail = () => {
+      script.remove();
+      pending = undefined;
+      reject(new Error("turnstile"));
+    };
     script.addEventListener("load", () => {
       const api = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
-      if (api) resolve(api); else reject(new Error("turnstile"));
+      if (api) resolve(api); else fail();
     });
-    script.addEventListener("error", () => reject(new Error("turnstile")));
+    script.addEventListener("error", fail);
+    document.head.appendChild(script);
   });
+  return pending;
 }
