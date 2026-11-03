@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode, type RefObject } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode, type RefObject } from "react";
 import { content, type Locale } from "./content";
 import { CONTACT_EMAIL } from "./legal-content";
 import { localeLinks, publicLegalPagePath } from "./i18n";
@@ -169,7 +169,7 @@ function useFocusTrap(active: boolean, containerRef: RefObject<HTMLElement | nul
       if (event.key !== "Tab" || !containerRef.current) return;
       const focusable = Array.from(
         containerRef.current.querySelectorAll<HTMLElement>("button, input, textarea, select, a[href], [tabindex]:not([tabindex='-1'])"),
-      ).filter((element) => !element.hasAttribute("disabled"));
+      ).filter((element) => !element.hasAttribute("disabled") && element.tabIndex >= 0 && element.getClientRects().length > 0);
       if (focusable.length === 0) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -283,6 +283,15 @@ function ModalFrame({
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   useFocusTrap(true, overlayRef, onDismiss);
+  useLayoutEffect(() => {
+    const overlay = overlayRef.current;
+    if (!overlay?.parentElement) return;
+    const siblings = Array.from(overlay.parentElement.children).filter((element) => element !== overlay && !element.hasAttribute("inert"));
+    siblings.forEach((element) => element.setAttribute("inert", ""));
+    return () => {
+      siblings.forEach((element) => element.removeAttribute("inert"));
+    };
+  }, []);
   useEffect(() => {
     if (initialFocus === "close") closeRef.current?.focus();
     else overlayRef.current?.querySelector<HTMLElement>("input, select, textarea")?.focus();
@@ -290,7 +299,7 @@ function ModalFrame({
 
   return (
     <div className="modal-overlay" ref={overlayRef}>
-      <button className="modal-backdrop" type="button" aria-label={closeLabel} onClick={onDismiss} />
+      <button className="modal-backdrop" type="button" tabIndex={-1} aria-label={closeLabel} onClick={onDismiss} />
       <div className={className} role="dialog" aria-modal="true" aria-labelledby={labelledBy}>
         <div className="modal-inner">
           <button className="modal-close" ref={closeRef} type="button" aria-label={closeLabel} onClick={onDismiss}>
