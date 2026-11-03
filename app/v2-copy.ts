@@ -24,7 +24,7 @@ export type V2Dialog = {
 };
 
 export type V2Messages = {
-  meta: { htmlLang: string; title: string; description: string };
+  meta: { htmlLang: string };
   common: {
     skip: string;
     close: string;
@@ -153,9 +153,7 @@ export type V2Messages = {
 export const v2Copy: Record<Locale, V2Messages> = {
   "en": {
     "meta": {
-      "htmlLang": "en",
-      "title": "JJWINE | China OEM production partner for global wine & beverage brands",
-      "description": "JJWine coordinates localization, production planning, quality governance and compliance in China for global wine and beverage brands — in bottles, cans and bag-in-box."
+      "htmlLang": "en"
     },
     "common": {
       "skip": "Skip to main content",
@@ -510,9 +508,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
   },
   "zh-cn": {
     "meta": {
-      "htmlLang": "zh-CN",
-      "title": "JJWINE｜全球葡萄酒与饮料品牌的中国 OEM 落地伙伴",
-      "description": "JJWine 为全球葡萄酒和饮料品牌协调中国本地化、生产组织、质量治理与合规事项，支持瓶装、罐装与盒中袋。"
+      "htmlLang": "zh-CN"
     },
     "common": {
       "skip": "跳到主要内容",
@@ -867,9 +863,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
   },
   "es": {
     "meta": {
-      "htmlLang": "es",
-      "title": "JJWINE | Socio de producción OEM en China para marcas de vinos y bebidas",
-      "description": "JJWine coordina la localización, la organización de la producción, la gestión de la calidad y el cumplimiento normativo en China para marcas internacionales de vinos y bebidas: botella, lata y bag-in-box."
+      "htmlLang": "es"
     },
     "common": {
       "skip": "Saltar al contenido principal",
@@ -1211,9 +1205,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
   },
   "fr": {
     "meta": {
-      "htmlLang": "fr",
-      "title": "JJWINE | Partenaire de production OEM en Chine pour les marques de vins et boissons",
-      "description": "JJWine coordonne la localisation, l’organisation de la production, la gouvernance qualité et la conformité en Chine pour les marques internationales de vins et boissons : bouteille, canette et bag-in-box."
+      "htmlLang": "fr"
     },
     "common": {
       "skip": "Aller au contenu principal",
