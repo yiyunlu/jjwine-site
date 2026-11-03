@@ -1,13 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode, type RefObject } from "react";
-import { content, type Locale } from "./content";
+import type { content } from "./content";
 import { CONTACT_EMAIL } from "./legal-content";
-import { localeLinks, publicLegalPagePath } from "./i18n";
+import { localeLinks, publicLegalPagePath, type Locale } from "./i18n";
 import { loadTurnstile, type TurnstileApi } from "./turnstile";
-import { v2Copy, type V2Messages } from "./v2-copy";
+import type { V2Messages } from "./v2-copy";
 
-type Props = { locale: Locale };
+type Props = {
+  locale: Locale;
+  copy: V2Messages;
+  footer: (typeof content)[Locale]["footer"];
+};
 type NavKey = "home" | "capability" | "process";
 type ProductKey = "bottle" | "can" | "bib" | "carton" | "mini" | "keg";
 type FieldName = "brand" | "contact" | "email" | "category" | "packaging" | "quantity" | "launch" | "needs";
@@ -529,9 +533,7 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
   );
 }
 
-export function JJWineSite({ locale }: Props) {
-  const copy = v2Copy[locale];
-  const site = content[locale];
+export function JJWineSite({ locale, copy, footer }: Props) {
   const separator = locale === "zh-cn" ? "：" : ": ";
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<NavKey>("home");
@@ -685,8 +687,8 @@ export function JJWineSite({ locale }: Props) {
               <li><button type="button" aria-haspopup="dialog" onClick={(event) => openInfo("quality", event.currentTarget)}>{copy.nav.quality}</button></li>
               <li><button type="button" aria-haspopup="dialog" onClick={(event) => openInfo("partners", event.currentTarget)}>{copy.nav.partners}</button></li>
               <li><button type="button" aria-haspopup="dialog" onClick={(event) => openInfo("about", event.currentTarget)}>{copy.nav.about}</button></li>
-              <li className="menu-legal-item"><a href={publicLegalPagePath("privacy", locale)}>{site.footer.privacyLink}</a></li>
-              <li className="menu-legal-item"><a href={publicLegalPagePath("legal", locale)}>{site.footer.legalLink}</a></li>
+              <li className="menu-legal-item"><a href={publicLegalPagePath("privacy", locale)}>{footer.privacyLink}</a></li>
+              <li className="menu-legal-item"><a href={publicLegalPagePath("legal", locale)}>{footer.legalLink}</a></li>
             </ul>
           </nav>
           <div className="header-tools">
@@ -830,16 +832,16 @@ export function JJWineSite({ locale }: Props) {
         <a className="footer-mark" href="#top" onClick={(event) => goTo("home", event)}>
           <img className="brand-logo" src="/brand/jjwine-logo-light.svg" alt="JJWine" />
         </a>
-        <p>{site.footer.line}</p>
-        <nav aria-label={site.footer.legalNav}>
-          <a href={publicLegalPagePath("privacy", locale)}>{site.footer.privacyLink}</a>
-          <a href={publicLegalPagePath("legal", locale)}>{site.footer.legalLink}</a>
+        <p>{footer.line}</p>
+        <nav aria-label={footer.legalNav}>
+          <a href={publicLegalPagePath("privacy", locale)}>{footer.privacyLink}</a>
+          <a href={publicLegalPagePath("legal", locale)}>{footer.legalLink}</a>
         </nav>
         <p className="footer-contact">
-          <span>{site.footer.contactLabel}</span>{" "}
+          <span>{footer.contactLabel}</span>{" "}
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </p>
-        <small>{site.footer.legal}</small>
+        <small>{footer.legal}</small>
       </footer>
 
       {infoKey ? (
