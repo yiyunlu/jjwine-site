@@ -342,3 +342,37 @@ for (const [locale, label] of [["en", "Contact"], ["zh-cn", "联系我们"], ["e
     assert.match(footer, /<a href="mailto:eddielu@winekee\.com">eddielu@winekee\.com<\/a>/);
   });
 }
+
+test("forged forwarded and host headers cannot change canonical, hreflang or og URLs", async () => {
+  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
+  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-forged-origin`);
+  const { default: worker } = await import(workerUrl.href);
+  const response = await worker.fetch(
+    new Request("https://jjwine.example/en", {
+      headers: {
+        accept: "text/html",
+        host: "evil.example",
+        "x-forwarded-host": "evil.example",
+        "x-forwarded-proto": "http",
+      },
+    }),
+    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
+    { waitUntil() {}, passThroughOnException() {} },
+  );
+  const html = await response.text();
+
+  assert.match(html, /<link rel="canonical" href="https:\/\/jjwine\.example\/en"/);
+  for (const hreflang of ["en", "zh-CN", "es", "fr", "x-default"]) {
+    assert.match(
+      html,
+      new RegExp(`<link rel="alternate" href="https://jjwine\\.example/[^"]*" hreflang="${hreflang}"`),
+    );
+  }
+  assert.equal(
+    [...html.matchAll(/<link rel="alternate" href="([^"]+)" hreflang=/g)]
+      .every(([, href]) => href.startsWith("https://jjwine.example/")),
+    true,
+  );
+  assert.match(html, /property="og:image" content="https:\/\/jjwine\.example\/og\.png"/);
+  assert.doesNotMatch(html, /evil\.example/);
+});
