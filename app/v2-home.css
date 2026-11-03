@@ -56,7 +56,7 @@ main:focus { outline: none; }
 
 /* ---------- 通用文字 ---------- */
 .eyebrow {
-  font-size: max(9.5px, calc(10.5 * var(--k)));
+  font-size: max(11px, calc(10.5 * var(--k)));
   letter-spacing: 0.24em;
   font-weight: 500;
   color: var(--muted-strong);
@@ -256,8 +256,6 @@ html:not([lang="zh-CN"]) .video-script { font-size: max(12px, calc(16 * var(--k)
 .vb-progress { flex: 1; height: 28px; display: flex; align-items: center; margin: 0 calc(42 * var(--k)) 0 calc(56 * var(--k)); }
 .vb-track { position: relative; display: block; width: 100%; height: 2px; background: rgba(255,255,255,.42); border-radius: 2px; }
 .vb-knob { position: absolute; left: 0; top: 50%; width: 9px; height: 9px; border-radius: 50%; background: #fff; transform: translate(-30%, -50%); }
-.video-bar [aria-disabled="true"] { cursor: help; }
-.vb-btn:hover, .vb-progress:hover .vb-track { opacity: .85; }
 
 .video-soon {
   position: absolute; inset: 0; z-index: 3;
@@ -514,14 +512,14 @@ html:not([lang="zh-CN"]) .step-title { overflow-wrap: break-word; hyphens: auto;
   .step-desc, html:not([lang="zh-CN"]) .step-desc { font-size: 13.5px; margin-left: 0; }
 
   .banner { height: 120px; }
-  .banner-left { font-size: 10px; }
+  .banner-left { font-size: 12px; }
   .banner-right { font-size: 14px; }
 }
 
 @media (max-width: 760px) {
   :root { --pad: 20px; }
   .hero-copy { padding-top: 32px; }
-  .eyebrow { font-size: 10.5px; letter-spacing: .18em; }
+  .eyebrow { font-size: 11px; letter-spacing: .18em; }
   .hero-title, html:not([lang="zh-CN"]) .hero-title { font-size: clamp(28px, 8.4vw, 36px); line-height: 1.25; }
   html[lang="es"] .hero-title, html[lang="fr"] .hero-title { font-size: clamp(25px, 7.4vw, 32px); }
   .hero-lead, html:not([lang="zh-CN"]) .hero-lead { font-size: 15.5px; }

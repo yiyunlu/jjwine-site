@@ -377,3 +377,26 @@ test("forged forwarded and host headers cannot change canonical, hreflang or og 
   assert.match(html, /property="og:image" content="https:\/\/jjwine\.example\/og\.png"/);
   assert.doesNotMatch(html, /evil\.example/);
 });
+
+for (const [pathname, lang] of legalRoutes) {
+  test(`offers a skip link and content landmark on ${pathname}`, async () => {
+    const html = await (await render(pathname)).text();
+    const skipLink = `<a class="skip-link" href="#main">${localeMeta[lang].skip}</a>`;
+    assert.ok(html.includes(skipLink), "the localized skip link targets main");
+    const main = html.match(/<main id="main" tabindex="-1">([\s\S]*?)<\/main>/);
+    assert.ok(main, "main is a programmatically focusable skip target");
+    assert.doesNotMatch(main[1], /<header class="topbar\b|<footer\b/);
+    assert.ok(html.indexOf(skipLink) < main.index, "the skip link precedes main");
+  });
+}
+
+for (const locale of ["en", "zh-cn", "es", "fr"]) {
+  test(`keeps the video bar decorative on /${locale}`, async () => {
+    const html = await (await render(`/${locale}`)).text();
+    const bar = html.match(/<div class="video-bar"([^>]*)>([\s\S]*?)<\/div>/);
+    assert.ok(bar, "the visual video bar is rendered");
+    assert.match(bar[1], /aria-hidden="true"/);
+    assert.doesNotMatch(bar[2], /<button\b|tabindex="\+?\d+"|aria-disabled|role=/i);
+    assert.match(html, /<button class="video-bigplay"/);
+  });
+}

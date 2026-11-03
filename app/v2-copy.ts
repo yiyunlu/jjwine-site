@@ -67,10 +67,6 @@ export type V2Messages = {
     script2: string;
     play: string;
     time: string;
-    timeLabel: string;
-    progress: string;
-    volume: string;
-    fullscreen: string;
     soonTitle: string;
     soonBody: string;
     soonBack: string;
@@ -197,10 +193,6 @@ export const v2Copy: Record<Locale, V2Messages> = {
       "script2": "opening wider possibilities",
       "play": "Play brand film",
       "time": "--:--",
-      "timeLabel": "Running time will appear once the official film is published",
-      "progress": "Playback progress (available once the film is published)",
-      "volume": "Volume (available once the film is published)",
-      "fullscreen": "Full screen (available once the film is published)",
       "soonTitle": "Brand film coming soon",
       "soonBody": "The official film has not been published yet; you are seeing the cover frame. Once available, it will play right here.",
       "soonBack": "Back to cover"
@@ -552,10 +544,6 @@ export const v2Copy: Record<Locale, V2Messages> = {
       "script2": "创造更广阔的可能",
       "play": "播放品牌影片",
       "time": "--:--",
-      "timeLabel": "影片时长待正式影片上线后显示",
-      "progress": "播放进度（影片上线后可用）",
-      "volume": "音量（影片上线后可用）",
-      "fullscreen": "全屏（影片上线后可用）",
       "soonTitle": "品牌影片即将上线",
       "soonBody": "正式影片尚未接入，当前展示的是视频封面。影片上线后将在此处直接播放。",
       "soonBack": "返回封面"
@@ -907,10 +895,6 @@ export const v2Copy: Record<Locale, V2Messages> = {
       "script2": "abriendo nuevas posibilidades",
       "play": "Reproducir la película de marca",
       "time": "--:--",
-      "timeLabel": "La duración se mostrará cuando se publique la película oficial",
-      "progress": "Progreso de reproducción (disponible cuando se publique la película)",
-      "volume": "Volumen (disponible cuando se publique la película)",
-      "fullscreen": "Pantalla completa (disponible cuando se publique la película)",
       "soonTitle": "Película de marca próximamente",
       "soonBody": "La película oficial aún no está publicada; lo que ve es la imagen de portada. Cuando esté disponible, se reproducirá aquí mismo.",
       "soonBack": "Volver a la portada"
@@ -1249,10 +1233,6 @@ export const v2Copy: Record<Locale, V2Messages> = {
       "script2": "ouvrir de nouveaux horizons",
       "play": "Lire le film de marque",
       "time": "--:--",
-      "timeLabel": "La durée s’affichera dès la mise en ligne du film officiel",
-      "progress": "Progression de la lecture (disponible dès la mise en ligne du film)",
-      "volume": "Volume (disponible dès la mise en ligne du film)",
-      "fullscreen": "Plein écran (disponible dès la mise en ligne du film)",
       "soonTitle": "Film de marque bientôt disponible",
       "soonBody": "Le film officiel n’est pas encore en ligne ; vous voyez l’image de couverture. Il sera diffusé ici dès sa publication.",
       "soonBack": "Retour à la couverture"

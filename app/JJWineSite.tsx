@@ -512,7 +512,7 @@ function BriefDialog({ copy, locale, separator, onDismiss }: { copy: V2Messages;
         <p className={status ? `form-status is-${status.kind}` : "form-status"} role="status" aria-live="polite">{statusText}</p>
         {enquiry ? (
           <>
-            {TURNSTILE_SITE_KEY ? <div className="turnstile-box" ref={turnstileBoxRef} aria-label={enquiry.turnstileLabel} /> : null}
+            {TURNSTILE_SITE_KEY ? <div role="group" className="turnstile-box" ref={turnstileBoxRef} aria-label={enquiry.turnstileLabel} /> : null}
             <p className="form-privacy">
               {enquiry.privacyLead} <a href={publicLegalPagePath("privacy", locale)} target="_blank" rel="noopener noreferrer">{enquiry.privacyLink}</a>.
             </p>
@@ -746,12 +746,12 @@ export function JJWineSite({ locale, copy, footer }: Props) {
               <button className="video-bigplay" ref={bigPlayRef} type="button" aria-label={copy.video.play} onClick={showSoon}>
                 <Icon id="i-play" />
               </button>
-              <div className="video-bar">
-                <button className="vb-btn" type="button" aria-label={copy.video.play} onClick={showSoon}><Icon id="i-play" /></button>
-                <span className="vb-time" role="img" aria-label={copy.video.timeLabel} title={copy.video.timeLabel}><span>{copy.video.time}</span></span>
-                <button className="vb-progress" type="button" aria-disabled="true" aria-label={copy.video.progress} onClick={showSoon}><span className="vb-track"><span className="vb-knob" /></span></button>
-                <button className="vb-btn" type="button" aria-disabled="true" aria-label={copy.video.volume} onClick={showSoon}><Icon id="i-volume" /></button>
-                <button className="vb-btn" type="button" aria-disabled="true" aria-label={copy.video.fullscreen} onClick={showSoon}><Icon id="i-fullscreen" /></button>
+              <div className="video-bar" aria-hidden="true">
+                <span className="vb-btn"><Icon id="i-play" /></span>
+                <span className="vb-time"><span>{copy.video.time}</span></span>
+                <span className="vb-progress"><span className="vb-track"><span className="vb-knob" /></span></span>
+                <span className="vb-btn"><Icon id="i-volume" /></span>
+                <span className="vb-btn"><Icon id="i-fullscreen" /></span>
               </div>
             </div>
             <div className="video-soon" id="video-soon" hidden={!videoSoon} role="status">

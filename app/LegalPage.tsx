@@ -15,7 +15,8 @@ export function LegalPage({ locale, page }: Props) {
   const otherPage: LegalPageKey = page === "privacy" ? "legal" : "privacy";
 
   return (
-    <main className={`site-shell legal-shell locale-${locale}`}>
+    <div className={`site-shell legal-shell locale-${locale}`}>
+      <a className="skip-link" href="#main">{ui.skip}</a>
       <header className="topbar legal-topbar">
         <a className="wordmark" href={`/${locale}`}>
           <span className="brand-mark"><b>JJ</b>WINE</span>
@@ -35,42 +36,44 @@ export function LegalPage({ locale, page }: Props) {
         </nav>
       </header>
 
-      <article className="legal-article">
-        <header className="legal-article-head">
-          <h1>{doc.title}</h1>
-          <p className="legal-effective">{doc.effectiveDate}</p>
-          <p className="legal-disclaimer">{doc.disclaimer}</p>
-        </header>
+      <main id="main" tabIndex={-1}>
+        <article className="legal-article">
+          <header className="legal-article-head">
+            <h1>{doc.title}</h1>
+            <p className="legal-effective">{doc.effectiveDate}</p>
+            <p className="legal-disclaimer">{doc.disclaimer}</p>
+          </header>
 
-        {doc.sections.map((section) => (
-          <section className="legal-section" key={section.heading}>
-            <h2>{section.heading}</h2>
-            {section.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-            {section.items ? (
-              <ul>
-                {section.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            ) : null}
+          {doc.sections.map((section) => (
+            <section className="legal-section" key={section.heading}>
+              <h2>{section.heading}</h2>
+              {section.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              {section.items ? (
+                <ul>
+                  {section.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </section>
+          ))}
+
+          <section className="legal-section legal-contact">
+            <h2>{ui.contactHeading}</h2>
+            <p>
+              {ui.contactLine}{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            </p>
           </section>
-        ))}
-
-        <section className="legal-section legal-contact">
-          <h2>{ui.contactHeading}</h2>
-          <p>
-            {ui.contactLine}{" "}
-            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-          </p>
-        </section>
-      </article>
+        </article>
+      </main>
 
       <footer className="legal-footer">
         <a href={`/${locale}`}>← {ui.backToHome}</a>
         <a href={`/${locale}/${otherPage}`}>{ui.otherDocument[otherPage]}</a>
       </footer>
-    </main>
+    </div>
   );
 }
