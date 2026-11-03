@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type FormEvent, type MouseEve
 import { content, type Locale } from "./content";
 import { CONTACT_EMAIL } from "./legal-content";
 import { localeLinks, publicLegalPagePath } from "./i18n";
+import { loadTurnstile, type TurnstileApi } from "./turnstile";
 import { v2Copy, type V2Messages } from "./v2-copy";
 
 type Props = { locale: Locale };
@@ -14,38 +15,10 @@ type FieldError = "required" | "email" | "select";
 type EnquiryStatusKey = "sending" | "sent" | "failed" | "rateLimit" | "network" | "captcha" | "not_configured";
 type BriefStatus = { key: "summary" | "downloaded" | "copied" | "copyFail" | EnquiryStatusKey; kind: "error" | "ok" } | null;
 
-type TurnstileApi = {
-  render: (container: HTMLElement, options: Record<string, unknown>) => string;
-  reset: (widgetId?: string) => void;
-  remove: (widgetId?: string) => void;
-};
-
 // Public Turnstile site key, injected at build time as VITE_TURNSTILE_SITE_KEY (a public value, not a secret).
 // TODO(ECO-132): the Worker verifies tokens with the matching secret; set both from the Cloudflare dashboard,
 // never commit either. Without a site key the widget is skipped and the Worker decides whether to accept an empty token.
 const TURNSTILE_SITE_KEY: string = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_TURNSTILE_SITE_KEY ?? "";
-const TURNSTILE_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-
-function loadTurnstile(): Promise<TurnstileApi> {
-  const existing = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
-  if (existing) return Promise.resolve(existing);
-  return new Promise((resolve, reject) => {
-    let script = document.querySelector<HTMLScriptElement>("script[data-turnstile]");
-    if (!script) {
-      script = document.createElement("script");
-      script.src = TURNSTILE_SCRIPT;
-      script.async = true;
-      script.defer = true;
-      script.dataset.turnstile = "1";
-      document.head.appendChild(script);
-    }
-    script.addEventListener("load", () => {
-      const api = (window as unknown as { turnstile?: TurnstileApi }).turnstile;
-      if (api) resolve(api); else reject(new Error("turnstile"));
-    });
-    script.addEventListener("error", () => reject(new Error("turnstile")));
-  });
-}
 
 const HOME_LOCALE_ORDER: Locale[] = ["zh-cn", "en", "es", "fr"];
 const LANG_NAME: Record<Locale, string> = {
