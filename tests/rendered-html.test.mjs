@@ -147,6 +147,27 @@ for (const [pathname, productionCopy, certificationCopy, obsoleteCopy] of [
   });
 }
 
+// docs/事实与来源边界.md「已确认的生产形式」: spirits, bag-in-box, sparkling
+// and small format are confirmed formats. The sparkling card (key "carton")
+// shows a bottle, so no locale may describe it as carton packs.
+for (const [pathname, formats, cartonAlt] of [
+  ["/en", ["Bag-in-Box (BIB)", "Sparkling", "Small format", "Spirits"], /gable-top/i],
+  ["/zh-cn", ["盒中袋 BIB", "起泡酒", "小瓶装", "烈酒"], /屋顶型/],
+  ["/es", ["Bag-in-Box (BIB)", "Espumosos", "Formato pequeño", "Destilados"], /a dos aguas/i],
+  ["/fr", ["Bag-in-Box (BIB)", "Effervescents", "Petit format", "Spiritueux"], /toit pointu/i],
+]) {
+  test(`renders the confirmed product formats on ${pathname}`, async () => {
+    const html = await (await render(pathname)).text();
+    for (const format of formats) assert.match(html, new RegExp(escape(format)));
+    assert.doesNotMatch(html, cartonAlt, "sparkling card alt text must describe the bottle, not carton packs");
+    assert.doesNotMatch(
+      html,
+      /FSSC/,
+      "FSSC 22000 scope excludes spirits; check docs/事实与来源边界.md before adding certification claims to the home page",
+    );
+  });
+}
+
 test("ships valid favicon files", async () => {
   const ico = await readFile(new URL("../public/favicon.ico", import.meta.url));
   assert.deepEqual([...ico.subarray(0, 4)], [0, 0, 1, 0]);
