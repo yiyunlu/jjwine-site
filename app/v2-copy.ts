@@ -250,7 +250,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "title": "Sparkling",
         "d1": "High and low sparkle,",
         "d2": "with multiple closure options.",
-        "alt": "Three ivory gable-top packs with burgundy and green leaf line art on a light beige background",
+        "alt": "Sparkling wine bottle with a cork, wire cage and gold foil, an ivory label with olive-branch line art, beside an olive branch on a light beige background",
         "intro": "Sparkling wine and sparkling drinks, from high to low sparkle, with cork, crown or other closures suited to China bottling and localization.",
         "listTitle": "To be confirmed together for each project:",
         "list": [
@@ -601,7 +601,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "title": "起泡酒",
         "d1": "高气泡与低气泡，",
         "d2": "多种封口方式可选。",
-        "alt": "三只象牙白屋顶型包装，酒红与绿色叶片线稿图案，浅米色背景",
+        "alt": "起泡酒瓶，软木塞配金属丝扣与金色封帽，象牙色标签饰橄榄枝线稿，旁有橄榄枝，浅米色背景",
         "intro": "起泡葡萄酒与起泡饮品，涵盖高气泡与低气泡，可选软木塞、皇冠盖等多种封口，适配中国灌装与本地化需求。",
         "listTitle": "项目中需要共同确认：",
         "list": [
@@ -952,7 +952,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "title": "Espumosos",
         "d1": "Burbuja intensa o suave,",
         "d2": "con distintas opciones de cierre.",
-        "alt": "Tres envases marfil con tapa a dos aguas e ilustraciones de hojas burdeos y verdes sobre fondo beige claro",
+        "alt": "Botella de espumoso con corcho, morrión y cápsula dorada, etiqueta marfil con ilustración de rama de olivo, junto a una rama de olivo sobre fondo beige claro",
         "intro": "Vino espumoso y bebidas espumosas, de burbuja intensa a suave, con corcho, chapa u otros cierres adecuados para el embotellado y la localización en China.",
         "listTitle": "Aspectos que confirmamos juntos en cada proyecto:",
         "list": [
@@ -1290,7 +1290,7 @@ export const v2Copy: Record<Locale, V2Messages> = {
         "title": "Effervescents",
         "d1": "Effervescence forte ou légère,",
         "d2": "avec plusieurs types de fermeture.",
-        "alt": "Trois emballages ivoire à toit pointu, motifs de feuilles bordeaux et vertes, sur fond beige clair",
+        "alt": "Bouteille d’effervescent avec bouchon en liège, muselet et coiffe dorée, étiquette ivoire ornée d’une branche d’olivier, près d’une branche d’olivier sur fond beige clair",
         "intro": "Vin effervescent et boissons pétillantes, d’effervescence forte à légère, avec bouchon liège, capsule couronne ou autres fermetures adaptées à l’embouteillage et à la localisation en Chine.",
         "listTitle": "Points à valider ensemble pour chaque projet :",
         "list": [
