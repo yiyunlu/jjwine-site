@@ -18,7 +18,6 @@ import type { LegalLocale } from "./i18n";
 
 export const OPERATOR_LEGAL_NAME = "上海捷嘉酒业有限公司";
 export const CONTACT_EMAIL = "eddielu@winekee.com";
-export const EFFECTIVE_DATE_ISO = "2026-10-30";
 
 export type LegalPageKey = "privacy" | "legal";
 
@@ -86,7 +85,7 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
           heading: "1. Operator and scope",
           paragraphs: [
             "This website is operated by 上海捷嘉酒业有限公司, referred to on this site as “JJWine” or “the operator”. The Chinese registered name above is the authoritative operator name used on this website; this policy does not state a separate English legal name.",
-            "This policy covers this public website (the English, Simplified Chinese, Spanish and French pages served under /en, /zh-cn, /es and /fr) the online enquiry form on the English and Simplified Chinese pages, and email correspondence used to respond to an inquiry or manage a potential business relationship, unless a more specific notice or agreement supplements it. Contractual relationships may be governed by additional notices and terms.",
+            "This policy covers this public website (the English, Simplified Chinese, Spanish and French pages served under /en, /zh-cn, /es and /fr), the online enquiry form on the English and Simplified Chinese pages, and email correspondence used to respond to an enquiry or manage a potential business relationship, unless a more specific notice or agreement supplements it. Contractual relationships may be governed by additional notices and terms.",
           ],
         },
         {
@@ -106,14 +105,14 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
           heading: "4. Online enquiry form",
           paragraphs: [
             "The English (/en) and Simplified Chinese (/zh-cn) pages offer an online enquiry form. The Spanish and French pages do not offer online submission. When you choose to submit the form, your browser sends the following to the operator's Cloudflare Worker at /api/enquiry: brand or company name, contact name, email address, product category, packaging preference, optional estimated quantity and launch timing, the needs you describe, the page language, and a Cloudflare Turnstile verification token. As with any request, the Worker also receives technical data such as your IP address and request headers (section 6).",
-            "To protect the form against spam and abuse, the page loads Cloudflare Turnstile, a security check provided by Cloudflare. The Worker sends the Turnstile token and your IP address to Cloudflare to verify the check, and uses your IP address to apply short-term rate limits held temporarily in the Worker's memory. Cloudflare processes Turnstile data under its own terms and privacy documentation.",
+            "To protect the form against spam and abuse, opening the online enquiry form loads Cloudflare Turnstile, a security check provided by Cloudflare. The Worker sends the Turnstile token and your IP address to Cloudflare to verify the check, and uses your IP address to apply short-term rate limits held temporarily in the Worker's memory. Cloudflare processes Turnstile data under its own terms and privacy documentation.",
             "If the submission passes these checks, the Worker sends its contents to the operator's business inbox through an email delivery service provider (currently Resend), with your email address set as the reply address. The Worker does not store submissions in a database. We use the information only to reply to your enquiry and manage a potential business relationship. Please do not include sensitive personal information in the form.",
           ],
         },
         {
           heading: "5. Email contact",
           paragraphs: [
-            "Email links on this site (mailto links) open your own email client. If you choose to email us, we receive whatever you send — typically your name, email address, company and message — and we use it only to respond to your inquiry and manage a potential business relationship. Please do not email sensitive personal information.",
+            "Email links on this site (mailto links) open your own email client. If you choose to email us, we receive whatever you send — typically your name, email address, company and message — and we use it only to respond to your enquiry and manage a potential business relationship. Please do not email sensitive personal information.",
           ],
         },
         {
@@ -148,7 +147,7 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
           heading: "10. International transfers, retention and security",
           paragraphs: [
             "Because the site is delivered through Cloudflare's global network and online enquiries and email are handled by service providers (including Cloudflare for Turnstile and an email delivery provider, currently Resend), technical data, enquiry content and correspondence may be transferred across borders. For transfers controlled by the operator, we limit them to what is needed to run this website and communicate with you, do not use them for marketing or profiling, and apply any notice, consent, contractual, assessment or other safeguard required by applicable law. Cloudflare describes its own transfer arrangements in its privacy documentation.",
-            "The operator keeps any technical or security logs it controls only as long as reasonably needed for operations, security and applicable legal obligations. Cloudflare's retention is governed by its own terms, policies and configured services. Online enquiries received by email and email correspondence are retained while relevant to an inquiry or business relationship and then deleted or archived in line with applicable obligations. The Worker's rate-limit data is kept only temporarily in memory.",
+            "The operator keeps any technical or security logs it controls only as long as reasonably needed for operations, security and applicable legal obligations. Cloudflare's retention is governed by its own terms, policies and configured services. Online enquiries received by email and email correspondence are retained while relevant to an enquiry or business relationship and then deleted or archived in line with applicable obligations. The Worker's rate-limit data is kept only temporarily in memory.",
             "We apply reasonable technical and organizational measures appropriate to a small informational website, including serving the site over HTTPS.",
           ],
         },
@@ -260,7 +259,7 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
           heading: "四、在线询盘表单",
           paragraphs: [
             "本网站英文（/en）和简体中文（/zh-cn）页面提供在线询盘表单；西班牙语和法语页面不提供在线提交功能。当您主动提交表单时，您的浏览器会将以下信息发送至运营者的 Cloudflare Worker（/api/enquiry）：品牌或公司名称、联系人姓名、电子邮箱、产品品类、包装偏好、可选填写的预计数量和上市时间、您描述的需求、页面语言，以及 Cloudflare Turnstile 验证令牌。与任何请求相同，Worker 也会接收您的 IP 地址和请求头等技术数据（第六条）。",
-            "为防止垃圾信息和滥用，表单页面会加载由 Cloudflare 提供的安全验证服务 Cloudflare Turnstile。Worker 会将 Turnstile 令牌和您的 IP 地址发送给 Cloudflare 进行验证，并利用您的 IP 地址实施短时频率限制，相关数据仅临时保存在 Worker 内存中。Cloudflare 按照其自身条款和隐私文档处理 Turnstile 相关数据。",
+            "为防止垃圾信息和滥用，打开在线询盘表单时会加载由 Cloudflare 提供的安全验证服务 Cloudflare Turnstile。Worker 会将 Turnstile 令牌和您的 IP 地址发送给 Cloudflare 进行验证，并利用您的 IP 地址实施短时频率限制，相关数据仅临时保存在 Worker 内存中。Cloudflare 按照其自身条款和隐私文档处理 Turnstile 相关数据。",
             "提交通过上述校验后，Worker 会通过邮件发送服务商（目前为 Resend）将询盘内容发送至运营者的业务邮箱，并将您的邮箱设为回复地址。Worker 不会将提交内容存入数据库。我们仅将这些信息用于回复您的询盘和推进潜在业务合作。请勿在表单中填写敏感个人信息。",
           ],
         },
@@ -286,8 +285,8 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
         {
           heading: "八、处理目的与法律依据",
           paragraphs: [
-            "我们处理上述有限技术数据的目的，是运营、保护和排查本网站故障；处理您通过在线表单提交的询盘内容和来信内容的目的，是回复您的咨询和推进潜在业务合作。",
-            "在《中华人民共和国个人信息保护法》（PIPL）适用的范围内，我们仅在 PIPL 允许的处理条件下处理个人信息，并在依法需要时取得同意；您就项目主动提供的信息，可在回复咨询和采取您所请求措施所必需的范围内处理。在相关处理符合《通用数据保护条例》（GDPR）的地域适用规则时，我们对网站运营和安全依据正当利益（GDPR 第6条第1款f项），并在适当情况下对项目咨询依据应您请求采取的缔约前措施（GDPR 第6条第1款b项）。",
+            "我们处理上述有限技术数据的目的，是运营、保护和排查本网站故障；处理您通过在线表单提交的询盘内容和来信内容的目的，是回复您的询盘或咨询并推进潜在业务合作。",
+            "在《中华人民共和国个人信息保护法》（PIPL）适用的范围内，我们仅在 PIPL 允许的处理条件下处理个人信息，并在依法需要时取得同意；您就项目主动提供的信息，可在回复咨询和采取您所请求措施所必需的范围内处理。在相关处理落入欧盟/欧洲经济区《通用数据保护条例》（GDPR）的地域适用范围时，我们基于正当利益（GDPR 第6条第1款f项）运营并保障本网站安全，并在适当情况下基于应您请求采取的缔约前措施（GDPR 第6条第1款b项）处理您的项目咨询。",
           ],
         },
         {
@@ -307,7 +306,7 @@ export const legalContent: Record<LegalLocale, Record<LegalPageKey, LegalDocumen
           ],
         },
         {
-          heading: "十一、未成年人与目标受众",
+          heading: "十一、未成年人与商业受众",
           paragraphs: [
             "本网站是面向专业人士的酒类生产 B2B 网站，不面向未成年人，我们也不会有意收集未成年人的个人信息。",
           ],
